@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Ett univers av spesialiserte apper for serier, bøker, mat, drikke, lyd og spill." />
+<meta name="theme-color" content="#0A0A0F" />
+<meta property="og:title" content="allctrl — alt du bruker tid på, under kontroll" />
+<meta property="og:description" content="Ett univers av spesialiserte apper. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm." />
+<meta property="og:type" content="website" />
+<title>allctrl — alt du bruker tid på, under kontroll</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A0F;
+    --surface: #14141B;
+    --surface-2: #1C1C24;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text: #FFFFFF;
+    --text-muted: #A8A8B0;
+    --text-dim: #6A6A75;
+
+    /* allctrl primary accent */
+    --accent: #E8FF47;
+    --accent-soft: rgba(232, 255, 71, 0.12);
+
+    /* universe accents */
+    --see: #00E5FF;
+    --read: #4DFF91;
+    --eat: #FF6B35;
+    --drink: #4D9FFF;
+    --listen: #C084FC;
+    --play: #FF4D6D;
+    --all: #E8FF47;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --maxw: 1120px;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+
+  .mono { font-family: 'DM Mono', ui-monospace, monospace; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    border-bottom: 0.5px solid var(--border);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 50;
+  }
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--accent);
+  }
+  .logo-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    font-size: 14px;
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    border: 0.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-primary:hover {
+    background: #F0FF7A;
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn-ghost:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 5rem 0 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(232, 255, 71, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero .container { position: relative; z-index: 1; }
+  .pill {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--accent);
+    padding: 6px 12px;
+    border: 0.5px solid rgba(232, 255, 71, 0.3);
+    border-radius: 999px;
+    margin-bottom: 1.75rem;
+    letter-spacing: 0.05em;
+  }
+  .hero-content {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: clamp(44px, 7vw, 76px);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin: 0 0 1.5rem;
+    color: var(--text);
+  }
+  h1 .highlight {
+    color: var(--accent);
+  }
+  .hero p.lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 auto 2.25rem;
+    max-width: 560px;
+  }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2.5rem;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== UNIVERSE GRID (visual showcase) ===== */
+  .universe-showcase {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .module-icon {
+    aspect-ratio: 1;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    position: relative;
+  }
+  .module-icon:hover { transform: translateY(-3px); }
+  .module-icon[data-color="see"] { background: rgba(0, 229, 255, 0.1); color: var(--see); border: 0.5px solid rgba(0, 229, 255, 0.25); }
+  .module-icon[data-color="read"] { background: rgba(77, 255, 145, 0.1); color: var(--read); border: 0.5px solid rgba(77, 255, 145, 0.25); }
+  .module-icon[data-color="eat"] { background: rgba(255, 107, 53, 0.1); color: var(--eat); border: 0.5px solid rgba(255, 107, 53, 0.25); }
+  .module-icon[data-color="drink"] { background: rgba(77, 159, 255, 0.1); color: var(--drink); border: 0.5px solid rgba(77, 159, 255, 0.25); }
+  .module-icon[data-color="listen"] { background: rgba(192, 132, 252, 0.1); color: var(--listen); border: 0.5px solid rgba(192, 132, 252, 0.25); }
+  .module-icon[data-color="play"] { background: rgba(255, 77, 109, 0.1); color: var(--play); border: 0.5px solid rgba(255, 77, 109, 0.25); }
+  .module-icon[data-color="all"] { background: rgba(232, 255, 71, 0.15); color: var(--all); border: 0.5px solid rgba(232, 255, 71, 0.4); }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 5rem 0; }
+  .section-head {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-size: clamp(30px, 4.5vw, 42px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  .section-head p {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ===== PHILOSOPHY ===== */
+  .philosophy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .philosophy-text h2 {
+    margin-bottom: 1.5rem;
+  }
+  .philosophy-text p {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0 0 1.25rem;
+  }
+  .philosophy-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .principle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+  }
+  .principle {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .principle-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    padding-top: 2px;
+    min-width: 24px;
+    letter-spacing: 0.05em;
+  }
+  .principle-content h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    color: var(--text);
+  }
+  .principle-content p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ===== MODULES SECTION ===== */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .module-card {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .module-card:hover { background: #181820; }
+  .module-card.featured {
+    background: linear-gradient(180deg, rgba(232, 255, 71, 0.04) 0%, var(--surface) 100%);
+  }
+  .module-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .module-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .module-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+  .module-name span {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .module-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-dim);
+  }
+  .module-status.live {
+    background: rgba(232, 255, 71, 0.1);
+    color: var(--accent);
+  }
+  .module-card h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .module-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ===== ALLCTRL DASHBOARD MOCKUP ===== */
+  .dashboard-section {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    text-align: center;
+  }
+  .dashboard-section h2 { margin-bottom: 0.75rem; }
+  .dashboard-section > p {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+  }
+  .dashboard-mock {
+    background: var(--bg);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .dashboard-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .stat-card {
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    border-left: 2px solid;
+  }
+  .stat-card[data-mod="see"] { border-left-color: var(--see); }
+  .stat-card[data-mod="read"] { border-left-color: var(--read); }
+  .stat-card[data-mod="listen"] { border-left-color: var(--listen); }
+  .stat-card[data-mod="play"] { border-left-color: var(--play); }
+  .stat-card[data-mod="eat"] { border-left-color: var(--eat); }
+  .stat-card[data-mod="drink"] { border-left-color: var(--drink); }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .stat-value {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .stat-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ===== ROADMAP ===== */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .phase {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    position: relative;
+  }
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .phase-time {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+  .phase h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 0.75rem;
+    color: var(--text);
+  }
+  .phase ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .phase ul li {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .phase ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 1px;
+    background: var(--text-dim);
+  }
+
+  /* ===== FOOTER CTA ===== */
+  .footer-cta {
+    text-align: center;
+    padding: 6rem 0 4rem;
+    border-top: 0.5px solid var(--border);
+  }
+  .footer-cta h3 {
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.75rem;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  .footer-cta .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin: 0 0 2.25rem;
+    letter-spacing: 0.06em;
+  }
+  .signup-form {
+    max-width: 420px;
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
+  }
+  .signup-form input {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .signup-form input:focus {
+    border-color: var(--accent);
+  }
+  .signup-form input::placeholder { color: var(--text-dim); }
+
+  footer {
+    padding: 2rem 0 3rem;
+    border-top: 0.5px solid var(--border);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-inner span {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    transition: color 0.15s ease;
+  }
+  .footer-links a:hover { color: var(--text); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 860px) {
+    .nav-links { gap: 16px; }
+    .nav-links a:not(.btn) { display: none; }
+    .hero { padding: 3rem 0 4rem; }
+    .universe-showcase {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .philosophy {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .modules-grid {
+      grid-template-columns: 1fr;
+    }
+    .dashboard-section { padding: 2rem 1.5rem; }
+    .dashboard-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .roadmap {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    section { padding: 3.5rem 0; }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 0 1.25rem; }
+    .universe-showcase {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .roadmap {
+      grid-template-columns: 1fr;
+    }
+    .signup-form {
+      flex-direction: column;
+    }
+    .signup-form input,
+    .signup-form button { width: 100%; }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo" aria-label="allctrl hjem">
+      <span class="logo-mark"></span>
+      <span class="logo-text">allctrl</span>
+    </a>
+    <div class="nav-links">
+      <a href="#filosofi">Filosofi</a>
+      <a href="#universet">Universet</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#tidlig-tilgang" class="btn btn-primary">Tidlig tilgang</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="pill mono">CTRL-UNIVERSET · UNDER UTVIKLING</span>
+      <h1>Alt du bruker tid på.<br/><span class="highlight">Under kontroll.</span></h1>
+      <p class="lead">Ett univers av spesialiserte apper for serier, bøker, mat, drikke, lyd og spill. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
+      <div class="cta-row">
+        <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
+        <a href="#universet" class="btn btn-ghost">Utforsk universet</a>
+      </div>
+      <div class="meta-row mono">
+        <span>SEECTRL LIVE Q3 2026</span>
+        <span>NORDISK-FØRST</span>
+        <span>BYGGES NÅ</span>
+      </div>
+    </div>
+
+    <!-- Universe showcase -->
+    <div class="universe-showcase">
+      <div class="module-icon" data-color="see" title="seectrl — serier">see</div>
+      <div class="module-icon" data-color="read" title="readctrl — bøker">read</div>
+      <div class="module-icon" data-color="eat" title="eatctrl — mat">eat</div>
+      <div class="module-icon" data-color="drink" title="drinkctrl — drikke">drink</div>
+      <div class="module-icon" data-color="listen" title="listenctrl — lyd">listen</div>
+      <div class="module-icon" data-color="play" title="playctrl — spill">play</div>
+      <div class="module-icon" data-color="all" title="allctrl — overbygg">all</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== PHILOSOPHY ===== -->
+<section id="filosofi">
+  <div class="container">
+    <div class="philosophy">
+      <div class="philosophy-text">
+        <div class="section-eyebrow">FILOSOFI</div>
+        <h2>Du eier tiden din. Vi gir deg oversikten.</h2>
+        <p>De fleste apper konkurrerer om oppmerksomheten din. <strong>Ctrl-universet gjør det motsatte</strong> — vi hjelper deg å forstå og styre det du allerede konsumerer.</p>
+        <p>Ikke én monolittisk app som prøver å gjøre alt halvveis. I stedet et voksende sett av spesialiserte apper med felles visuell identitet, teknisk infrastruktur og overbygg.</p>
+        <p>Du starter med det produktet som løser det mest akutte behovet — og utvider når du er klar.</p>
+      </div>
+
+      <div class="principle-list">
+        <div class="principle">
+          <span class="principle-num mono">01</span>
+          <div class="principle-content">
+            <h4>Spesialisert, ikke spredt</h4>
+            <p>Hver app er bygget for ett formål. Ingen kompromisser, ingen halve løsninger.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <span class="principle-num mono">02</span>
+          <div class="principle-content">
+            <h4>Modulær vekst</h4>
+            <p>Bruk én app eller hele suiten. Du bestemmer takten.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <span class="principle-num mono">03</span>
+          <div class="principle-content">
+            <h4>Felles språk</h4>
+            <p>Samme designsystem og logikk. Lærer du én, kan du dem alle.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <span class="principle-num mono">04</span>
+          <div class="principle-content">
+            <h4>Dine data, dine mønstre</h4>
+            <p>Anonymisert innsikt. Persondata deles aldri. Reklamefri opplevelse.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULES ===== -->
+<section id="universet">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">UNIVERSET</div>
+      <h2>Syv apper. Ett system.</h2>
+      <p>Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet.</p>
+    </div>
+
+    <div class="modules-grid">
+
+      <div class="module-card">
+        <div class="module-head">
+          <div class="module-name">
+            <span class="module-dot" style="background: var(--see);"></span>
+            <span>seectrl</span>
+          </div>
+          <span class="module-status live">LIVE Q3 2026</span>
+        </div>
+        <h3>Alle serier, samlet på ett sted</h3>
+        <p>Oversikt over alle serier du følger på tvers av Netflix, HBO Max, Viaplay, Disney+ og resten. Episodesporing, fremdrift og automatisk strømmestatus.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <div class="module-name">
+            <span class="module-dot" style="background: var(--read);"></span>
+            <span>readctrl</span>
+          </div>
+          <span class="module-status">FASE 3</span>
+        </div>
+        <h3>Sporingsliste for alt du leser</h3>
+        <p>Bøker du leser, har lest og vil lese. Lesehistorikk, fremdrift per bok og oversikt over hele biblioteket ditt — fysiske og digitale.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <div class="module-name">
+            <span class="module-dot" style="background: var(--eat);"></span>
+            <span>eatctrl</span>
+          </div>
+          <span class="module-status">FASE 3+</span>
+        </div>
+        <h3>Restaurantene og måltidene dine</h3>
+        <p>Kontroll på restaurantene du har besøkt og rettene du har smakt. Fyll på med ønskelister over steder å prøve og smaker å oppdage.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <div class="module-name">
+            <span class="module-dot" style="background: var(--drink);"></span>
+            <span>drinkctrl</span>
+          </div>
+          <span class="module-status">FASE 3+</span>
+        </div>
+        <h3>Drinker, viner og øl du har smakt</h3>
+        <p>Hold styr på hva du har prøvd — og få tips til hva du burde smake neste gang. Personlig smaksoversikt for drinker, vin og øl.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <div class="module-name">
+            <span class="module-dot" style="background: var(--listen);"></span>
+            <span>listenctrl</span>
+          </div>
+          <span class="module-status">FASE 3+</span>
+        </div>
+        <h3>Lyttehistorikk og musikksmak</h3>
+        <p>Musikk og podkast samlet. Fremdrift på podkastserier, lyttemønstre og en ærlig oversikt over hva du faktisk hører på.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <div class="module-name">
+            <span class="module-dot" style="background: var(--play);"></span>
+            <span>playctrl</span>
+          </div>
+          <span class="module-status">FASE 3+</span>
+        </div>
+        <h3>Spillbibliotek og spilltid</h3>
+        <p>Alle spillene dine på tvers av plattformer. Fremgang i enkeltspill, total spilltid og hva som ligger i køen.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== DASHBOARD ===== -->
+<section>
+  <div class="container">
+    <div class="dashboard-section">
+      <div class="section-eyebrow">ALLCTRL · OVERBYGG</div>
+      <h2>Én skjerm. Hele livet ditt.</h2>
+      <p>allctrl samler alle modulene i ett dashboard. Se mønstrene på tvers — ikke bare innenfor hver kategori.</p>
+
+      <div class="dashboard-mock">
+        <div class="dashboard-header">
+          <span class="dashboard-title">DENNE UKEN</span>
+          <span class="mono" style="font-size: 11px; color: var(--accent);">● LIVE</span>
+        </div>
+        <div class="dashboard-grid">
+          <div class="stat-card" data-mod="see">
+            <div class="stat-label">SEECTRL</div>
+            <div class="stat-value">12t 30m</div>
+            <div class="stat-meta">5 episoder · 3 serier</div>
+          </div>
+          <div class="stat-card" data-mod="read">
+            <div class="stat-label">READCTRL</div>
+            <div class="stat-value">142 sider</div>
+            <div class="stat-meta">2 bøker aktive</div>
+          </div>
+          <div class="stat-card" data-mod="listen">
+            <div class="stat-label">LISTENCTRL</div>
+            <div class="stat-value">8t 12m</div>
+            <div class="stat-meta">Mest: lo-fi · podkast</div>
+          </div>
+          <div class="stat-card" data-mod="play">
+            <div class="stat-label">PLAYCTRL</div>
+            <div class="stat-value">4t 45m</div>
+            <div class="stat-meta">Hades II · Balatro</div>
+          </div>
+          <div class="stat-card" data-mod="eat">
+            <div class="stat-label">EATCTRL</div>
+            <div class="stat-value">3 nye steder</div>
+            <div class="stat-meta">12 retter smakt</div>
+          </div>
+          <div class="stat-card" data-mod="drink">
+            <div class="stat-label">DRINKCTRL</div>
+            <div class="stat-value">7 nye smaker</div>
+            <div class="stat-meta">5 viner · 2 øl</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">ROADMAP</div>
+      <h2>Ett steg av gangen.</h2>
+      <p>Vi bygger seectrl ferdig først. Når det funker bra, vokser universet videre.</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="phase">
+        <div class="phase-num mono">FASE 01</div>
+        <div class="phase-time">0–3 mnd</div>
+        <h4>MVP</h4>
+        <ul>
+          <li>Prototype og brukertesting</li>
+          <li>seectrl-kjerneflyt</li>
+          <li>Merkevare og domener</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num mono">FASE 02</div>
+        <div class="phase-time">3–6 mnd</div>
+        <h4>Lansering</h4>
+        <ul>
+          <li>seectrl live i Norge</li>
+          <li>Freemium og betaling</li>
+          <li>Iterasjoner</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num mono">FASE 03</div>
+        <div class="phase-time">6–12 mnd</div>
+        <h4>Ekspansjon</h4>
+        <ul>
+          <li>seectrl til Norden</li>
+          <li>readctrl lanseres</li>
+          <li>Affiliate-inntekter</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num mono">FASE 04</div>
+        <div class="phase-time">12+ mnd</div>
+        <h4>Universet</h4>
+        <ul>
+          <li>Resten av modulene</li>
+          <li>allctrl-dashboard</li>
+          <li>Global skalering</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER CTA ===== -->
+<section id="tidlig-tilgang">
+  <div class="container">
+    <div class="footer-cta">
+      <h3>Vær med fra start.</h3>
+      <p class="tagline mono">ALT DU BRUKER TID PÅ. UNDER KONTROLL.</p>
+      <form class="signup-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Du står på listen ✓'; this.querySelector('input').value='';">
+        <input type="email" placeholder="din@epost.no" required aria-label="E-postadresse" />
+        <button type="submit" class="btn btn-primary">Få tidlig tilgang</button>
+      </form>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 1.25rem;">Ingen spam. Bare beskjed når seectrl er klar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container footer-inner">
+    <span class="mono">© 2026 ctrl-universet</span>
+    <div class="footer-links">
+      <a href="#">Personvern</a>
+      <a href="#">Vilkår</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
