@@ -183,7 +183,7 @@
     50% { opacity: 0.4; }
   }
 
-  /* Hero logo strip — alle produkter side ved side */
+  /* Hero logo strip — alle produkter side ved side, klikkbare */
   .hero-strip {
     margin-top: 80px;
     padding: 32px 0;
@@ -196,12 +196,15 @@
     flex-wrap: wrap;
     opacity: 0.85;
   }
+  .hero-strip a {
+    display: inline-block;
+    transition: transform 0.3s;
+  }
+  .hero-strip a:hover { transform: translateY(-3px); }
   .hero-strip img {
     height: 44px;
-    transition: all 0.3s;
     filter: grayscale(0%);
   }
-  .hero-strip img:hover { transform: translateY(-3px); }
 
   /* ============ SECTION GENERICS ============ */
   .section { padding: 120px 0; }
@@ -278,7 +281,9 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
   }
+  /* Endret fra div til a — beholder alt visuelt likt */
   .product-card {
+    display: block;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 18px;
@@ -286,6 +291,9 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
   }
   .product-card::after {
     content: '';
@@ -298,6 +306,25 @@
   }
   .product-card:hover { border-color: var(--accent); transform: translateY(-4px); }
   .product-card:hover::after { opacity: 1; }
+
+  /* Liten "→ Utforsk"-indikator som dukker opp på hover */
+  .product-card .product-cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .product-card:hover .product-cta {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
   .product-card[data-product="seectrl"] { --accent: var(--c-see); }
   .product-card[data-product="readctrl"] { --accent: var(--c-read); }
@@ -399,14 +426,18 @@
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
   }
+  /* Også stat-cards blir klikkbare lenker */
   .stat-card {
+    display: block;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, transform 0.2s;
+    color: inherit;
+    text-decoration: none;
   }
-  .stat-card:hover { border-color: var(--accent); }
+  .stat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
   .stat-card[data-product="seectrl"] { --accent: var(--c-see); }
   .stat-card[data-product="readctrl"] { --accent: var(--c-read); }
   .stat-card[data-product="eatctrl"] { --accent: var(--c-eat); }
@@ -589,14 +620,14 @@
       <span>BYGGES NÅ</span>
     </div>
 
-    <!-- Logo-stripe i hero: viser hele familien med en gang -->
+    <!-- Logo-stripe i hero: hver logo går nå direkte til sin underside -->
     <div class="hero-strip">
-      <img src="logos/seectrl_logo.png" alt="seectrl" title="seectrl">
-      <img src="logos/readctrl_logo.png" alt="readctrl" title="readctrl">
-      <img src="logos/eatctrl_logo.png" alt="eatctrl" title="eatctrl">
-      <img src="logos/drinkctrl_logo.png" alt="drinkctrl" title="drinkctrl">
-      <img src="logos/listenctrl_logo.png" alt="listenctrl" title="listenctrl">
-      <img src="logos/playctrl_logo.png" alt="playctrl" title="playctrl">
+      <a href="seectrl.html" title="seectrl"><img src="logos/seectrl_logo.png" alt="seectrl"></a>
+      <a href="readctrl.html" title="readctrl"><img src="logos/readctrl_logo.png" alt="readctrl"></a>
+      <a href="eatctrl.html" title="eatctrl"><img src="logos/eatctrl_logo.png" alt="eatctrl"></a>
+      <a href="drinkctrl.html" title="drinkctrl"><img src="logos/drinkctrl_logo.png" alt="drinkctrl"></a>
+      <a href="listenctrl.html" title="listenctrl"><img src="logos/listenctrl_logo.png" alt="listenctrl"></a>
+      <a href="playctrl.html" title="playctrl"><img src="logos/playctrl_logo.png" alt="playctrl"></a>
     </div>
   </div>
 </section>
@@ -644,11 +675,11 @@
   <div class="container">
     <div class="section-eyebrow">UNIVERSET</div>
     <h2 class="section-title">Syv apper. Ett system.</h2>
-    <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet.</p>
+    <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet. Klikk for å utforske hver enkelt.</p>
 
     <div class="universe-grid">
 
-      <div class="product-card" data-product="seectrl">
+      <a class="product-card" data-product="seectrl" href="seectrl.html">
         <div class="product-header">
           <img class="product-symbol" src="logos/seectrl_symbol.png" alt="">
           <div class="product-meta">
@@ -658,9 +689,10 @@
         </div>
         <h3>Alle serier, samlet på ett sted</h3>
         <p>Oversikt over alle serier du følger på tvers av Netflix, HBO Max, Viaplay, Disney+ og resten. Episodesporing, fremdrift og automatisk strømmestatus.</p>
-      </div>
+        <div class="product-cta">UTFORSK SEECTRL →</div>
+      </a>
 
-      <div class="product-card" data-product="readctrl">
+      <a class="product-card" data-product="readctrl" href="readctrl.html">
         <div class="product-header">
           <img class="product-symbol" src="logos/readctrl_symbol.png" alt="">
           <div class="product-meta">
@@ -670,9 +702,10 @@
         </div>
         <h3>Sporingsliste for alt du leser</h3>
         <p>Bøker du leser, har lest og vil lese. Lesehistorikk, fremdrift per bok og oversikt over hele biblioteket ditt — fysiske og digitale.</p>
-      </div>
+        <div class="product-cta">UTFORSK READCTRL →</div>
+      </a>
 
-      <div class="product-card" data-product="eatctrl">
+      <a class="product-card" data-product="eatctrl" href="eatctrl.html">
         <div class="product-header">
           <img class="product-symbol" src="logos/eatctrl_symbol.png" alt="">
           <div class="product-meta">
@@ -682,9 +715,10 @@
         </div>
         <h3>Restaurantene og måltidene dine</h3>
         <p>Kontroll på restaurantene du har besøkt og rettene du har smakt. Fyll på med ønskelister over steder å prøve og smaker å oppdage.</p>
-      </div>
+        <div class="product-cta">UTFORSK EATCTRL →</div>
+      </a>
 
-      <div class="product-card" data-product="drinkctrl">
+      <a class="product-card" data-product="drinkctrl" href="drinkctrl.html">
         <div class="product-header">
           <img class="product-symbol" src="logos/drinkctrl_symbol.png" alt="">
           <div class="product-meta">
@@ -694,9 +728,10 @@
         </div>
         <h3>Drinker, viner og øl du har smakt</h3>
         <p>Hold styr på hva du har prøvd — og få tips til hva du burde smake neste gang. Personlig smaksoversikt for drinker, vin og øl.</p>
-      </div>
+        <div class="product-cta">UTFORSK DRINKCTRL →</div>
+      </a>
 
-      <div class="product-card" data-product="listenctrl">
+      <a class="product-card" data-product="listenctrl" href="listenctrl.html">
         <div class="product-header">
           <img class="product-symbol" src="logos/listenctrl_symbol.png" alt="">
           <div class="product-meta">
@@ -706,9 +741,10 @@
         </div>
         <h3>Lyttehistorikk og musikksmak</h3>
         <p>Musikk og podkast samlet. Fremdrift på podkastserier, lyttemønstre og en ærlig oversikt over hva du faktisk hører på.</p>
-      </div>
+        <div class="product-cta">UTFORSK LISTENCTRL →</div>
+      </a>
 
-      <div class="product-card" data-product="playctrl">
+      <a class="product-card" data-product="playctrl" href="playctrl.html">
         <div class="product-header">
           <img class="product-symbol" src="logos/playctrl_symbol.png" alt="">
           <div class="product-meta">
@@ -718,7 +754,8 @@
         </div>
         <h3>Spillbibliotek og spilltid</h3>
         <p>Alle spillene dine på tvers av plattformer. Fremgang i enkeltspill, total spilltid og hva som ligger i køen.</p>
-      </div>
+        <div class="product-cta">UTFORSK PLAYCTRL →</div>
+      </a>
 
     </div>
   </div>
@@ -741,59 +778,59 @@
       </div>
       <div class="dashboard-grid">
 
-        <div class="stat-card" data-product="seectrl">
+        <a class="stat-card" data-product="seectrl" href="seectrl.html">
           <div class="stat-head">
             <img src="logos/seectrl_symbol.png" alt="">
             <span class="stat-name">SEECTRL</span>
           </div>
           <div class="stat-value">12t 30m</div>
           <div class="stat-detail">5 episoder · 3 serier</div>
-        </div>
+        </a>
 
-        <div class="stat-card" data-product="readctrl">
+        <a class="stat-card" data-product="readctrl" href="readctrl.html">
           <div class="stat-head">
             <img src="logos/readctrl_symbol.png" alt="">
             <span class="stat-name">READCTRL</span>
           </div>
           <div class="stat-value">142 sider</div>
           <div class="stat-detail">2 bøker aktive</div>
-        </div>
+        </a>
 
-        <div class="stat-card" data-product="listenctrl">
+        <a class="stat-card" data-product="listenctrl" href="listenctrl.html">
           <div class="stat-head">
             <img src="logos/listenctrl_symbol.png" alt="">
             <span class="stat-name">LISTENCTRL</span>
           </div>
           <div class="stat-value">8t 12m</div>
           <div class="stat-detail">Mest: lo-fi · podkast</div>
-        </div>
+        </a>
 
-        <div class="stat-card" data-product="playctrl">
+        <a class="stat-card" data-product="playctrl" href="playctrl.html">
           <div class="stat-head">
             <img src="logos/playctrl_symbol.png" alt="">
             <span class="stat-name">PLAYCTRL</span>
           </div>
           <div class="stat-value">4t 45m</div>
           <div class="stat-detail">Hades II · Balatro</div>
-        </div>
+        </a>
 
-        <div class="stat-card" data-product="eatctrl">
+        <a class="stat-card" data-product="eatctrl" href="eatctrl.html">
           <div class="stat-head">
             <img src="logos/eatctrl_symbol.png" alt="">
             <span class="stat-name">EATCTRL</span>
           </div>
           <div class="stat-value">3 nye steder</div>
           <div class="stat-detail">12 retter smakt</div>
-        </div>
+        </a>
 
-        <div class="stat-card" data-product="drinkctrl">
+        <a class="stat-card" data-product="drinkctrl" href="drinkctrl.html">
           <div class="stat-head">
             <img src="logos/drinkctrl_symbol.png" alt="">
             <span class="stat-name">DRINKCTRL</span>
           </div>
           <div class="stat-value">7 nye smaker</div>
           <div class="stat-detail">5 viner · 2 øl</div>
-        </div>
+        </a>
 
       </div>
     </div>
