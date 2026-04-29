@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>drinkctrl — drikke · ctrl-universet</title>
+<meta name="description" content="drinkctrl er smakshukommelsen for vin, øl, drinker og brennevin. Logg det du har smakt, hva du syntes, og bygg ønskelisten av det du må prøve. Privat eller delt.">
+<style>
+  /* ============ DESIGN TOKENS (samme som hovedside) ============ */
+  :root {
+    --bg: #0A0A0F;
+    --bg-card: #11111a;
+    --bg-elevated: #15151f;
+    --border: #1f1f25;
+    --border-strong: #2a2a35;
+    --text: #ffffff;
+    --text-muted: #aaaaaa;
+    --text-dim: #666666;
+    --text-faint: #444444;
+
+    --c-all: #E8FF47;
+    --c-see: #00E5FF;
+    --c-read: #4DFF91;
+    --c-eat: #FF6B35;
+    --c-drink: #4D9FFF;
+    --c-listen: #C084FC;
+    --c-play: #FF4D6D;
+
+    --accent: var(--c-drink);
+
+    --mono: 'JetBrains Mono', 'DM Mono', 'SF Mono', Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  em { font-style: normal; color: var(--accent); }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ============ HEADER ============ */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+  .header-logo img {
+    height: 32px;
+    transition: opacity 0.2s;
+  }
+  .header-logo:hover img { opacity: 0.85; }
+  .nav {
+    display: flex;
+    gap: 32px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .nav a { transition: color 0.2s; }
+  .nav a:hover { color: var(--text); }
+  .nav .back { color: var(--text); }
+  .nav .back::before { content: '← '; color: var(--text-dim); }
+  @media (max-width: 700px) {
+    .nav { gap: 20px; font-size: 13px; }
+    .nav a:not(.back):not(.cta-link) { display: none; }
+  }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: var(--sans);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px #4D9FFF40; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn-secondary:hover { border-color: var(--text-muted); }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 80px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -100px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, #4D9FFF1f 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  .hero-logo {
+    margin-bottom: 32px;
+  }
+  .hero-logo img {
+    height: 80px;
+    filter: drop-shadow(0 0 30px #4D9FFF40);
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    padding: 6px 14px;
+    border: 1px solid #4D9FFF4d;
+    border-radius: 999px;
+    margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 5.5vw, 64px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .hero-lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 36px;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .hero-status {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+  }
+  .hero-status span { display: flex; align-items: center; gap: 8px; }
+  .hero-status .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ============ MOCK-UP ============ */
+  .mockup {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    aspect-ratio: 4/5;
+    display: flex;
+    flex-direction: column;
+  }
+  .mock-titlebar {
+    display: flex;
+    gap: 6px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .mock-titlebar span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--border-strong);
+  }
+  .mock-titlebar span:nth-child(1) { background: #FF5F57; }
+  .mock-titlebar span:nth-child(2) { background: #FEBC2E; }
+  .mock-titlebar span:nth-child(3) { background: #28C840; }
+  .mock-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .mock-row {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-row:last-child { border-bottom: none; }
+  .mock-thumb {
+    width: 36px; height: 36px;
+    border-radius: 6px;
+    background: #4D9FFF1a;
+    border: 1px solid #4D9FFF4d;
+    flex-shrink: 0;
+  }
+  .mock-content { flex: 1; min-width: 0; }
+  .mock-title {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mock-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .mock-progress {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .mock-progress-bar {
+    height: 100%;
+    background: var(--accent);
+  }
+
+  /* ============ SECTIONS ============ */
+  .section { padding: 100px 0; }
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4.5vw, 48px);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    max-width: 800px;
+  }
+  .section-lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin-bottom: 56px;
+  }
+
+  /* ============ PROBLEM ============ */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .problem-list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+    font-size: 16px;
+  }
+  .problem-list li:first-child { border-top: 1px solid var(--border); }
+  .problem-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ============ FUNKSJONER ============ */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+  }
+  .feature {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .feature:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .feature-wide {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #4D9FFF0d, var(--bg-card));
+  }
+  @media (max-width: 600px) {
+    .feature-wide { grid-column: span 1; }
+  }
+  .feature-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .feature h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .feature-wide h3 { font-size: 22px; }
+  .feature p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ============ HVORDAN ============ */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (max-width: 900px) {
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+  .step {
+    padding: 36px 32px;
+    border-right: 1px solid var(--border);
+  }
+  .step:last-child { border-right: none; }
+  @media (max-width: 900px) {
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+  }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 36px;
+    color: var(--accent);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .step h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .step p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ============ PRICING ============ */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+  .price-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 36px;
+  }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #4D9FFF0d, var(--bg-card));
+    position: relative;
+  }
+  .price-card.featured::after {
+    content: 'Premium';
+    position: absolute;
+    top: 24px; right: 24px;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid #4D9FFF66;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .price-tier {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .price-amount {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .price-amount sub { font-size: 15px; color: var(--text-muted); font-weight: 400; }
+  .price-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+  .price-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .price-list li::before {
+    content: '→';
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .price-list li:last-child { border-bottom: none; }
+
+  /* ============ CTA ============ */
+  .cta {
+    text-align: center;
+    padding: 100px 24px;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, transparent, #4D9FFF08);
+  }
+  .cta-logo img {
+    height: 64px;
+    margin: 0 auto 28px;
+    filter: drop-shadow(0 0 30px #4D9FFF40);
+  }
+  .cta h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .cta p {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin: 0 auto 32px;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .footer-logo img { height: 24px; opacity: 0.7; }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { font-family: var(--mono); font-size: 12px; }
+  .footer-links a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="index.html" class="header-logo" aria-label="allctrl forside">
+      <img src="logos/allctrl_logo.png" alt="allctrl">
+    </a>
+    <nav class="nav">
+      <a href="index.html" class="back">Universet</a>
+      <a href="#funksjoner">Funksjoner</a>
+      <a href="#hvordan">Hvordan</a>
+      <a href="#pris">Pris</a>
+      <a href="#tidlig-tilgang" class="cta-link">Tidlig tilgang</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-logo">
+          <img src="logos/drinkctrl_logo.png" alt="drinkctrl">
+        </div>
+        <div class="hero-tag">DRIKKE · FASE 3+</div>
+        <h1>Hva var navnet<br>på den vinen igjen?</h1>
+        <p class="hero-lead">drinkctrl er smakshukommelsen for vin, øl, drinker og brennevin. Logg det du har smakt, hva du syntes, og bygg ønskelisten av det du må prøve. <em>Privat eller delt.</em></p>
+        <div class="hero-buttons">
+          <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
+          <a href="#funksjoner" class="btn btn-secondary">Se funksjoner</a>
+        </div>
+        <div class="hero-status">
+      <span><span class="dot" style="background: var(--c-drink);"></span>FASE 3+</span>
+      <span>VIN + ØL + DRINKER</span>
+      <span>VINMONOPOLET-INTEGRASJON</span>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mock-titlebar"><span></span><span></span><span></span></div>
+        <div class="mock-label">SMAKT NYLIG · 3 NYE</div>
+        <div class="mock-rows">
+          <div class="mock-row">
+              <div class="mock-thumb"></div>
+              <div class="mock-content">
+                <div class="mock-title">Domaine Tempier Bandol 2019</div>
+                <div class="mock-meta">12. apr · Rødvin · 5/5</div>
+              <div class="mock-progress"><div class="mock-progress-bar" style="width: 100%;"></div></div>
+              </div>
+            </div>
+            <div class="mock-row">
+              <div class="mock-thumb"></div>
+              <div class="mock-content">
+                <div class="mock-title">Nøgne Ø Imperial Stout</div>
+                <div class="mock-meta">8. apr · Stout · 4/5</div>
+              <div class="mock-progress"><div class="mock-progress-bar" style="width: 80%;"></div></div>
+              </div>
+            </div>
+            <div class="mock-row">
+              <div class="mock-thumb"></div>
+              <div class="mock-content">
+                <div class="mock-title">Negroni @ Himkok</div>
+                <div class="mock-meta">5. apr · Cocktail · 5/5</div>
+              <div class="mock-progress"><div class="mock-progress-bar" style="width: 100%;"></div></div>
+              </div>
+            </div>
+            <div class="mock-row">
+              <div class="mock-thumb"></div>
+              <div class="mock-content">
+                <div class="mock-title">Ønskeliste · 24 flasker</div>
+                <div class="mock-meta">8 tilgjengelige på Polet</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROBLEM ========== -->
+<section class="section">
+  <div class="container">
+    <div class="problem-grid">
+      <div>
+        <div class="section-eyebrow">PROBLEMET</div>
+        <h2 class="section-title">Du smaker mye. Du husker lite.</h2>
+      </div>
+      <div>
+        <p style="font-size: 17px; color: var(--text-muted); margin-bottom: 24px;">Den vinen til middag i Lisboa. Den IPA-en på den lille puben i Bergen. Den drinken på baren med utsikt. Du smaker. Du elsker. Du glemmer.</p>
+        <ul class="problem-list">
+          <li><span class="problem-num">01</span><span>Du tar bilde av etiketter, men kommer aldri tilbake til dem.</span></li>
+            <li><span class="problem-num">02</span><span>Du anbefaler en øl du elsket, men husker ikke navnet.</span></li>
+            <li><span class="problem-num">03</span><span>Du kjøper samme middelmådige flaske igjen og igjen.</span></li>
+            <li><span class="problem-num">04</span><span>Du har en mental ønskeliste som aldri møter virkeligheten.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FUNKSJONER ========== -->
+<section class="section" id="funksjoner" style="background: linear-gradient(180deg, transparent, var(--bg-card)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-eyebrow">FUNKSJONER</div>
+    <h2 class="section-title">Alt du trenger.<br>Ingenting du ikke gjør.</h2>
+
+    <div class="features-grid">
+      <div class="feature feature-wide">
+          <div class="feature-num">F.01</div>
+          <h3>Smakshistorikk</h3>
+          <p>Logg vin, øl, drinker og brennevin med smaksnotater, vurdering og kontekst. Bygg en personlig database over tid.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-num">F.02</div>
+          <h3>Foto av etikett</h3>
+          <p>Snap bildet — drinkctrl gjør resten med tekstgjenkjenning.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-num">F.03</div>
+          <h3>Ønskeliste</h3>
+          <p>Spar det du vil prøve. Med kobling til Vinmonopolet for vin og brennevin.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-num">F.04</div>
+          <h3>Smaksprofil</h3>
+          <p>Forstå hva du liker — druer, stiler, regioner.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-num">F.05</div>
+          <h3>Anledninger</h3>
+          <p>Logg hvor og når. "Bryllupsmiddag, juni 2026" sier mer enn en stjerne.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-num">F.06</div>
+          <h3>Anbefalinger</h3>
+          <p>Finn neste flaske basert på din smak. <em>Premium.</em></p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HVORDAN ========== -->
+<section class="section" id="hvordan">
+  <div class="container">
+    <div class="section-eyebrow">HVORDAN</div>
+    <h2 class="section-title">Tre trinn til full kontroll.</h2>
+
+    <div class="steps-grid">
+      <div class="step">
+          <div class="step-num">01</div>
+          <h4>Smak — så snap</h4>
+          <p>Ta bilde av etiketten. drinkctrl identifiserer flasken automatisk.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4>Skriv det viktigste</h4>
+          <p>Liker du den? Hva minner den om? Behøver ikke være et essay.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4>Bygg smaks-DNA-et ditt</h4>
+          <p>Etter 50 loggføringer vet du mer om din egen smak enn de fleste vinkelnere.</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRIS ========== -->
+<section class="section" id="pris" style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-eyebrow">PRIS</div>
+    <h2 class="section-title">Gratis å bruke.<br>Premium om du vil ha mer.</h2>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Gratis — alltid</div>
+        <div class="price-amount">0<sub> kr/mnd</sub></div>
+        <p class="price-tagline">Alt du trenger for å holde oversikt.</p>
+        <ul class="price-list">
+          <li>Logg vin, øl, drinker, brennevin</li>
+            <li>Foto med etikett-gjenkjenning</li>
+            <li>Bygg ønskeliste</li>
+            <li>Egne smaksnotater</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier">Premium</div>
+        <div class="price-amount">49<sub> kr/mnd</sub></div>
+        <p class="price-tagline">For de som virkelig vil ha kontroll.</p>
+        <ul class="price-list">
+          <li>Smaksbasert anbefalinger</li>
+            <li>Vinmonopolet-integrasjon</li>
+            <li>Eksport til CSV</li>
+            <li>Synk mellom enheter</li>
+            <li>Statistikk: druer, regioner, stiler</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta" id="tidlig-tilgang">
+  <div class="container">
+    <div class="cta-logo">
+      <img src="logos/drinkctrl_logo.png" alt="drinkctrl">
+    </div>
+    <h2>Husk det du smakte.</h2>
+    <p>drinkctrl kommer. Bli med tidlig — vi sier fra når den er klar.</p>
+    <a href="index.html#tidlig-tilgang" class="btn btn-primary">Få tidlig tilgang</a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <a href="index.html" class="footer-logo">
+      <img src="logos/allctrl_logo.png" alt="allctrl">
+    </a>
+    <div>© 2026 Johan Jørgen Fossli allctrl</div>
+    <div class="footer-links">
+      <a href="seectrl.html">seectrl</a>
+        <a href="readctrl.html">readctrl</a>
+        <a href="eatctrl.html">eatctrl</a>
+        <a href="listenctrl.html">listenctrl</a>
+        <a href="playctrl.html">playctrl</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
