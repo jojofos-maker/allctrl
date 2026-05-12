@@ -180,29 +180,44 @@
     50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(196,138,90,0); }
   }
 
- /* Logo strip in hero */
+/* Logo grid in hero — 3x3 */
   .hero-strip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 48px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 720px;
+    margin: 0 auto;
   }
   .hero-strip a {
     display: flex;
     align-items: center;
-    transition: all 0.3s;
-    opacity: 1;
-    filter: drop-shadow(0 0 12px rgba(255,255,255,0.05));
+    justify-content: center;
+    padding: 28px 16px;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.35s ease;
   }
-  .hero-strip a:hover { 
-    transform: translateY(-4px) scale(1.05); 
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+  .hero-strip a:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.035);
+    border-color: var(--border-strong);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   }
-  .hero-strip img { height: 72px; }
+  .hero-strip img { 
+    height: 88px;
+    transition: transform 0.35s ease;
+  }
+  .hero-strip a:hover img {
+    transform: scale(1.06);
+  }
 
   @media (max-width: 700px) {
-    .hero-strip { gap: 28px; }
+    .hero-strip { 
+      gap: 10px;
+      max-width: 100%;
+    }
+    .hero-strip a { padding: 16px 8px; }
     .hero-strip img { height: 52px; }
   }
 
