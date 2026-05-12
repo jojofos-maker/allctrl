@@ -282,58 +282,133 @@
   }
 
   /* ============ STRATEGI (ny seksjon) ============ */
- /* ============ STRATEGI ============ */
+/* ============ STRATEGI ============ */
   .strategi-section { border-top: 1px solid var(--border); }
   .strategi-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 16px;
     margin-top: 16px;
   }
-  .strategi-item {
-    display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 24px;
-    align-items: start;
-    padding: 28px 0;
-    border-top: 1px solid var(--border);
-  }
-  .strategi-marker {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: var(--marker);
-    padding-top: 4px;
+  .strategi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
   }
-  .strategi-marker::after {
+  .strategi-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 26px;
-    width: 32px;
-    height: 1px;
-    background: var(--marker);
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
     opacity: 0.5;
+    transition: opacity 0.35s ease;
   }
-  .strategi-body h4 {
-    font-size: 18px;
+  .strategi-card::after {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
+    opacity: 0.04;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .strategi-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+  }
+  .strategi-card:hover::before { opacity: 1; }
+  .strategi-card:hover::after { opacity: 0.08; }
+
+  .strategi-card-featured {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+  }
+  .strategi-card-featured::before { opacity: 1; height: 3px; }
+
+  .strategi-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .strategi-icon {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+  }
+  .strategi-icon-stack {
+    display: flex;
+    gap: 8px;
+  }
+  .strategi-icon-stack img {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .strategi-step {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    opacity: 0.8;
+  }
+  .strategi-card h4 {
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 10px;
+    line-height: 1.3;
     letter-spacing: -0.01em;
+    margin-top: 4px;
   }
-  .strategi-body p {
+  .strategi-card-featured h4 {
+    font-size: 24px;
+  }
+  .strategi-card > p {
     font-size: 15px;
     color: var(--text-dim);
     line-height: 1.7;
     font-weight: 300;
+    flex: 1;
+  }
+  .strategi-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+  .meta-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+  }
+  .meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
   }
 
   @media (max-width: 768px) {
-    .strategi-grid { grid-template-columns: 1fr; gap: 0; }
-    .strategi-item { grid-template-columns: 48px 1fr; gap: 16px; padding: 24px 0; }
-    .strategi-marker::after { width: 24px; }
+    .strategi-grid { grid-template-columns: 1fr; }
+    .strategi-card { padding: 24px; }
+    .strategi-card-featured h4 { font-size: 20px; }
   }
   /* ============ UNIVERSET GRID ============ */
   .universe-grid {
