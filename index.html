@@ -245,42 +245,64 @@
     font-weight: 300;
   }
 
-  /* ============ FILOSOFI ============ */
+ /* ============ FILOSOFI ============ */
   .filosofi-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    gap: 48px;
     align-items: start;
   }
   .filosofi-text p {
     color: var(--text-dim);
     font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 20px;
+    line-height: 1.75;
+    margin-bottom: 18px;
     font-weight: 300;
   }
   .filosofi-text strong { color: var(--text); font-weight: 500; }
-  .principles { display: flex; flex-direction: column; gap: 28px; }
-  .principle {
-    padding: 20px 24px;
-    border-left: 2px solid var(--border-strong);
-    transition: border-color 0.3s;
+
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
-  .principle:hover { border-color: var(--c-all); }
+  .principle {
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s;
+  }
+  .principle:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
   .principle-num {
     font-family: var(--mono);
     font-size: 11px;
     color: var(--c-all);
     letter-spacing: 0.1em;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
-  .principle h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  .principle p { font-size: 14px; color: var(--text-dim); line-height: 1.6; font-weight: 300; }
+  .principle h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .principle p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    font-weight: 300;
+  }
 
   @media (max-width: 768px) {
-    .filosofi-grid { grid-template-columns: 1fr; gap: 40px; }
+    .filosofi-grid { grid-template-columns: 1fr; gap: 32px; }
   }
-
+  @media (max-width: 500px) {
+    .principles { grid-template-columns: 1fr; }
+  }
   /* ============ STRATEGI (ny seksjon) ============ */
 /* ============ STRATEGI ============ */
   .strategi-section { border-top: 1px solid var(--border); }
