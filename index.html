@@ -533,10 +533,8 @@
   [data-product="carctrl"] .product-name { color: var(--c-car); }
   [data-product="sportctrl"] .product-name { color: var(--c-sport); }
 
-  /* ============ ALLCTRL DASHBOARD MOCK ============ */
-  .dashboard-section {
-    border-top: 1px solid var(--border);
-  }
+/* ============ ALLCTRL DASHBOARD MOCK ============ */
+  .dashboard-section { border-top: 1px solid var(--border); }
   .dashboard-mock {
     background: var(--bg-card);
     border: 2px solid transparent;
@@ -568,7 +566,7 @@
   }
   .dash-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 12px;
   }
   .stat-card {
@@ -576,6 +574,13 @@
     background: var(--bg-elevated);
     border-radius: 10px;
     border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
   }
   .stat-label {
     font-family: var(--mono);
@@ -592,17 +597,224 @@
     font-size: 12px;
     color: var(--text-dim);
     font-weight: 300;
+    margin-bottom: 16px;
+  }
+  .stat-viz {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
-  [data-mod="sourdough"] .stat-label { color: var(--c-sourdough); }
-  [data-mod="eat"] .stat-label { color: var(--c-eat); }
-  [data-mod="drink"] .stat-label { color: var(--c-drink); }
-  [data-mod="read"] .stat-label { color: var(--c-read); }
-  [data-mod="see"] .stat-label { color: var(--c-see); }
-  [data-mod="play"] .stat-label { color: var(--c-play); }
-  [data-mod="listen"] .stat-label { color: var(--c-listen); }
-  [data-mod="car"] .stat-label { color: var(--c-car); }
-  [data-mod="sport"] .stat-label { color: var(--c-sport); }
+  /* Per-module accent variables on each card */
+  [data-mod="sourdough"] { --mod: var(--c-sourdough); }
+  [data-mod="eat"] { --mod: var(--c-eat); }
+  [data-mod="drink"] { --mod: var(--c-drink); }
+  [data-mod="read"] { --mod: var(--c-read); }
+  [data-mod="see"] { --mod: var(--c-see); }
+  [data-mod="play"] { --mod: var(--c-play); }
+  [data-mod="listen"] { --mod: var(--c-listen); }
+  [data-mod="car"] { --mod: var(--c-car); }
+  [data-mod="sport"] { --mod: var(--c-sport); }
+  [data-mod] .stat-label { color: var(--mod); }
+
+  /* === sourdough: bubbling dots === */
+  .viz-bubbles {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+    height: 100%;
+  }
+  .viz-bubbles span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mod);
+    opacity: 0.4;
+    animation: viz-bubble 2s ease-in-out infinite;
+  }
+  .viz-bubbles span:nth-child(2) { animation-delay: 0.2s; }
+  .viz-bubbles span:nth-child(3) { animation-delay: 0.4s; }
+  .viz-bubbles span:nth-child(4) { animation-delay: 0.6s; }
+  .viz-bubbles span:nth-child(5) { animation-delay: 0.8s; }
+  @keyframes viz-bubble {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-12px); opacity: 1; }
+  }
+
+  /* === see: animated bars === */
+  .viz-bars {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+  }
+  .viz-bars span {
+    flex: 1;
+    background: var(--mod);
+    height: var(--h);
+    border-radius: 2px 2px 0 0;
+    opacity: 0.85;
+    animation: viz-bar-grow 1.8s ease-in-out infinite alternate;
+  }
+  .viz-bars span:nth-child(odd) { animation-delay: 0.3s; }
+  @keyframes viz-bar-grow {
+    from { transform: scaleY(0.6); }
+    to { transform: scaleY(1); }
+  }
+
+  /* === read: progress bar === */
+  .viz-progress {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+  .viz-progress-fill {
+    height: 100%;
+    width: var(--p);
+    background: var(--mod);
+    border-radius: 3px;
+    box-shadow: 0 0 12px var(--mod);
+    animation: viz-progress-fill 2.5s ease-out forwards;
+    transform-origin: left;
+  }
+  @keyframes viz-progress-fill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* === eat: popping dots on a timeline === */
+  .viz-dots {
+    width: 100%;
+    height: 100%;
+  }
+  .dots-line {
+    stroke: var(--mod);
+    stroke-width: 1;
+    opacity: 0.3;
+  }
+  .dot-pop {
+    fill: var(--mod);
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: viz-pop 3s ease-in-out infinite;
+  }
+  @keyframes viz-pop {
+    0%, 100% { transform: scale(0.6); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+
+  /* === drink: glass icons === */
+  .viz-glasses {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 100%;
+  }
+  .viz-glasses span {
+    width: 8px;
+    height: 16px;
+    background: var(--mod);
+    opacity: 0.5;
+    clip-path: polygon(15% 0, 85% 0, 70% 100%, 30% 100%);
+    animation: viz-fill 2.5s ease-in-out infinite;
+  }
+  .viz-glasses span:nth-child(2) { animation-delay: 0.15s; }
+  .viz-glasses span:nth-child(3) { animation-delay: 0.3s; }
+  .viz-glasses span:nth-child(4) { animation-delay: 0.45s; }
+  .viz-glasses span:nth-child(5) { animation-delay: 0.6s; }
+  .viz-glasses span:nth-child(6) { animation-delay: 0.75s; }
+  .viz-glasses span:nth-child(7) { animation-delay: 0.9s; }
+  @keyframes viz-fill {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* === listen: waveform === */
+  .viz-wave {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  .viz-wave span {
+    flex: 1;
+    background: var(--mod);
+    border-radius: 2px;
+    height: 30%;
+    animation: viz-wave-pulse 1.2s ease-in-out infinite;
+  }
+  .viz-wave span:nth-child(1) { animation-delay: 0s; }
+  .viz-wave span:nth-child(2) { animation-delay: 0.1s; }
+  .viz-wave span:nth-child(3) { animation-delay: 0.2s; }
+  .viz-wave span:nth-child(4) { animation-delay: 0.3s; }
+  .viz-wave span:nth-child(5) { animation-delay: 0.4s; }
+  .viz-wave span:nth-child(6) { animation-delay: 0.5s; }
+  .viz-wave span:nth-child(7) { animation-delay: 0.4s; }
+  .viz-wave span:nth-child(8) { animation-delay: 0.3s; }
+  .viz-wave span:nth-child(9) { animation-delay: 0.2s; }
+  .viz-wave span:nth-child(10) { animation-delay: 0.1s; }
+  .viz-wave span:nth-child(11) { animation-delay: 0.05s; }
+  .viz-wave span:nth-child(12) { animation-delay: 0s; }
+  @keyframes viz-wave-pulse {
+    0%, 100% { height: 25%; }
+    50% { height: 95%; }
+  }
+
+  /* === play: circular ring === */
+  .viz-ring {
+    width: 36px;
+    height: 36px;
+    transform: rotate(-90deg);
+  }
+  .ring-bg {
+    fill: none;
+    stroke: var(--bg-card);
+    stroke-width: 4;
+  }
+  .ring-fill {
+    fill: none;
+    stroke: var(--mod);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 150.8;
+    stroke-dashoffset: calc(150.8 - (150.8 * var(--p) / 100));
+    filter: drop-shadow(0 0 4px var(--mod));
+    animation: viz-ring-draw 2s ease-out forwards;
+  }
+  @keyframes viz-ring-draw {
+    from { stroke-dashoffset: 150.8; }
+  }
+
+  /* === sport: heartbeat pulse line === */
+  .viz-pulse-line {
+    width: 100%;
+    height: 100%;
+  }
+  .pulse-stroke {
+    fill: none;
+    stroke: var(--mod);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px var(--mod));
+    stroke-dasharray: 300;
+    animation: viz-pulse-draw 3s linear infinite;
+  }
+  @keyframes viz-pulse-draw {
+    0% { stroke-dashoffset: 300; }
+    50%, 100% { stroke-dashoffset: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .dash-grid { grid-template-columns: 1fr 1fr; }
+    .stat-value { font-size: 18px; }
+  }
 
   /* ============ ROADMAP ============ */
   .roadmap-section {
