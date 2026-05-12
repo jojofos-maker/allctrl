@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>allctrl — alt du bruker tid på, under kontroll</title>
-<meta name="description" content="Ett univers av spesialiserte apper for serier, bøker, mat, drikke, lyd og spill. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.">
+<meta name="description" content="Ett univers av spesialiserte apper for serier, bøker, mat, drikke, lyd, spill, surdeig, bil og sport. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.">
 <style>
-  /* ============ DESIGN TOKENS ============ */
   :root {
     --bg: #0A0A0F;
     --bg-card: #11111a;
@@ -25,6 +24,9 @@
     --c-drink: #4D9FFF;
     --c-listen: #C084FC;
     --c-play: #FF4D6D;
+    --c-sourdough: #C48A5A;
+    --c-car: #FF8C42;
+    --c-sport: #39FF14;
 
     --mono: 'JetBrains Mono', 'DM Mono', 'SF Mono', Menlo, monospace;
     --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
@@ -43,378 +45,169 @@
   img { max-width: 100%; height: auto; display: block; }
   a { color: inherit; text-decoration: none; }
   ul { list-style: none; }
-
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
   /* ============ HEADER ============ */
   .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10, 10, 15, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
   .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 0;
+    display: flex; align-items: center; justify-content: space-between; padding: 16px 0;
   }
-  .header-logo img {
-    height: 32px;
-    transition: opacity 0.2s;
-  }
+  .header-logo img { height: 32px; transition: opacity 0.2s; }
   .header-logo:hover img { opacity: 0.85; }
-  .nav {
-    display: flex;
-    gap: 32px;
-    font-size: 14px;
-    color: var(--text-muted);
-  }
+  .nav { display: flex; gap: 32px; font-size: 14px; color: var(--text-muted); }
   .nav a { transition: color 0.2s; }
   .nav a:hover { color: var(--text); }
-  @media (max-width: 700px) {
-    .nav { display: none; }
-  }
+  @media (max-width: 700px) { .nav { display: none; } }
 
   /* ============ HERO ============ */
   .hero {
-    padding: 100px 0 120px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    padding: 100px 0 120px; text-align: center; position: relative; overflow: hidden;
   }
   .hero::before {
-    content: '';
-    position: absolute;
-    top: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(232,255,71,0.12) 0%, transparent 60%);
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(232,255,71,0.06) 0%, transparent 70%);
     pointer-events: none;
-    z-index: 0;
   }
   .hero > * { position: relative; z-index: 1; }
-
-  .hero-logo {
-    margin-bottom: 40px;
+  .hero-logo { width: 120px; height: 120px; margin: 0 auto 32px; border-radius: 28px; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em;
+    color: var(--c-all); margin-bottom: 24px;
   }
-  .hero-logo img {
-    height: 110px;
-    margin: 0 auto;
-    filter: drop-shadow(0 0 40px rgba(232,255,71,0.25));
+  .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .hero h1 span {
+    display: block;
+    background: linear-gradient(135deg, var(--c-see), var(--c-read), var(--c-eat), var(--c-drink), var(--c-listen), var(--c-play), var(--c-sourdough), var(--c-car), var(--c-sport), var(--c-all));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .hero-tag {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--c-all);
-    padding: 6px 14px;
-    border: 1px solid rgba(232, 255, 71, 0.3);
-    border-radius: 999px;
-    margin-bottom: 32px;
+  .hero-lead {
+    font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px;
   }
-  .hero h1 {
-    font-size: clamp(40px, 6vw, 72px);
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    max-width: 900px;
-    margin: 0 auto 28px;
-  }
-  .hero p {
-    font-size: 19px;
-    color: var(--text-muted);
-    max-width: 640px;
-    margin: 0 auto 40px;
-  }
-  .hero-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: 1px solid transparent;
+    display: inline-block; padding: 14px 28px; border-radius: 8px;
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.05em; transition: all 0.2s;
   }
-  .btn-primary {
-    background: var(--c-all);
-    color: var(--bg);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(232,255,71,0.3); }
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--border-strong);
-  }
-  .btn-secondary:hover { border-color: var(--text-muted); }
+  .btn-primary { background: var(--c-all); color: var(--bg); }
+  .btn-primary:hover { background: #f0ff70; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,255,71,0.2); }
+  .btn-secondary { border: 1px solid var(--border-strong); color: var(--text-muted); }
+  .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); transform: translateY(-2px); }
 
-  /* Hero status pills */
   .hero-status {
-    display: flex;
-    gap: 24px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 56px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    margin-top: 48px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.15em; color: var(--text-dim);
   }
-  .hero-status span { display: flex; align-items: center; gap: 8px; }
   .hero-status .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--c-see); animation: pulse 2s infinite;
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--c-see); margin-right: 6px; animation: pulse 2s infinite;
   }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  /* Hero logo strip — alle produkter side ved side, klikkbare */
   .hero-strip {
-    margin-top: 80px;
-    padding: 32px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
-    flex-wrap: wrap;
-    opacity: 0.85;
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 40px;
   }
   .hero-strip a {
-    display: inline-block;
-    transition: transform 0.3s;
+    display: block; width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .hero-strip a:hover { transform: translateY(-3px); }
-  .hero-strip img {
-    height: 44px;
-    filter: grayscale(0%);
-  }
+  .hero-strip a:hover { transform: scale(1.15); box-shadow: 0 0 20px rgba(255,255,255,0.08); }
+  .hero-strip img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* ============ SECTION GENERICS ============ */
+  /* ============ SECTIONS ============ */
   .section { padding: 120px 0; }
   .section-eyebrow {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    color: var(--text-dim);
-    margin-bottom: 16px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em;
+    color: var(--c-all); margin-bottom: 16px;
   }
-  .section-title {
-    font-size: clamp(32px, 4.5vw, 52px);
-    line-height: 1.1;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-    max-width: 800px;
-  }
-  .section-lead {
-    font-size: 18px;
-    color: var(--text-muted);
-    max-width: 680px;
-    margin-bottom: 56px;
-  }
+  .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .section-lead { font-size: 18px; color: var(--text-muted); max-width: 680px; margin-bottom: 56px; }
 
   /* ============ FILOSOFI ============ */
-  .filosofi-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .filosofi-grid { grid-template-columns: 1fr; gap: 56px; }
-  }
-  .filosofi-text p {
-    font-size: 17px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-  }
+  .filosofi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  @media (max-width: 900px) { .filosofi-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .filosofi-text p { font-size: 17px; color: var(--text-muted); margin-bottom: 20px; }
   .filosofi-text strong { color: var(--text); }
-  .principles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  @media (max-width: 500px) { .principles { grid-template-columns: 1fr; } }
+  .principles { display: flex; flex-direction: column; gap: 0; }
   .principle {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
+    padding: 24px 0; border-bottom: 1px solid var(--border);
   }
+  .principle:first-child { border-top: 1px solid var(--border); }
   .principle-num {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--c-all);
-    margin-bottom: 12px;
+    font-family: var(--mono); font-size: 12px; color: var(--c-all); margin-bottom: 8px;
   }
-  .principle h4 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .principle p {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
+  .principle h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .principle p { font-size: 14px; color: var(--text-muted); }
 
-  /* ============ UNIVERSET ============ */
-  .universe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+  /* ============ PRODUCTS ============ */
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;
   }
-  /* Endret fra div til a — beholder alt visuelt likt */
+  @media (max-width: 740px) { .products-grid { grid-template-columns: 1fr; } }
+
   .product-card {
-    display: block;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 32px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
+    display: block; background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    --accent: var(--c-all);
   }
-  .product-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    opacity: 0;
-    transition: opacity 0.3s;
+  .product-card:hover {
+    border-color: var(--accent); transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
   }
-  .product-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .product-card:hover::after { opacity: 1; }
-
-  /* Liten "→ Utforsk"-indikator som dukker opp på hover */
-  .product-card .product-cta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .product-card:hover .product-cta {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
   .product-card[data-product="seectrl"] { --accent: var(--c-see); }
   .product-card[data-product="readctrl"] { --accent: var(--c-read); }
   .product-card[data-product="eatctrl"] { --accent: var(--c-eat); }
   .product-card[data-product="drinkctrl"] { --accent: var(--c-drink); }
   .product-card[data-product="listenctrl"] { --accent: var(--c-listen); }
   .product-card[data-product="playctrl"] { --accent: var(--c-play); }
+  .product-card[data-product="sourdoughctrl"] { --accent: var(--c-sourdough); }
+  .product-card[data-product="carctrl"] { --accent: var(--c-car); }
+  .product-card[data-product="sportctrl"] { --accent: var(--c-sport); }
 
-  .product-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .product-symbol {
-    width: 56px;
-    height: 56px;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
-  .product-meta { flex: 1; }
+  .product-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .product-symbol { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; }
   .product-name {
-    font-family: var(--mono);
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 4px;
+    font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--accent);
   }
   .product-phase {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.05);
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(255,255,255,0.05); color: var(--accent);
+    border: 1px solid; border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
-  .product-card h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    line-height: 1.3;
+  .product-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
+  .product-card p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+  .product-cta {
+    display: block; margin-top: 20px; font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.1em; color: var(--accent); transition: opacity 0.2s;
   }
-  .product-card p {
-    color: var(--text-muted);
-    font-size: 15px;
-    line-height: 1.6;
-  }
+  .product-card:hover .product-cta { opacity: 0.7; }
 
   /* ============ ALLCTRL DASHBOARD ============ */
   .allctrl-section {
     background: linear-gradient(180deg, transparent, rgba(232,255,71,0.04));
-    padding: 120px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    padding: 120px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   }
-  .allctrl-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 16px;
-  }
+  .allctrl-header { display: flex; align-items: center; gap: 20px; margin-bottom: 16px; }
   .allctrl-header img { height: 48px; }
   .allctrl-eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--c-all);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--c-all);
   }
   .dashboard {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
-    margin-top: 56px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px; margin-top: 56px;
   }
   .dashboard-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--text-dim);
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--text-dim);
   }
   .dashboard-top .live { color: var(--c-all); display: flex; align-items: center; gap: 8px; }
   .dashboard-top .live .dot {
@@ -422,175 +215,103 @@
     background: var(--c-all); animation: pulse 2s infinite;
   }
   .dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
   }
-  /* Også stat-cards blir klikkbare lenker */
   .stat-card {
-    display: block;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: border-color 0.2s, transform 0.2s;
-    color: inherit;
-    text-decoration: none;
+    display: block; background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; transition: border-color 0.2s, transform 0.2s;
+    color: inherit; text-decoration: none;
   }
-  .stat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .stat-card[data-product="seectrl"] { --accent: var(--c-see); }
-  .stat-card[data-product="readctrl"] { --accent: var(--c-read); }
-  .stat-card[data-product="eatctrl"] { --accent: var(--c-eat); }
-  .stat-card[data-product="drinkctrl"] { --accent: var(--c-drink); }
-  .stat-card[data-product="listenctrl"] { --accent: var(--c-listen); }
-  .stat-card[data-product="playctrl"] { --accent: var(--c-play); }
-  .stat-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .stat-head img { width: 28px; height: 28px; object-fit: contain; }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-card[data-product="seectrl"]:hover { border-color: var(--c-see); }
+  .stat-card[data-product="readctrl"]:hover { border-color: var(--c-read); }
+  .stat-card[data-product="eatctrl"]:hover { border-color: var(--c-eat); }
+  .stat-card[data-product="drinkctrl"]:hover { border-color: var(--c-drink); }
+  .stat-card[data-product="listenctrl"]:hover { border-color: var(--c-listen); }
+  .stat-card[data-product="playctrl"]:hover { border-color: var(--c-play); }
+  .stat-card[data-product="sourdoughctrl"]:hover { border-color: var(--c-sourdough); }
+  .stat-card[data-product="carctrl"]:hover { border-color: var(--c-car); }
+  .stat-card[data-product="sportctrl"]:hover { border-color: var(--c-sport); }
+  .stat-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .stat-head img { height: 20px; border-radius: 4px; }
   .stat-name {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-    text-transform: uppercase;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-dim);
   }
-  .stat-value {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    letter-spacing: -0.02em;
-  }
-  .stat-detail {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
+  .stat-value { font-size: 24px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  .stat-detail { font-size: 13px; color: var(--text-dim); }
 
   /* ============ ROADMAP ============ */
-  .roadmap-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+  .roadmap-grid { display: grid; gap: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .phase {
+    padding: 32px; border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 160px 1fr; gap: 32px; align-items: start;
   }
-  .phase-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
+  .phase:last-child { border-bottom: none; }
+  @media (max-width: 700px) { .phase { grid-template-columns: 1fr; gap: 16px; } }
+  .phase-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em;
+    color: var(--c-all); margin-bottom: 4px;
   }
-  .phase-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.2em;
-    margin-bottom: 8px;
+  .phase-time { font-family: var(--mono); font-size: 13px; color: var(--text-dim); }
+  .phase h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+  .phase ul { padding: 0; }
+  .phase li {
+    font-size: 15px; color: var(--text-muted); padding: 4px 0 4px 16px; position: relative;
   }
-  .phase-time {
-    color: var(--c-all);
-    font-family: var(--mono);
-    font-size: 13px;
-    margin-bottom: 16px;
-  }
-  .phase-card h4 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-  .phase-card ul li {
-    padding: 6px 0;
-    font-size: 14px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    padding-left: 18px;
-  }
-  .phase-card ul li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--c-all);
-  }
-  .phase-card ul li:last-child { border-bottom: none; }
+  .phase li::before { content: '—'; position: absolute; left: 0; color: var(--text-faint); }
 
   /* ============ CTA ============ */
-  .cta {
-    text-align: center;
-    padding: 120px 24px;
-    border-top: 1px solid var(--border);
+  .cta { text-align: center; padding: 120px 0; position: relative; }
+  .cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 80%, rgba(232,255,71,0.05) 0%, transparent 60%);
+    pointer-events: none;
   }
-  .cta-logo img {
-    height: 80px;
-    margin: 0 auto 32px;
-    filter: drop-shadow(0 0 30px rgba(232,255,71,0.2));
+  .cta > * { position: relative; z-index: 1; }
+  .cta-logo img { width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 24px; }
+  .cta h2 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+  .cta .tagline {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    color: var(--c-all); margin-bottom: 32px;
   }
-  .cta h2 {
-    font-size: clamp(32px, 4vw, 44px);
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-  .cta-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--text-dim);
-    margin-bottom: 32px;
-  }
-  .cta-form {
-    display: flex;
-    gap: 8px;
-    max-width: 460px;
-    margin: 0 auto;
-  }
+  .cta-form { display: flex; gap: 12px; max-width: 420px; margin: 0 auto 16px; }
   .cta-form input {
-    flex: 1;
-    padding: 14px 18px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-strong);
-    border-radius: 10px;
-    color: var(--text);
-    font-size: 15px;
-    font-family: var(--sans);
+    flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; color: var(--text);
+    font-family: var(--mono); font-size: 14px; outline: none; transition: border-color 0.2s;
   }
-  .cta-form input:focus {
-    outline: none;
-    border-color: var(--c-all);
-  }
-  .cta-note {
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-top: 16px;
-  }
+  .cta-form input::placeholder { color: var(--text-faint); }
+  .cta-form input:focus { border-color: var(--c-all); }
+  .cta-note { font-size: 13px; color: var(--text-faint); }
+  @media (max-width: 500px) { .cta-form { flex-direction: column; } }
 
   /* ============ FOOTER ============ */
   .footer {
-    border-top: 1px solid var(--border);
-    padding: 40px 0;
+    border-top: 1px solid var(--border); padding: 32px 0;
   }
   .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    font-size: 13px;
-    color: var(--text-dim);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    font-size: 13px; color: var(--text-faint);
   }
-  .footer-logo img { height: 24px; opacity: 0.7; }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a:hover { color: var(--text); }
+  .footer-logo img { height: 24px; opacity: 0.6; }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { color: var(--text-dim); transition: color 0.2s; font-size: 13px; }
+  .footer-links a:hover { color: var(--text-muted); }
+  @media (max-width: 600px) {
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  /* ============ FADE IN ============ */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+  .fade-in.visible { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
 
-<!-- ========== HEADER ========== -->
+<!-- HEADER -->
 <header class="header">
   <div class="container header-inner">
-    <a href="#" class="header-logo" aria-label="allctrl forside">
-      <img src="logos/allctrl_logo.png" alt="allctrl">
-    </a>
+    <a href="#" class="header-logo"><img src="logos/allctrl_logo.png" alt="allctrl"></a>
     <nav class="nav">
       <a href="#filosofi">Filosofi</a>
       <a href="#universet">Universet</a>
@@ -600,44 +321,42 @@
   </div>
 </header>
 
-<!-- ========== HERO ========== -->
+<!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-logo">
-      <img src="logos/allctrl_logo.png" alt="allctrl">
-    </div>
-    <div class="hero-tag">CTRL-UNIVERSET · UNDER UTVIKLING</div>
-    <h1>Alt du bruker tid på.<br>Under kontroll.</h1>
-    <p>Ett univers av spesialiserte apper for serier, bøker, mat, drikke, lyd og spill. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
+    <img src="allctrl1.png" alt="allctrl" class="hero-logo">
+    <div class="hero-eyebrow">CTRL-UNIVERSET · UNDER UTVIKLING</div>
+    <h1>Alt du bruker tid på.<span>Under kontroll.</span></h1>
+    <p class="hero-lead">Ett univers av spesialiserte apper for serier, bøker, mat, drikke, lyd, spill, surdeig, bil og sport. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
     <div class="hero-buttons">
       <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
       <a href="#universet" class="btn btn-secondary">Utforsk universet</a>
     </div>
-
     <div class="hero-status">
       <span><span class="dot"></span>SEECTRL LIVE Q3 2026</span>
       <span>NORDISK-FØRST</span>
+      <span>10 MODULER PLANLAGT</span>
       <span>BYGGES NÅ</span>
     </div>
-
-    <!-- Logo-stripe i hero: hver logo går nå direkte til sin underside -->
     <div class="hero-strip">
-      <a href="seectrl.html" title="seectrl"><img src="logos/seectrl_logo.png" alt="seectrl"></a>
-      <a href="readctrl.html" title="readctrl"><img src="logos/readctrl_logo.png" alt="readctrl"></a>
-      <a href="eatctrl.html" title="eatctrl"><img src="logos/eatctrl_logo.png" alt="eatctrl"></a>
-      <a href="drinkctrl.html" title="drinkctrl"><img src="logos/drinkctrl_logo.png" alt="drinkctrl"></a>
-      <a href="listenctrl.html" title="listenctrl"><img src="logos/listenctrl_logo.png" alt="listenctrl"></a>
-      <a href="playctrl.html" title="playctrl"><img src="logos/playctrl_logo.png" alt="playctrl"></a>
+      <a href="seectrl.html" title="seectrl"><img src="seectrl1.png" alt="seectrl"></a>
+      <a href="readctrl.html" title="readctrl"><img src="readctrl1.png" alt="readctrl"></a>
+      <a href="eatctrl.html" title="eatctrl"><img src="eatctrl1.png" alt="eatctrl"></a>
+      <a href="drinkctrl.html" title="drinkctrl"><img src="drinkctrl1.png" alt="drinkctrl"></a>
+      <a href="listenctrl.html" title="listenctrl"><img src="listenctrl1.png" alt="listenctrl"></a>
+      <a href="playctrl.html" title="playctrl"><img src="playctrl1.png" alt="playctrl"></a>
+      <a href="sourdoughctrl.html" title="sourdoughctrl"><img src="sourdoughctrl.png" alt="sourdoughctrl"></a>
+      <a href="carctrl.html" title="carctrl"><img src="carctrl1.png" alt="carctrl"></a>
+      <a href="sportctrl.html" title="sportctrl"><img src="sportctrl1.png" alt="sportctrl"></a>
     </div>
   </div>
 </section>
 
-<!-- ========== FILOSOFI ========== -->
+<!-- FILOSOFI -->
 <section class="section" id="filosofi">
   <div class="container">
     <div class="section-eyebrow">FILOSOFI</div>
     <h2 class="section-title">Du eier tiden din. Vi gir deg oversikten.</h2>
-
     <div class="filosofi-grid">
       <div class="filosofi-text">
         <p>De fleste apper konkurrerer om oppmerksomheten din. <strong>Ctrl-universet gjør det motsatte</strong> — vi hjelper deg å forstå og styre det du allerede konsumerer.</p>
@@ -645,47 +364,28 @@
         <p>Du starter med det produktet som løser det mest akutte behovet — og utvider når du er klar.</p>
       </div>
       <div class="principles">
-        <div class="principle">
-          <div class="principle-num">01</div>
-          <h4>Spesialisert, ikke spredt</h4>
-          <p>Hver app er bygget for ett formål. Ingen kompromisser, ingen halve løsninger.</p>
-        </div>
-        <div class="principle">
-          <div class="principle-num">02</div>
-          <h4>Modulær vekst</h4>
-          <p>Bruk én app eller hele suiten. Du bestemmer takten.</p>
-        </div>
-        <div class="principle">
-          <div class="principle-num">03</div>
-          <h4>Felles språk</h4>
-          <p>Samme designsystem og logikk. Lærer du én, kan du dem alle.</p>
-        </div>
-        <div class="principle">
-          <div class="principle-num">04</div>
-          <h4>Dine data, dine mønstre</h4>
-          <p>Anonymisert innsikt. Persondata deles aldri. Reklamefri opplevelse.</p>
-        </div>
+        <div class="principle"><div class="principle-num">01</div><h4>Spesialisert, ikke spredt</h4><p>Hver app er bygget for ett formål. Ingen kompromisser, ingen halve løsninger.</p></div>
+        <div class="principle"><div class="principle-num">02</div><h4>Modulær vekst</h4><p>Bruk én app eller hele suiten. Du bestemmer takten.</p></div>
+        <div class="principle"><div class="principle-num">03</div><h4>Felles språk</h4><p>Samme designsystem og logikk. Lærer du én, kan du dem alle.</p></div>
+        <div class="principle"><div class="principle-num">04</div><h4>Dine data, dine mønstre</h4><p>Anonymisert innsikt. Persondata deles aldri. Reklamefri opplevelse.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== UNIVERSET ========== -->
+<!-- UNIVERSET -->
 <section class="section" id="universet">
   <div class="container">
     <div class="section-eyebrow">UNIVERSET</div>
-    <h2 class="section-title">Syv apper. Ett system.</h2>
+    <h2 class="section-title">Ti apper. Ett system.</h2>
     <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet. Klikk for å utforske hver enkelt.</p>
 
-    <div class="universe-grid">
+    <div class="products-grid">
 
       <a class="product-card" data-product="seectrl" href="seectrl.html">
         <div class="product-header">
-          <img class="product-symbol" src="logos/seectrl_symbol.png" alt="">
-          <div class="product-meta">
-            <div class="product-name">seectrl</div>
-            <div class="product-phase">Live Q3 2026</div>
-          </div>
+          <img class="product-symbol" src="seectrl1.png" alt="">
+          <div><div class="product-name">seectrl</div><div class="product-phase">Live Q3 2026</div></div>
         </div>
         <h3>Alle serier, samlet på ett sted</h3>
         <p>Oversikt over alle serier du følger på tvers av Netflix, HBO Max, Viaplay, Disney+ og resten. Episodesporing, fremdrift og automatisk strømmestatus.</p>
@@ -694,11 +394,8 @@
 
       <a class="product-card" data-product="readctrl" href="readctrl.html">
         <div class="product-header">
-          <img class="product-symbol" src="logos/readctrl_symbol.png" alt="">
-          <div class="product-meta">
-            <div class="product-name">readctrl</div>
-            <div class="product-phase">Fase 3</div>
-          </div>
+          <img class="product-symbol" src="readctrl1.png" alt="">
+          <div><div class="product-name">readctrl</div><div class="product-phase">Fase 3</div></div>
         </div>
         <h3>Sporingsliste for alt du leser</h3>
         <p>Bøker du leser, har lest og vil lese. Lesehistorikk, fremdrift per bok og oversikt over hele biblioteket ditt — fysiske og digitale.</p>
@@ -707,11 +404,8 @@
 
       <a class="product-card" data-product="eatctrl" href="eatctrl.html">
         <div class="product-header">
-          <img class="product-symbol" src="logos/eatctrl_symbol.png" alt="">
-          <div class="product-meta">
-            <div class="product-name">eatctrl</div>
-            <div class="product-phase">Fase 3+</div>
-          </div>
+          <img class="product-symbol" src="eatctrl1.png" alt="">
+          <div><div class="product-name">eatctrl</div><div class="product-phase">Fase 3+</div></div>
         </div>
         <h3>Restaurantene og måltidene dine</h3>
         <p>Kontroll på restaurantene du har besøkt og rettene du har smakt. Fyll på med ønskelister over steder å prøve og smaker å oppdage.</p>
@@ -720,11 +414,8 @@
 
       <a class="product-card" data-product="drinkctrl" href="drinkctrl.html">
         <div class="product-header">
-          <img class="product-symbol" src="logos/drinkctrl_symbol.png" alt="">
-          <div class="product-meta">
-            <div class="product-name">drinkctrl</div>
-            <div class="product-phase">Fase 3+</div>
-          </div>
+          <img class="product-symbol" src="drinkctrl1.png" alt="">
+          <div><div class="product-name">drinkctrl</div><div class="product-phase">Fase 3+</div></div>
         </div>
         <h3>Drinker, viner og øl du har smakt</h3>
         <p>Hold styr på hva du har prøvd — og få tips til hva du burde smake neste gang. Personlig smaksoversikt for drinker, vin og øl.</p>
@@ -733,11 +424,8 @@
 
       <a class="product-card" data-product="listenctrl" href="listenctrl.html">
         <div class="product-header">
-          <img class="product-symbol" src="logos/listenctrl_symbol.png" alt="">
-          <div class="product-meta">
-            <div class="product-name">listenctrl</div>
-            <div class="product-phase">Fase 3+</div>
-          </div>
+          <img class="product-symbol" src="listenctrl1.png" alt="">
+          <div><div class="product-name">listenctrl</div><div class="product-phase">Fase 3+</div></div>
         </div>
         <h3>Lyttehistorikk og musikksmak</h3>
         <p>Musikk og podkast samlet. Fremdrift på podkastserier, lyttemønstre og en ærlig oversikt over hva du faktisk hører på.</p>
@@ -746,179 +434,174 @@
 
       <a class="product-card" data-product="playctrl" href="playctrl.html">
         <div class="product-header">
-          <img class="product-symbol" src="logos/playctrl_symbol.png" alt="">
-          <div class="product-meta">
-            <div class="product-name">playctrl</div>
-            <div class="product-phase">Fase 3+</div>
-          </div>
+          <img class="product-symbol" src="playctrl1.png" alt="">
+          <div><div class="product-name">playctrl</div><div class="product-phase">Fase 3+</div></div>
         </div>
         <h3>Spillbibliotek og spilltid</h3>
         <p>Alle spillene dine på tvers av plattformer. Fremgang i enkeltspill, total spilltid og hva som ligger i køen.</p>
         <div class="product-cta">UTFORSK PLAYCTRL →</div>
       </a>
 
+      <a class="product-card" data-product="sourdoughctrl" href="sourdoughctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="sourdoughctrl.png" alt="">
+          <div><div class="product-name">sourdoughctrl</div><div class="product-phase">Fase 3+</div></div>
+        </div>
+        <h3>Starteren din og bakeøktene dine</h3>
+        <p>Spor fôringsplan og aktivitet for starteren din. Logg bakeøkter med oppskrift, tidslinje og resultat. Perfeksjoner teknikken over tid.</p>
+        <div class="product-cta">UTFORSK SOURDOUGHCTRL →</div>
+      </a>
+
+      <a class="product-card" data-product="carctrl" href="carctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="carctrl1.png" alt="">
+          <div><div class="product-name">carctrl</div><div class="product-phase">Fase 4</div></div>
+        </div>
+        <h3>Bilene du vurderer, prøvekjører og eier</h3>
+        <p>Oversikt over biler du vurderer, har prøvekjørt eller eier — med sammenligning, kjørehistorikk og personlige vurderinger.</p>
+        <div class="product-cta">UTFORSK CARCTRL →</div>
+      </a>
+
+      <a class="product-card" data-product="sportctrl" href="sportctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="sportctrl1.png" alt="">
+          <div><div class="product-name">sportctrl</div><div class="product-phase">Fase 4</div></div>
+        </div>
+        <h3>Kamper, lag og treningsøkter</h3>
+        <p>Følg favorittelag, kommende kamper og resultater på tvers av idretter. Logg egne treningsøkter og se din personlige statistikk.</p>
+        <div class="product-cta">UTFORSK SPORTCTRL →</div>
+      </a>
+
     </div>
   </div>
 </section>
 
-<!-- ========== ALLCTRL · OVERBYGG ========== -->
+<!-- ALLCTRL DASHBOARD -->
 <section class="allctrl-section">
   <div class="container">
     <div class="allctrl-header">
-      <img src="logos/allctrl_symbol.png" alt="allctrl">
+      <img src="allctrl1.png" alt="allctrl" style="height:48px;border-radius:12px;">
       <div class="allctrl-eyebrow">ALLCTRL · OVERBYGG</div>
     </div>
     <h2 class="section-title">Én skjerm. Hele livet ditt.</h2>
     <p class="section-lead">allctrl samler alle modulene i ett dashboard. Se mønstrene på tvers — ikke bare innenfor hver kategori.</p>
-
     <div class="dashboard">
       <div class="dashboard-top">
         <span>DENNE UKEN</span>
         <span class="live"><span class="dot"></span>LIVE</span>
       </div>
       <div class="dashboard-grid">
-
         <a class="stat-card" data-product="seectrl" href="seectrl.html">
-          <div class="stat-head">
-            <img src="logos/seectrl_symbol.png" alt="">
-            <span class="stat-name">SEECTRL</span>
-          </div>
-          <div class="stat-value">12t 30m</div>
-          <div class="stat-detail">5 episoder · 3 serier</div>
+          <div class="stat-head"><img src="seectrl1.png" alt=""><span class="stat-name">SEECTRL</span></div>
+          <div class="stat-value">12t 30m</div><div class="stat-detail">5 episoder · 3 serier</div>
         </a>
-
         <a class="stat-card" data-product="readctrl" href="readctrl.html">
-          <div class="stat-head">
-            <img src="logos/readctrl_symbol.png" alt="">
-            <span class="stat-name">READCTRL</span>
-          </div>
-          <div class="stat-value">142 sider</div>
-          <div class="stat-detail">2 bøker aktive</div>
+          <div class="stat-head"><img src="readctrl1.png" alt=""><span class="stat-name">READCTRL</span></div>
+          <div class="stat-value">142 sider</div><div class="stat-detail">2 bøker aktive</div>
         </a>
-
         <a class="stat-card" data-product="listenctrl" href="listenctrl.html">
-          <div class="stat-head">
-            <img src="logos/listenctrl_symbol.png" alt="">
-            <span class="stat-name">LISTENCTRL</span>
-          </div>
-          <div class="stat-value">8t 12m</div>
-          <div class="stat-detail">Mest: lo-fi · podkast</div>
+          <div class="stat-head"><img src="listenctrl1.png" alt=""><span class="stat-name">LISTENCTRL</span></div>
+          <div class="stat-value">8t 12m</div><div class="stat-detail">Mest: lo-fi · podkast</div>
         </a>
-
         <a class="stat-card" data-product="playctrl" href="playctrl.html">
-          <div class="stat-head">
-            <img src="logos/playctrl_symbol.png" alt="">
-            <span class="stat-name">PLAYCTRL</span>
-          </div>
-          <div class="stat-value">4t 45m</div>
-          <div class="stat-detail">Hades II · Balatro</div>
+          <div class="stat-head"><img src="playctrl1.png" alt=""><span class="stat-name">PLAYCTRL</span></div>
+          <div class="stat-value">4t 45m</div><div class="stat-detail">Hades II · Balatro</div>
         </a>
-
         <a class="stat-card" data-product="eatctrl" href="eatctrl.html">
-          <div class="stat-head">
-            <img src="logos/eatctrl_symbol.png" alt="">
-            <span class="stat-name">EATCTRL</span>
-          </div>
-          <div class="stat-value">3 nye steder</div>
-          <div class="stat-detail">12 retter smakt</div>
+          <div class="stat-head"><img src="eatctrl1.png" alt=""><span class="stat-name">EATCTRL</span></div>
+          <div class="stat-value">3 nye steder</div><div class="stat-detail">12 retter smakt</div>
         </a>
-
         <a class="stat-card" data-product="drinkctrl" href="drinkctrl.html">
-          <div class="stat-head">
-            <img src="logos/drinkctrl_symbol.png" alt="">
-            <span class="stat-name">DRINKCTRL</span>
-          </div>
-          <div class="stat-value">7 nye smaker</div>
-          <div class="stat-detail">5 viner · 2 øl</div>
+          <div class="stat-head"><img src="drinkctrl1.png" alt=""><span class="stat-name">DRINKCTRL</span></div>
+          <div class="stat-value">7 nye smaker</div><div class="stat-detail">5 viner · 2 øl</div>
         </a>
-
+        <a class="stat-card" data-product="sourdoughctrl" href="sourdoughctrl.html">
+          <div class="stat-head"><img src="sourdoughctrl.png" alt=""><span class="stat-name">SOURDOUGHCTRL</span></div>
+          <div class="stat-value">2 bakeøkter</div><div class="stat-detail">Starter fôret 3x denne uken</div>
+        </a>
+        <a class="stat-card" data-product="carctrl" href="carctrl.html">
+          <div class="stat-head"><img src="carctrl1.png" alt=""><span class="stat-name">CARCTRL</span></div>
+          <div class="stat-value">2 prøvekjørt</div><div class="stat-detail">5 biler under vurdering</div>
+        </a>
+        <a class="stat-card" data-product="sportctrl" href="sportctrl.html">
+          <div class="stat-head"><img src="sportctrl1.png" alt=""><span class="stat-name">SPORTCTRL</span></div>
+          <div class="stat-value">3 kamper</div><div class="stat-detail">2 treningsøkter logget</div>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== ROADMAP ========== -->
+<!-- ROADMAP -->
 <section class="section" id="roadmap">
   <div class="container">
     <div class="section-eyebrow">ROADMAP</div>
     <h2 class="section-title">Ett steg av gangen.</h2>
     <p class="section-lead">Vi bygger seectrl ferdig først. Når det funker bra, vokser universet videre.</p>
-
     <div class="roadmap-grid">
-      <div class="phase-card">
-        <div class="phase-num">FASE 01</div>
-        <div class="phase-time">0–3 mnd</div>
-        <h4>MVP</h4>
-        <ul>
-          <li>Prototype og brukertesting</li>
-          <li>seectrl-kjerneflyt</li>
-          <li>Merkevare og domener</li>
-        </ul>
+      <div class="phase">
+        <div><div class="phase-label">FASE 01</div><div class="phase-time">0–3 mnd</div></div>
+        <div><h4>MVP</h4><ul><li>Prototype og brukertesting</li><li>seectrl-kjerneflyt med TMDB og JustWatch</li><li>Merkevare, logoer og domener</li></ul></div>
       </div>
-      <div class="phase-card">
-        <div class="phase-num">FASE 02</div>
-        <div class="phase-time">3–6 mnd</div>
-        <h4>Lansering</h4>
-        <ul>
-          <li>seectrl live i Norge</li>
-          <li>Freemium og betaling</li>
-          <li>Iterasjoner</li>
-        </ul>
+      <div class="phase">
+        <div><div class="phase-label">FASE 02</div><div class="phase-time">3–6 mnd</div></div>
+        <div><h4>Lansering</h4><ul><li>seectrl live i Norge</li><li>Freemium og betaling</li><li>Iterasjoner basert på brukerfeedback</li></ul></div>
       </div>
-      <div class="phase-card">
-        <div class="phase-num">FASE 03</div>
-        <div class="phase-time">6–12 mnd</div>
-        <h4>Ekspansjon</h4>
-        <ul>
-          <li>seectrl til Norden</li>
-          <li>readctrl lanseres</li>
-          <li>Affiliate-inntekter</li>
-        </ul>
+      <div class="phase">
+        <div><div class="phase-label">FASE 03</div><div class="phase-time">6–12 mnd</div></div>
+        <div><h4>Ekspansjon</h4><ul><li>seectrl til Norden</li><li>readctrl lanseres</li><li>Affiliate-inntekter etablert</li></ul></div>
       </div>
-      <div class="phase-card">
-        <div class="phase-num">FASE 04</div>
-        <div class="phase-time">12+ mnd</div>
-        <h4>Universet</h4>
-        <ul>
-          <li>Resten av modulene</li>
-          <li>allctrl-dashboard</li>
-          <li>Global skalering</li>
-        </ul>
+      <div class="phase">
+        <div><div class="phase-label">FASE 04</div><div class="phase-time">12–24 mnd</div></div>
+        <div><h4>Universet vokser</h4><ul><li>eatctrl, drinkctrl, listenctrl, playctrl, sourdoughctrl</li><li>carctrl og sportctrl lanseres</li><li>allctrl-dashboard bygges</li></ul></div>
+      </div>
+      <div class="phase">
+        <div><div class="phase-label">FASE 05</div><div class="phase-time">24+ mnd</div></div>
+        <div><h4>Global skalering</h4><ul><li>allctrl-premiumplan på tvers av alle moduler</li><li>Partnerskap med bil- og sportsaktører i Norden</li><li>Global skaleringsplan</li></ul></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== CTA ========== -->
+<!-- CTA -->
 <section class="cta" id="tidlig-tilgang">
   <div class="container">
-    <div class="cta-logo">
-      <img src="logos/allctrl_logo.png" alt="allctrl">
-    </div>
+    <div class="cta-logo"><img src="allctrl1.png" alt="allctrl"></div>
     <h2>Vær med fra start.</h2>
-    <div class="cta-tag">ALT DU BRUKER TID PÅ. UNDER KONTROLL.</div>
-    <form class="cta-form" onsubmit="event.preventDefault(); alert('Takk! Vi melder fra når seectrl er klar.');">
-      <input type="email" placeholder="din@epost.no" required>
-      <button type="submit" class="btn btn-primary">Få tidlig tilgang</button>
-    </form>
+    <div class="tagline">ALT DU BRUKER TID PÅ. UNDER KONTROLL.</div>
+    <div class="cta-form">
+      <input type="email" placeholder="din@epost.no">
+      <a href="#" class="btn btn-primary">Få tidlig tilgang</a>
+    </div>
     <p class="cta-note">Ingen spam. Bare beskjed når seectrl er klar.</p>
   </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="container footer-inner">
-    <a href="#" class="footer-logo">
-      <img src="logos/allctrl_logo.png" alt="allctrl">
-    </a>
-    <div>© 2026 Johan Jørgen Fossli allctrl</div>
+    <a href="#" class="footer-logo"><img src="logos/allctrl_logo.png" alt="allctrl"></a>
+    <div>© 2026 Johan Jørgen Fossli · allctrl</div>
     <div class="footer-links">
-      <a href="#">Personvern</a>
-      <a href="#">Vilkår</a>
-      <a href="#">Kontakt</a>
+      <a href="seectrl.html">seectrl</a>
+      <a href="readctrl.html">readctrl</a>
+      <a href="eatctrl.html">eatctrl</a>
+      <a href="drinkctrl.html">drinkctrl</a>
+      <a href="listenctrl.html">listenctrl</a>
+      <a href="playctrl.html">playctrl</a>
+      <a href="sourdoughctrl.html">sourdoughctrl</a>
+      <a href="carctrl.html">carctrl</a>
+      <a href="sportctrl.html">sportctrl</a>
     </div>
   </div>
 </footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
 
 </body>
 </html>
