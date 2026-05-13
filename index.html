@@ -1549,10 +1549,13 @@
     <img class="cta-icon" src="logos/allctrl_logo.png" alt="">
     <h2>Bli med fra starten</h2>
     <div class="cta-tag">CTRL-UNIVERSET · TIDLIG TILGANG</div>
-    <div class="cta-form" id="ctaForm">
-      <input type="email" id="ctaEmail" placeholder="din@epost.no" required>
-      <button class="btn btn-primary" onclick="handleSignup()">Meld meg på</button>
-    </div>
+    <form class="cta-form" id="ctaForm" action="https://formspree.io/f/mykovdpe" method="POST" onsubmit="return handleSignup(event)">
+  <input type="email" name="email" id="ctaEmail" placeholder="din@epost.no" required>
+  <input type="hidden" name="_subject" value="Ny påmelding til ctrl-universet">
+  <input type="hidden" name="kilde" value="allctrl landingsside">
+  <input type="text" name="_gotcha" style="display:none">
+  <button type="submit" class="btn btn-primary">Meld meg på</button>
+</form>
     <div class="cta-success" id="ctaSuccess">
       ✓ Du er på listen. Vi gir beskjed når sourdoughctrl er klar.
     </div>
