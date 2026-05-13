@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Ti spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill og bil — samlet i ett univers.">
+<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Ni spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill og bil — samlet i ett univers.">
 <title>ctrl-universet — alt du bruker tid på. under kontroll.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +50,9 @@
   img { display: block; max-width: 100%; }
 
   .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Scroll offset for fixed header */
+  .section, .cta { scroll-margin-top: 80px; }
 
   /* ============ HEADER ============ */
   .header {
@@ -104,7 +107,7 @@
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.3em;
-    color: var(--text-dim);
+    color: var(--c-all);
     margin-bottom: 24px;
   }
   .hero h1 {
@@ -151,7 +154,10 @@
     color: var(--text);
     border: 1px solid var(--border-strong);
   }
-  .btn-secondary:hover { border-color: var(--text-dim); }
+  .btn-secondary:hover { 
+    border-color: var(--c-all); 
+    color: var(--c-all);
+  }
 
   .hero-status {
     display: flex;
@@ -180,7 +186,7 @@
     50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(196,138,90,0); }
   }
 
-/* Logo grid in hero — 3x3 */
+  /* Logo grid in hero — 3x3 */
   .hero-strip {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -245,7 +251,7 @@
     font-weight: 300;
   }
 
- /* ============ FILOSOFI ============ */
+  /* ============ FILOSOFI ============ */
   .filosofi-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -300,11 +306,11 @@
   @media (max-width: 768px) {
     .filosofi-grid { grid-template-columns: 1fr; gap: 32px; }
   }
-  @media (max-width: 500px) {
+  @media (max-width: 640px) {
     .principles { grid-template-columns: 1fr; }
   }
-  /* ============ STRATEGI (ny seksjon) ============ */
-/* ============ STRATEGI ============ */
+
+  /* ============ STRATEGI ============ */
   .strategi-section { border-top: 1px solid var(--border); }
   .strategi-grid {
     display: grid;
@@ -432,6 +438,7 @@
     .strategi-card { padding: 24px; }
     .strategi-card-featured h4 { font-size: 20px; }
   }
+
   /* ============ UNIVERSET GRID ============ */
   .universe-grid {
     display: grid;
@@ -533,13 +540,13 @@
   [data-product="carctrl"] .product-name { color: var(--c-car); }
   [data-product="sportctrl"] .product-name { color: var(--c-sport); }
 
-/* ============ ALLCTRL DASHBOARD MOCK ============ */
+  /* ============ ALLCTRL DASHBOARD MOCK ============ */
   .dashboard-section { border-top: 1px solid var(--border); }
   .dashboard-mock {
     background: var(--bg-card);
     border: 2px solid transparent;
     border-image: linear-gradient(135deg, var(--c-sourdough), var(--c-eat), var(--c-drink), var(--c-read), var(--c-see), var(--c-play), var(--c-listen), var(--c-car), var(--c-sport), var(--c-all)) 1;
-    border-radius: 0;
+    border-radius: 16px;
     padding: 32px;
     margin-top: 16px;
   }
@@ -811,6 +818,28 @@
     50%, 100% { stroke-dashoffset: 0; }
   }
 
+  /* === car: speedometer-style horizontal indicator === */
+  .viz-speed {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .viz-speed-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mod), transparent);
+    width: 65%;
+    border-radius: 3px;
+    box-shadow: 0 0 8px var(--mod);
+    animation: viz-speed-pulse 2s ease-in-out infinite;
+  }
+  @keyframes viz-speed-pulse {
+    0%, 100% { width: 55%; opacity: 0.7; }
+    50% { width: 75%; opacity: 1; }
+  }
+
   @media (max-width: 640px) {
     .dash-grid { grid-template-columns: 1fr 1fr; }
     .stat-value { font-size: 18px; }
@@ -983,6 +1012,15 @@
   }
   .cta-success.show { display: block; }
   .cta-form.hidden { display: none; }
+
+  /* ============ REDUCED MOTION ============ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1010,7 +1048,7 @@
     </div>
     <div class="hero-tag">CTRL-UNIVERSET · UNDER UTVIKLING</div>
     <h1>Alt du bruker tid på.<br>Under kontroll.</h1>
-    <p>Ti spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill og bil. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
+    <p>Ni spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill og bil. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
     <div class="hero-buttons">
       <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
       <a href="#universet" class="btn btn-secondary">Utforsk universet</a>
@@ -1019,10 +1057,10 @@
     <div class="hero-status">
       <span><span class="dot"></span>SOURDOUGHCTRL FØRST UT</span>
       <span>NORDISK-FØRST</span>
-      <span>TI APPER · ETT UNIVERS</span>
+      <span>NI APPER + ALLCTRL</span>
     </div>
 
-    <!-- Logo-stripe i hero -->
+    <!-- Logo-grid i hero — i strategisk rekkefølge -->
     <div class="hero-strip">
       <a href="sourdoughctrl.html" title="sourdoughctrl"><img src="logos/sourdoughctrl_logo.png" alt="sourdoughctrl"></a>
       <a href="eatctrl.html" title="eatctrl"><img src="logos/eatctrl_logo.png" alt="eatctrl"></a>
@@ -1073,6 +1111,7 @@
     </div>
   </div>
 </section>
+
 <!-- ========== STRATEGI ========== -->
 <section class="section strategi-section" id="strategi">
   <div class="container">
@@ -1141,11 +1180,12 @@
     </div>
   </div>
 </section>
+
 <!-- ========== UNIVERSET ========== -->
 <section class="section" id="universet">
   <div class="container">
     <div class="section-eyebrow">UNIVERSET</div>
-    <h2 class="section-title">Ti apper. Ett system.</h2>
+    <h2 class="section-title">Ni apper. Ett system.</h2>
     <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet. Lanseringsrekkefølgen er strategisk: enklest først.</p>
 
     <div class="universe-grid">
@@ -1156,7 +1196,7 @@
           <img class="product-symbol" src="logos/sourdoughctrl_symbol.png" alt="">
           <div class="product-meta">
             <div class="product-name">sourdoughctrl</div>
-            <div class="product-phase">FØRST UT · FASE 1</div>
+            <div class="product-phase">FØRST UT · FASE 1–2</div>
           </div>
         </div>
         <h3>Full kontroll på surdeigen din</h3>
@@ -1170,7 +1210,7 @@
           <img class="product-symbol" src="logos/eatctrl_symbol.png" alt="">
           <div class="product-meta">
             <div class="product-name">eatctrl</div>
-            <div class="product-phase">PRODUKT #2 · FASE 3</div>
+            <div class="product-phase">FASE 3 · #2</div>
           </div>
         </div>
         <h3>Restaurantene og måltidene dine</h3>
@@ -1184,7 +1224,7 @@
           <img class="product-symbol" src="logos/drinkctrl_symbol.png" alt="">
           <div class="product-meta">
             <div class="product-name">drinkctrl</div>
-            <div class="product-phase">PRODUKT #3 · FASE 3</div>
+            <div class="product-phase">FASE 3 · #3</div>
           </div>
         </div>
         <h3>Drinker, viner og øl du har smakt</h3>
@@ -1198,7 +1238,7 @@
           <img class="product-symbol" src="logos/readctrl_symbol.png" alt="">
           <div class="product-meta">
             <div class="product-name">readctrl</div>
-            <div class="product-phase">PRODUKT #4 · FASE 3</div>
+            <div class="product-phase">FASE 3 · #4</div>
           </div>
         </div>
         <h3>Sporingsliste for alt du leser</h3>
@@ -1305,34 +1345,6 @@
           </div>
         </div>
 
-        <div class="stat-card" data-mod="see">
-          <div class="stat-label">SEECTRL</div>
-          <div class="stat-value">4 episoder</div>
-          <div class="stat-meta">2 serier · Netflix, HBO</div>
-          <div class="stat-viz">
-            <div class="viz-bars">
-              <span style="--h: 40%"></span>
-              <span style="--h: 70%"></span>
-              <span style="--h: 55%"></span>
-              <span style="--h: 90%"></span>
-              <span style="--h: 60%"></span>
-              <span style="--h: 80%"></span>
-              <span style="--h: 45%"></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="stat-card" data-mod="read">
-          <div class="stat-label">READCTRL</div>
-          <div class="stat-value">128 sider</div>
-          <div class="stat-meta">«Dune Messiah» — 62 %</div>
-          <div class="stat-viz">
-            <div class="viz-progress">
-              <div class="viz-progress-fill" style="--p: 62%"></div>
-            </div>
-          </div>
-        </div>
-
         <div class="stat-card" data-mod="eat">
           <div class="stat-label">EATCTRL</div>
           <div class="stat-value">3 nye steder</div>
@@ -1358,15 +1370,30 @@
           </div>
         </div>
 
-        <div class="stat-card" data-mod="listen">
-          <div class="stat-label">LISTENCTRL</div>
-          <div class="stat-value">9 episoder</div>
-          <div class="stat-meta">3 podkaster · 4t 20m</div>
+        <div class="stat-card" data-mod="read">
+          <div class="stat-label">READCTRL</div>
+          <div class="stat-value">128 sider</div>
+          <div class="stat-meta">«Dune Messiah» — 62 %</div>
           <div class="stat-viz">
-            <div class="viz-wave">
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span>
+            <div class="viz-progress">
+              <div class="viz-progress-fill" style="--p: 62%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="see">
+          <div class="stat-label">SEECTRL</div>
+          <div class="stat-value">4 episoder</div>
+          <div class="stat-meta">2 serier · Netflix, HBO</div>
+          <div class="stat-viz">
+            <div class="viz-bars">
+              <span style="--h: 40%"></span>
+              <span style="--h: 70%"></span>
+              <span style="--h: 55%"></span>
+              <span style="--h: 90%"></span>
+              <span style="--h: 60%"></span>
+              <span style="--h: 80%"></span>
+              <span style="--h: 45%"></span>
             </div>
           </div>
         </div>
@@ -1380,6 +1407,30 @@
               <circle cx="30" cy="30" r="24" class="ring-bg"/>
               <circle cx="30" cy="30" r="24" class="ring-fill" style="--p: 78"/>
             </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="listen">
+          <div class="stat-label">LISTENCTRL</div>
+          <div class="stat-value">9 episoder</div>
+          <div class="stat-meta">3 podkaster · 4t 20m</div>
+          <div class="stat-viz">
+            <div class="viz-wave">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="car">
+          <div class="stat-label">CARCTRL</div>
+          <div class="stat-value">3 prøvekjørt</div>
+          <div class="stat-meta">2 på shortlist</div>
+          <div class="stat-viz">
+            <div class="viz-speed">
+              <div class="viz-speed-fill"></div>
+            </div>
           </div>
         </div>
 
