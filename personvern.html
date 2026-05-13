@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Personvernerklæring for ctrl-universet. Slik håndterer vi e-postadresser og andre data fra besøkende.">
+<title>Personvern — ctrl-universet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0F;
+    --bg-card: #111118;
+    --bg-elevated: #16161F;
+    --text: #F0F0FF;
+    --text-dim: #8888AA;
+    --border: #1C1C30;
+    --border-strong: #2A2A44;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Outfit', sans-serif;
+    --c-all: #E8FF47;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--c-all); text-decoration: none; transition: opacity 0.2s; }
+  a:hover { opacity: 0.8; }
+  img { display: block; max-width: 100%; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .header-logo img { height: 48px; }
+  .nav { display: flex; gap: 28px; }
+  .nav a {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+  .nav a:hover { color: var(--text); }
+
+  /* Page */
+  .page {
+    padding: 140px 0 80px;
+  }
+  .page-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--c-all);
+    margin-bottom: 16px;
+  }
+  .page-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .page-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Content */
+  .content h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .content h2:first-child { margin-top: 0; }
+  .content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  .content p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+  .content p strong { color: var(--text); font-weight: 500; }
+  .content ul {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+  .content ul li {
+    color: var(--text-dim);
+    font-size: 16px;
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-weight: 300;
+  }
+  .content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--c-all);
+    font-family: var(--mono);
+  }
+
+  .info-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--c-all);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .info-box p {
+    margin: 0;
+    color: var(--text);
+    font-size: 15px;
+  }
+  .info-box p + p { margin-top: 12px; }
+
+  .contact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+  }
+  .contact-card h3 { margin-top: 0; }
+  .contact-card .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-top: 12px;
+    margin-bottom: 2px;
+  }
+  .contact-card .value {
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .footer-logo img { height: 24px; opacity: 0.7; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--text-dim); }
+  .footer-links a:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .nav { gap: 16px; }
+    .nav a { font-size: 11px; letter-spacing: 0.05em; }
+    .page { padding: 120px 0 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo" aria-label="allctrl forside">
+      <img src="logos/allctrl_logo.png" alt="allctrl">
+    </a>
+    <nav class="nav">
+      <a href="index.html#filosofi">Filosofi</a>
+      <a href="index.html#universet">Universet</a>
+      <a href="index.html#roadmap">Roadmap</a>
+      <a href="index.html#tidlig-tilgang">Tidlig tilgang</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container">
+
+    <div class="page-eyebrow">PERSONVERN</div>
+    <h1 class="page-title">Hvordan vi håndterer dine data</h1>
+    <div class="page-meta">SIST OPPDATERT · MAI 2026</div>
+
+    <div class="content">
+
+      <div class="info-box">
+        <p><strong>Kort oppsummert:</strong> Vi samler kun e-postadressen din når du melder deg på tidlig tilgang. Vi bruker den til å gi deg oppdateringer om ctrl-universet. Du kan be om sletting når som helst.</p>
+      </div>
+
+      <h2>Hvem vi er</h2>
+      <p>ctrl-universet er et personlig produktinitiativ under utvikling. Nettsiden <strong>jojofos-maker.github.io/allctrl</strong> drives av Johan Jørgen og er ansvarlig for behandlingen av personopplysninger beskrevet her.</p>
+
+      <h2>Hva vi samler inn</h2>
+      <p>Når du melder deg på "tidlig tilgang" via skjemaet på forsiden, samler vi inn:</p>
+      <ul>
+        <li>E-postadressen du oppgir</li>
+        <li>Tidspunkt for påmelding</li>
+        <li>Hvilken side påmeldingen kom fra (allctrl-landingssiden)</li>
+      </ul>
+      <p>Vi samler <strong>ikke</strong> inn navn, adresse, telefonnummer, IP-adresse eller andre opplysninger uten ditt eksplisitte samtykke.</p>
+
+      <h2>Hvorfor vi samler det inn</h2>
+      <p>Formålet er ett, og bare ett: <strong>å kunne sende deg beskjed når sourdoughctrl og andre produkter i ctrl-universet er klare</strong>. Du har samtykket til dette ved aktivt å melde deg på.</p>
+      <p>Vi bruker <strong>ikke</strong> e-postadressen din til:</p>
+      <ul>
+        <li>Markedsføring av tredjepartsprodukter</li>
+        <li>Videresalg eller utleie til andre</li>
+        <li>Spam eller hyppige nyhetsbrev</li>
+        <li>Sporing av oppførsel på andre nettsider</li>
+      </ul>
+
+      <h2>Hvor lenge vi lagrer det</h2>
+      <p>Vi lagrer e-postadressen din så lenge du ønsker å være en del av listen. Du kan be om sletting når som helst — det skjer innen 30 dager etter henvendelsen.</p>
+      <p>Hvis ctrl-universet legges ned, vil hele listen slettes innen 60 dager etter avslutning.</p>
+
+      <h2>Hvem som har tilgang</h2>
+      <p>E-postadressen din behandles av to parter:</p>
+      <ul>
+        <li><strong>Johan Jørgen</strong>, som drifter ctrl-universet</li>
+        <li><strong>Formspree</strong> (formspree.io), en databehandler som tilbyr skjema-tjenesten på siden. Formspree er GDPR-kompatibel og lagrer data på servere i EU/USA</li>
+      </ul>
+      <p>E-postadressen din deles ikke med andre parter. Hvis vi senere bytter til en annen leverandør (for eksempel en e-postliste-tjeneste som ConvertKit eller Buttondown), vil personvernerklæringen oppdateres og du vil få beskjed.</p>
+
+      <h2>Dine rettigheter</h2>
+      <p>Etter EUs personvernforordning (GDPR) og norsk personopplysningslov har du rett til å:</p>
+      <ul>
+        <li><strong>Innsyn</strong> — be om å se hvilke opplysninger vi har om deg</li>
+        <li><strong>Retting</strong> — be om å få endret feil informasjon</li>
+        <li><strong>Sletting</strong> — be om å bli fjernet fra listen ("retten til å bli glemt")</li>
+        <li><strong>Dataportabilitet</strong> — få utlevert dine data i et lesbart format</li>
+        <li><strong>Trekke tilbake samtykke</strong> — når som helst, uten begrunnelse</li>
+      </ul>
+      <p>For å bruke rettighetene dine, send en e-post til adressen nederst på siden.</p>
+
+      <h2>Informasjonskapsler (cookies)</h2>
+      <p>Denne nettsiden bruker <strong>ingen cookies</strong> for sporing, analyse eller markedsføring. Vi bruker heller ikke Google Analytics, Facebook Pixel eller lignende verktøy som krever samtykke.</p>
+      <p>Eksterne tjenester vi bruker (Google Fonts for typografi) kan teknisk sett sette egne cookies, men disse er nødvendige for at siden skal fungere og samler ikke personopplysninger som identifiserer deg.</p>
+
+      <h2>Klagerett</h2>
+      <p>Hvis du mener vi har behandlet personopplysningene dine på en uforsvarlig måte, kan du klage til <strong>Datatilsynet</strong> i Norge — <a href="https://www.datatilsynet.no" target="_blank" rel="noopener">datatilsynet.no</a>.</p>
+
+      <h2>Endringer i denne erklæringen</h2>
+      <p>Vi kan oppdatere personvernerklæringen når produktet utvikler seg eller når regelverket endrer seg. Versjonsdatoen øverst viser når siste endring ble gjort. Vesentlige endringer vil bli kommunisert via e-post til de som er på listen.</p>
+
+      <div class="contact-card">
+        <h3>Kontakt</h3>
+        <p>For spørsmål om personvern, sletting av data, eller andre henvendelser:</p>
+        <div class="label">E-POST</div>
+        <div class="value">[jojofos@gmail.com]</div>
+        <div class="label">ANSVARLIG</div>
+        <div class="value">Johan Jørgen Fossli</div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <a href="index.html"><img src="logos/allctrl_logo.png" alt="allctrl"></a>
+    </div>
+    <span>© 2026 ctrl-universet</span>
+    <div class="footer-links">
+      <a href="index.html#filosofi">Filosofi</a>
+      <a href="index.html#universet">Universet</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
