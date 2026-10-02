@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="nb"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>medctrl — medisiner og rutiner · ctrl-universet</title>
+<meta name="description" content="medctrl er et konsept for personlig oversikt over medisiner, rutiner og registrerte inntak. En del av ctrl-universet.">
+<style>
+  /* ============ DESIGN TOKENS (samme som hovedside) ============ */
+  :root {
+    --bg: #0A0A0F;
+    --bg-card: #11111a;
+    --bg-elevated: #15151f;
+    --border: #1f1f25;
+    --border-strong: #2a2a35;
+    --text: #ffffff;
+    --text-muted: #aaaaaa;
+    --text-dim: #666666;
+    --text-faint: #444444;
+
+    --c-all: #E8FF47;
+    --c-see: #00E5FF;
+    --c-read: #4DFF91;
+    --c-med: #FF7EB6;
+    --c-drink: #4D9FFF;
+    --c-listen: #C084FC;
+    --c-play: #FF4D6D;
+
+    --accent: var(--c-med);
+
+    --mono: 'JetBrains Mono', 'DM Mono', 'SF Mono', Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  em { font-style: normal; color: var(--accent); }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ============ HEADER ============ */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+  .header-logo img {
+    height: 32px;
+    transition: opacity 0.2s;
+  }
+  .header-logo:hover img { opacity: 0.85; }
+  .nav {
+    display: flex;
+    gap: 32px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .nav a { transition: color 0.2s; }
+  .nav a:hover { color: var(--text); }
+  .nav .back { color: var(--text); }
+  .nav .back::before { content: '← '; color: var(--text-dim); }
+  @media (max-width: 700px) {
+    .nav { gap: 20px; font-size: 13px; }
+    .nav a:not(.back):not(.cta-link) { display: none; }
+  }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: var(--sans);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px #FF7EB640; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn-secondary:hover { border-color: var(--text-muted); }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 80px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -100px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, #FF7EB61f 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  .hero-logo {
+    margin-bottom: 32px;
+  }
+  .hero-logo img {
+    height: 80px;
+    filter: drop-shadow(0 0 30px #FF7EB640);
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    padding: 6px 14px;
+    border: 1px solid #FF7EB64d;
+    border-radius: 999px;
+    margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 5.5vw, 64px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .hero-lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 36px;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .hero-status {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+  }
+  .hero-status span { display: flex; align-items: center; gap: 8px; }
+  .hero-status .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ============ MOCK-UP ============ */
+  .mockup {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    aspect-ratio: 4/5;
+    display: flex;
+    flex-direction: column;
+  }
+  .mock-titlebar {
+    display: flex;
+    gap: 6px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .mock-titlebar span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--border-strong);
+  }
+  .mock-titlebar span:nth-child(1) { background: #FF5F57; }
+  .mock-titlebar span:nth-child(2) { background: #FEBC2E; }
+  .mock-titlebar span:nth-child(3) { background: #28C840; }
+  .mock-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .mock-row {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-row:last-child { border-bottom: none; }
+  .mock-thumb {
+    width: 36px; height: 36px;
+    border-radius: 6px;
+    background: #FF7EB61a;
+    border: 1px solid #FF7EB64d;
+    flex-shrink: 0;
+  }
+  .mock-content { flex: 1; min-width: 0; }
+  .mock-title {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mock-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .mock-progress {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .mock-progress-bar {
+    height: 100%;
+    background: var(--accent);
+  }
+
+  /* ============ SECTIONS ============ */
+  .section { padding: 100px 0; }
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4.5vw, 48px);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    max-width: 800px;
+  }
+  .section-lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin-bottom: 56px;
+  }
+
+  /* ============ PROBLEM ============ */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .problem-list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+    font-size: 16px;
+  }
+  .problem-list li:first-child { border-top: 1px solid var(--border); }
+  .problem-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ============ FUNKSJONER ============ */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+  }
+  .feature {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .feature:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .feature-wide {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #FF7EB60d, var(--bg-card));
+  }
+  @media (max-width: 600px) {
+    .feature-wide { grid-column: span 1; }
+  }
+  .feature-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .feature h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .feature-wide h3 { font-size: 22px; }
+  .feature p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ============ HVORDAN ============ */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (max-width: 900px) {
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+  .step {
+    padding: 36px 32px;
+    border-right: 1px solid var(--border);
+  }
+  .step:last-child { border-right: none; }
+  @media (max-width: 900px) {
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+  }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 36px;
+    color: var(--accent);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .step h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .step p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ============ PRICING ============ */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+  .price-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 36px;
+  }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #FF7EB60d, var(--bg-card));
+    position: relative;
+  }
+  .price-card.featured::after {
+    content: 'Premium';
+    position: absolute;
+    top: 24px; right: 24px;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid #FF7EB666;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .price-tier {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .price-amount {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .price-amount sub { font-size: 15px; color: var(--text-muted); font-weight: 400; }
+  .price-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+  .price-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .price-list li::before {
+    content: '→';
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .price-list li:last-child { border-bottom: none; }
+
+  /* ============ CTA ============ */
+  .cta {
+    text-align: center;
+    padding: 100px 24px;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, transparent, #FF7EB608);
+  }
+  .cta-logo img {
+    height: 64px;
+    margin: 0 auto 28px;
+    filter: drop-shadow(0 0 30px #FF7EB640);
+  }
+  .cta h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .cta p {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin: 0 auto 32px;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .footer-logo img { height: 24px; opacity: 0.7; }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { font-family: var(--mono); font-size: 12px; }
+  .footer-links a:hover { color: var(--text); }
+
+.mockup { aspect-ratio: auto; min-height: 360px; }
+.mock-thumb { display: grid; place-items: center; color: var(--accent); font-size: 20px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style></head><body>
+<header class="header"><div class="container header-inner"><a href="index.html" class="header-logo" aria-label="allctrl forside"><img src="logos/allctrl_logo.png" alt="allctrl"></a><nav class="nav"><a href="index.html" class="back">Universet</a><a href="#funksjoner">Funksjoner</a><a href="#hvordan">Hvordan</a><a href="#tidlig-tilgang" class="cta-link">Tidlig tilgang</a></nav></div></header>
+<section class="hero"><div class="container hero-grid"><div>
+<div class="hero-logo"><img src="logos/medctrl_logo.svg" alt="medctrl"></div>
+<div class="hero-tag">MEDISINER OG RUTINER · KONSEPT</div>
+<h1>En enklere hverdag.<br>En tydeligere oversikt.</h1>
+<p class="hero-lead">Medisiner, tidspunkter og registrerte inntak på ett sted. medctrl hjelper deg å holde orden på rutinene dine. <em>Din egen medisinoversikt.</em></p>
+<div class="hero-buttons"><a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a><a href="#funksjoner" class="btn btn-secondary">Se planlagte funksjoner</a></div>
+<div class="hero-status"><span><span class="dot" style="background: var(--accent)"></span>UNDER UTVIKLING</span><span>PERSONLIG OVERSIKT</span></div></div>
+<div class="mockup" aria-label="Illustrasjon av planlagt medctrl-oversikt"><div class="mock-titlebar"><span></span><span></span><span></span></div><div class="mock-label">DAGENS RUTINE · ILLUSTRASJON</div>
+<div class="mock-row"><div class="mock-thumb">+</div><div class="mock-content"><div class="mock-title">Morgen</div><div class="mock-meta">Planlagt tidspunkt · 08:00</div></div></div><div class="mock-row"><div class="mock-thumb">+</div><div class="mock-content"><div class="mock-title">Registrert inntak</div><div class="mock-meta">Din logg · i dag</div></div></div><div class="mock-row"><div class="mock-thumb">+</div><div class="mock-content"><div class="mock-title">Kveld</div><div class="mock-meta">Planlagt tidspunkt · 20:00</div></div></div><div class="mock-row"><div class="mock-thumb">+</div><div class="mock-content"><div class="mock-title">Neste legetime</div><div class="mock-meta">Samle spørsmål og notater</div></div></div>
+</div></div></section>
+<section class="section"><div class="container problem-grid"><div><div class="section-eyebrow">PROBLEMET</div><h2 class="section-title">Rutinene er viktige.<br>Oversikten bør være enkel.</h2></div><div><p class="section-lead">Når navn, tidspunkter og notater ligger på forskjellige steder, er det lett å miste oversikten. medctrl samler det du trenger for å følge dine avtalte rutiner.</p><ul class="problem-list"><li><span class="problem-num">01</span><span>Medisinlisten ligger flere steder.</span></li><li><span class="problem-num">02</span><span>Det er vanskelig å huske hva du har registrert.</span></li><li><span class="problem-num">03</span><span>Spørsmål til legen forsvinner mellom timene.</span></li></ul></div></div></section>
+<section class="section" id="funksjoner" style="background: var(--bg-card); border-block: 1px solid var(--border)"><div class="container"><div class="section-eyebrow">PLANLAGTE FUNKSJONER</div><h2 class="section-title">Alt samlet.<br>Lettere å følge.</h2><p class="section-lead">medctrl er i konseptfasen. Dette er funksjonene vi planlegger å bygge.</p><div class="features-grid"><div class="feature"><div class="feature-num">F.01</div><h3>Medisinoversikt</h3><p>Samle navn, styrke og rutiner slik de er avtalt med legen.</p></div><div class="feature"><div class="feature-num">F.02</div><h3>Tidspunkter</h3><p>Planlagt oversikt over når medisinene skal tas.</p></div><div class="feature"><div class="feature-num">F.03</div><h3>Inntakslogg</h3><p>Registrer inntak og se hva du har ført i dag.</p></div><div class="feature"><div class="feature-num">F.04</div><h3>Påminnelser</h3><p>Planlagte varsler som hjelper deg å huske rutinene.</p></div><div class="feature"><div class="feature-num">F.05</div><h3>Egne notater</h3><p>Samle spørsmål og observasjoner til samtalen med legen.</p></div><div class="feature"><div class="feature-num">F.06</div><h3>Historikk</h3><p>Få oversikt over tidligere registreringer og endringer i rutinene.</p></div></div></div></section>
+<section class="section" id="hvordan"><div class="container"><div class="section-eyebrow">HVORDAN</div><h2 class="section-title">En rutine du kan holde oversikt over.</h2><div class="steps-grid"><div class="step"><div class="step-num">01</div><h4>Samle oversikten</h4><p>Legg inn medisinene og rutinene du har avtalt med legen.</p></div><div class="step"><div class="step-num">02</div><h4>Følg dagen</h4><p>Se tidspunktene og registrer inntakene dine.</p></div><div class="step"><div class="step-num">03</div><h4>Se tilbake</h4><p>Bruk historikken og notatene i samtalen med legen.</p></div></div><p style="color: var(--text-muted); margin-top: 24px">medctrl er planlagt som et verktøy for oversikt og logging. Følg legens og apotekets instruksjoner for bruk og dosering av medisiner.</p></div></section>
+<section class="cta" id="tidlig-tilgang"><div class="container"><div class="cta-logo"><img src="logos/medctrl_logo.svg" alt="medctrl"></div><h2>Få oversikt fra starten.</h2><p>medctrl er under utvikling. Meld deg på ctrl-universets felles liste for oppdateringer.</p><a href="index.html#tidlig-tilgang" class="btn btn-primary">Få tidlig tilgang</a></div></section>
+<footer class="footer"><div class="container footer-inner"><a href="index.html" class="footer-logo"><img src="logos/allctrl_logo.png" alt="allctrl"></a><span>© 2026 ctrl-universet</span><div class="footer-links"><a href="index.html#universet">Alle moduler</a><a href="personvern.html">Personvern</a></div></div></footer>
+</body></html>

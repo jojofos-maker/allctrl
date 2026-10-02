@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Ni spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill og bil — samlet i ett univers.">
+<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Ti spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil og medisiner — samlet i ett univers.">
 <title>ctrl-universet — alt du bruker tid på. under kontroll.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@
     --c-play: #FF4D6D;
     --c-car: #2563EB;
     --c-sport: #FFC700;
+    --c-med: #FF7EB6;
   }
 
   /* ============ RESET & BASE ============ */
@@ -186,7 +187,7 @@
     50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(196,138,90,0); }
   }
 
-  /* Logo grid in hero — 3x3 */
+  /* Logo grid i hero */
   .hero-strip {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -481,6 +482,10 @@
   .product-card[data-product="listenctrl"]::before { background: var(--c-listen); }
   .product-card[data-product="carctrl"]::before { background: var(--c-car); }
   .product-card[data-product="sportctrl"]::before { background: var(--c-sport); }
+
+  .product-card[data-product="medctrl"]::before { background: var(--c-med); }
+  [data-product="medctrl"] .product-name { color: var(--c-med); }
+  [data-mod="med"] { --mod: var(--c-med); }
 
   .product-header {
     display: flex;
@@ -1048,7 +1053,7 @@
     </div>
     <div class="hero-tag">CTRL-UNIVERSET · UNDER UTVIKLING</div>
     <h1>Alt du bruker tid på.<br>Under kontroll.</h1>
-    <p>Ni spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill og bil. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
+    <p>Ti spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil og medisiner. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
     <div class="hero-buttons">
       <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
       <a href="#universet" class="btn btn-secondary">Utforsk universet</a>
@@ -1057,7 +1062,7 @@
     <div class="hero-status">
       <span><span class="dot"></span>SOURDOUGHCTRL FØRST UT</span>
       <span>NORDISK-FØRST</span>
-      <span>NI APPER + ALLCTRL</span>
+      <span>TI APPER + ALLCTRL</span>
     </div>
 
     <!-- Logo-grid i hero — i strategisk rekkefølge -->
@@ -1071,6 +1076,7 @@
       <a href="listenctrl.html" title="listenctrl"><img src="logos/listenctrl_logo.png" alt="listenctrl"></a>
       <a href="carctrl.html" title="carctrl"><img src="logos/carctrl_logo.png" alt="carctrl"></a>
       <a href="sportctrl.html" title="sportctrl"><img src="logos/sportctrl_logo.png" alt="sportctrl"></a>
+      <a href="medctrl.html" title="medctrl"><img src="logos/medctrl_logo.svg" alt="medctrl"></a>
     </div>
   </div>
 </section>
@@ -1185,7 +1191,7 @@
 <section class="section" id="universet">
   <div class="container">
     <div class="section-eyebrow">UNIVERSET</div>
-    <h2 class="section-title">Ni apper. Ett system.</h2>
+    <h2 class="section-title">Ti apper. Ett system.</h2>
     <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet. Lanseringsrekkefølgen er strategisk: enklest først.</p>
 
     <div class="universe-grid">
@@ -1316,6 +1322,20 @@
         <div class="product-cta">UTFORSK SPORTCTRL →</div>
       </a>
 
+      <!-- 10. medctrl -->
+      <a class="product-card" data-product="medctrl" href="medctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/medctrl_symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">medctrl</div>
+            <div class="product-phase">KONSEPT · UNDER UTVIKLING</div>
+          </div>
+        </div>
+        <h3>Medisiner og rutiner, samlet</h3>
+        <p>En personlig oversikt over medisiner, tidspunkter og registrerte inntak. Hold styr på rutinene dine og ta med oversikten til neste samtale med legen.</p>
+        <div class="product-cta">UTFORSK MEDCTRL →</div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -1444,6 +1464,13 @@
                 class="pulse-stroke"/>
             </svg>
           </div>
+        </div>
+
+        <div class="stat-card" data-mod="med">
+          <div class="stat-label">MEDCTRL</div>
+          <div class="stat-value">Dagens rutine</div>
+          <div class="stat-meta">Illustrasjon · inntak og tidspunkter</div>
+          <div class="stat-viz"><img src="logos/medctrl_symbol.svg" alt="" style="height: 36px;"></div>
         </div>
 
       </div>
@@ -1608,3 +1635,4 @@ async function handleSignup(event) {
 
 </body>
 </html>
+
