@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Ti spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil og medisiner — samlet i ett univers.">
+<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil, medisiner og tid — samlet i ett univers.">
 <title>ctrl-universet — alt du bruker tid på. under kontroll.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,7 @@
     --c-car: #2563EB;
     --c-sport: #FFC700;
     --c-med: #FF7EB6;
+    --c-time: #5EEAD4;
   }
 
   /* ============ RESET & BASE ============ */
@@ -1026,6 +1027,8 @@
       transition-duration: 0.01ms !important;
     }
   }
+.product-card[data-product="timectrl"]::before { background: var(--c-time); }
+[data-product="timectrl"] .product-name { color: var(--c-time); }
 </style>
 </head>
 <body>
@@ -1053,7 +1056,7 @@
     </div>
     <div class="hero-tag">CTRL-UNIVERSET · UNDER UTVIKLING</div>
     <h1>Alt du bruker tid på.<br>Under kontroll.</h1>
-    <p>Ti spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil og medisiner. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
+    <p>Spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil, medisiner og tid. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
     <div class="hero-buttons">
       <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
       <a href="#universet" class="btn btn-secondary">Utforsk universet</a>
@@ -1077,6 +1080,7 @@
       <a href="carctrl.html" title="carctrl"><img src="logos/carctrl_logo.png" alt="carctrl"></a>
       <a href="sportctrl.html" title="sportctrl"><img src="logos/sportctrl_logo.png" alt="sportctrl"></a>
       <a href="medctrl.html" title="medctrl"><img src="logos/medctrl_logo.png" alt="medctrl"></a>
+      <a href="timectrl.html" title="timectrl"><img src="logos/timectrl_logo.svg" alt="timectrl"></a>
     </div>
   </div>
 </section>
@@ -1191,7 +1195,7 @@
 <section class="section" id="universet">
   <div class="container">
     <div class="section-eyebrow">UNIVERSET</div>
-    <h2 class="section-title">Ti apper. Ett system.</h2>
+    <h2 class="section-title">Alle apper. Ett system.</h2>
     <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet. Lanseringsrekkefølgen er strategisk: enklest først.</p>
 
     <div class="universe-grid">
@@ -1334,6 +1338,14 @@
         <h3>Medisiner og rutiner, samlet</h3>
         <p>En personlig oversikt over medisiner, tidspunkter og registrerte inntak. Hold styr på rutinene dine og ta med oversikten til neste samtale med legen.</p>
         <div class="product-cta">UTFORSK MEDCTRL →</div>
+      </a>
+
+      <!-- 11. timectrl -->
+      <a class="product-card" data-product="timectrl" href="timectrl.html">
+        <div class="product-header"><img class="product-symbol" src="logos/timectrl_symbol.svg" alt=""><div class="product-meta"><div class="product-name">timectrl</div><div class="product-phase">PILOT · BYGGER PÅ PROSJEKTPULS</div></div></div>
+        <h3>Tiden din, prosjekt for prosjekt</h3>
+        <p>Start og stopp timeren, registrer tid manuelt og få oversikt over arbeidsdagen. timectrl bygger på Prosjektpuls. Automatisk e-postrapport er fortsatt under utprøving.</p>
+        <div class="product-cta">UTFORSK TIMECTRL →</div>
       </a>
 
     </div>
