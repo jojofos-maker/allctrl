@@ -18,7 +18,7 @@
     --c-all: #E8FF47;
     --c-see: #00E5FF;
     --c-read: #4DFF91;
-    --c-time: #5EEAD4;
+    --c-time: #8B9DFF;
     --c-drink: #4D9FFF;
     --c-listen: #C084FC;
     --c-play: #FF4D6D;
@@ -98,7 +98,7 @@
     background: var(--accent);
     color: var(--bg);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px #5EEAD440; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px #8B9DFF40; }
   .btn-secondary {
     background: transparent;
     color: var(--text);
@@ -119,7 +119,7 @@
     right: -100px;
     width: 700px;
     height: 700px;
-    background: radial-gradient(circle, #5EEAD41f 0%, transparent 60%);
+    background: radial-gradient(circle, #8B9DFF1f 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
@@ -139,7 +139,7 @@
   }
   .hero-logo img {
     height: 80px;
-    filter: drop-shadow(0 0 30px #5EEAD440);
+    filter: drop-shadow(0 0 30px #8B9DFF40);
   }
   .hero-tag {
     display: inline-block;
@@ -148,7 +148,7 @@
     letter-spacing: 0.25em;
     color: var(--accent);
     padding: 6px 14px;
-    border: 1px solid #5EEAD44d;
+    border: 1px solid #8B9DFF4d;
     border-radius: 999px;
     margin-bottom: 32px;
   }
@@ -231,8 +231,8 @@
   .mock-thumb {
     width: 36px; height: 36px;
     border-radius: 6px;
-    background: #5EEAD41a;
-    border: 1px solid #5EEAD44d;
+    background: #8B9DFF1a;
+    border: 1px solid #8B9DFF4d;
     flex-shrink: 0;
   }
   .mock-content { flex: 1; min-width: 0; }
@@ -337,7 +337,7 @@
   }
   .feature-wide {
     grid-column: span 2;
-    background: linear-gradient(135deg, #5EEAD40d, var(--bg-card));
+    background: linear-gradient(135deg, #8B9DFF0d, var(--bg-card));
   }
   @media (max-width: 600px) {
     .feature-wide { grid-column: span 1; }
@@ -418,7 +418,7 @@
   }
   .price-card.featured {
     border-color: var(--accent);
-    background: linear-gradient(135deg, #5EEAD40d, var(--bg-card));
+    background: linear-gradient(135deg, #8B9DFF0d, var(--bg-card));
     position: relative;
   }
   .price-card.featured::after {
@@ -430,7 +430,7 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--accent);
-    border: 1px solid #5EEAD466;
+    border: 1px solid #8B9DFF66;
     padding: 4px 10px;
     border-radius: 4px;
   }
@@ -476,12 +476,12 @@
     text-align: center;
     padding: 100px 24px;
     border-top: 1px solid var(--border);
-    background: linear-gradient(180deg, transparent, #5EEAD408);
+    background: linear-gradient(180deg, transparent, #8B9DFF08);
   }
   .cta-logo img {
     height: 64px;
     margin: 0 auto 28px;
-    filter: drop-shadow(0 0 30px #5EEAD440);
+    filter: drop-shadow(0 0 30px #8B9DFF40);
   }
   .cta h2 {
     font-size: clamp(28px, 4vw, 40px);
@@ -521,7 +521,7 @@
 </style></head><body>
 <header class="header"><div class="container header-inner"><a href="index.html" class="header-logo" aria-label="allctrl forside"><img src="logos/allctrl_logo.png" alt="allctrl"></a><nav class="nav"><a href="index.html" class="back">Universet</a><a href="#funksjoner">Funksjoner</a><a href="#hvordan">Hvordan</a><a href="https://prosjektpuls.jojofos.chatgpt.site" class="cta-link">Åpne Prosjektpuls</a></nav></div></header>
 <section class="hero"><div class="container hero-grid"><div>
-<div class="hero-logo"><img src="logos/timectrl_logo.svg" alt="timectrl"></div>
+<div class="hero-logo"><img src="logos/timectrl_logo_horizontal.svg" alt="timectrl"></div>
 <div class="hero-tag">TID OG PROSJEKTER · PILOT</div>
 <h1>Fang tiden.<br>Få oversikt over dagen.</h1>
 <p class="hero-lead">Hold styr på tiden du bruker på hvert prosjekt. Start timeren, før tid manuelt og se dagens arbeid samlet. <em>timectrl bygger på Prosjektpuls.</em></p>
@@ -542,6 +542,6 @@
 <div class="feature"><div class="feature-num">F.06</div><h3>Dagsrapport</h3><p>Automatisk e-postrapport er fortsatt under utprøving. Levering og planlegging må kontrolleres før funksjonen regnes som ferdig.</p></div>
 </div></div></section>
 <section class="section" id="hvordan"><div class="container"><div class="section-eyebrow">HVORDAN</div><h2 class="section-title">Tre steg til oversikt.</h2><div class="steps-grid"><div class="step"><div class="step-num">01</div><h4>Velg prosjekt</h4><p>Åpne Prosjektpuls og velg prosjektet du vil føre tid på.</p></div><div class="step"><div class="step-num">02</div><h4>Registrer tiden</h4><p>Bruk timeren mens du jobber, eller legg inn tiden manuelt.</p></div><div class="step"><div class="step-num">03</div><h4>Se dagen samlet</h4><p>Kontroller registreringene i «I dag» og få oversikt over arbeidet.</p></div></div></div></section>
-<section class="cta"><div class="container"><div class="cta-logo"><img src="logos/timectrl_logo.svg" alt="timectrl"></div><h2>Få kontroll på tiden.</h2><p>timectrl er en del av ctrl-universet. Piloten er tilgjengelig som Prosjektpuls for brukere med tilgang.</p><a href="https://prosjektpuls.jojofos.chatgpt.site" class="btn btn-primary">Åpne Prosjektpuls</a></div></section>
+<section class="cta"><div class="container"><div class="cta-logo"><img src="logos/timectrl_logo_horizontal.svg" alt="timectrl"></div><h2>Få kontroll på tiden.</h2><p>timectrl er en del av ctrl-universet. Piloten er tilgjengelig som Prosjektpuls for brukere med tilgang.</p><a href="https://prosjektpuls.jojofos.chatgpt.site" class="btn btn-primary">Åpne Prosjektpuls</a></div></section>
 <footer class="footer"><div class="container footer-inner"><a href="index.html" class="footer-logo"><img src="logos/allctrl_logo.png" alt="allctrl"></a><div class="footer-links"><a href="index.html">ctrl-universet</a><a href="personvern.html">Personvern</a></div></div></footer>
 </body></html>
