@@ -32,3 +32,15 @@ Gratisnivået har 100 000 målinger per måned og 6 måneders historikk, kontrol
 Alle 13 modulsider har «Jeg vil teste»-lenke øverst og en interessemelding nederst. Knappen åpner brukerens eget e-postprogram med modulnavn i emnet og en kort ferdig utfylt tekst. Meldingen sendes av den besøkende til jjf@allctrl.no. Ingen skjemaopplysninger lagres på hjemmesiden, og ingen tilgang loves.
 
 Umami-hendelser `testinteresse_<modulnavn>` teller klikk på e-postknappen. Disse viser interesse, ikke antall sendte e-poster eller påmeldte testbrukere. Faktiske henvendelser finnes i innboksen til jjf@allctrl.no.
+
+## Modulstatus
+
+Statusmerker vises på forsiden og hver modulside. Oppdatert 13. oktober 2026.
+
+| Status | Moduler |
+| --- | --- |
+| I bruk | timectrl |
+| Prototype | jobctrl, seectrl, carctrl |
+| Ide | allctrl, drinkctrl, eatctrl, listenctrl, medctrl, playctrl, readctrl, sourdoughctrl, sportctrl |
+
+«I bruk» gjelder en første versjon og betyr ikke at alle planlagte funksjoner er ferdige. «Prototype» bekrefter en tidlig versjon, ikke åpen tilgjengelighet eller full funksjonstest. Kun Timectrl har en bekreftet offentlig appknapp på hjemmesiden. Konseptbilder skal fortsatt merkes som konseptbilder. Oppdater status både på forsiden, modulsiden og i eksportgrunnlaget når den endres.
