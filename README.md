@@ -10,13 +10,14 @@ Hver modul har én side i `<modul>/index.html`. Ikke legg tilbake `<modul>.html`
 
 Umami-integrasjon er klargjort på alle 16 innholdssider, inkludert Bak ctrl. Nettsted-ID er konfigurert 13. oktober 2026. Speil endringen i `website/analytics.js`. Måling er aktiv på allctrl.no og www.allctrl.no.
 
-Aktivering
+Tilgang til statistikken
 
-1. Opprett gratis Hobby-konto på https://cloud.umami.is/signup og bekreft e-posten.
-2. Legg til nettstedet allctrl med domenet www.allctrl.no.
-3. Kopier nettsted-ID fra sporingskoden. Den er offentlig, og er ikke passord/API-nøkkel.
-4. Fyll ID i begge analytics.js-filer og oppdater personvernsiden før aktivering. Opplys om Umami, formål, målinger og lagring i 6 måneder. Avklar behandlingsvilkår og eventuell region i kontoen.
-5. Publiser og kontroller sanntidsvisning med ett besøk og ett LinkedIn-klikk. Kontroller at én sidevisning registreres per side.
+- Dashboard: https://cloud.umami.is/
+- Innlogging: Velg GitHub og bruk Johan Jørgens GitHub-konto, jojofos-maker.
+- Nettsted: allctrl, domene www.allctrl.no.
+- Nettsted-ID: b58ad5c8-e8b3-4151-b09e-08245c609223. ID-en er offentlig og er ikke en API-nøkkel.
+- Publisert og tracker kontrollert på hjemmesiden 13. oktober 2026. Historikk begynner fra aktiveringen og inkluderer ikke tidligere besøk.
+- Statistikken ligger i Umami-kontoen og vises ikke som teller eller panel på hjemmesiden. Personvernsiden beskriver målingen.
 
 Dashboardet skal vise besøk og sidevisninger, populære sider, trafikkilder, land og enheter, og sammenligne siste 7/30 dager med forrige periode. Klikkhendelser viser interesse for hver modul, Bak ctrl, LinkedIn, e-post, appene, kontaktseksjonen og modulfiltrene. Et e-postklikk betyr at e-postlenken er åpnet, ikke at e-post er sendt. Appklikk måler overgangen fra hjemmesiden, ikke aktivitet inne i appene.
 
