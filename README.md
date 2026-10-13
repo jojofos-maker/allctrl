@@ -44,3 +44,9 @@ Statusmerker vises på forsiden og hver modulside. Oppdatert 13. oktober 2026.
 | Ide | allctrl, drinkctrl, eatctrl, listenctrl, medctrl, playctrl, readctrl, sourdoughctrl, sportctrl |
 
 «I bruk» gjelder en første versjon og betyr ikke at alle planlagte funksjoner er ferdige. «Prototype» bekrefter en tidlig versjon, ikke åpen tilgjengelighet eller full funksjonstest. Kun Timectrl har en bekreftet offentlig appknapp på hjemmesiden. Konseptbilder skal fortsatt merkes som konseptbilder. Oppdater status både på forsiden, modulsiden og i eksportgrunnlaget når den endres.
+
+## Jobb med Johan Jørgen
+
+«Jobb med meg» finnes på https://www.allctrl.no/johan/#samarbeid. Seksjonen presenterer lederstøtte, praktiske AI-kurs/hjelp og HMS-/kvalitetsarbeid. Kontakt går til jjf@allctrl.no via den besøkendes e-postprogram med ferdig emne og forslag til melding. LinkedIn er fortsatt synlig øverst og i kontaktseksjonen.
+
+Umami-hendelsen `oppdrag_epost` teller klikk på oppdrags- og samarbeidslenker. Den måler ikke sendte e-poster. Henvendelser finnes i e-postinnboksen. Ingen informasjon fra e-postmeldingen sendes til Umami.

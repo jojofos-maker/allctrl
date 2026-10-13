@@ -25,6 +25,7 @@
     let target;
     try { target = new URL(element.href, location.href); } catch (_) { return; }
     if (target.protocol === 'mailto:') {
+      if (element.dataset.contact === 'oppdrag') return send('oppdrag_epost');
       const interest = element.dataset.interest;
       if (modules.has(interest)) return send('testinteresse_' + interest);
       return send('kontakt_epost');
