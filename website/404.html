@@ -1,0 +1,5 @@
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Finn siden · allctrl</title><link rel="stylesheet" href="/style.css?v=light5"></head><body><main><section class="section"><h1>Finn veien videre.</h1><p>Siden kan ha fått en ny adresse.</p><a class="btn" href="/">Til allctrl</a></section></main><script>
+const modules = ["sourdoughctrl", "eatctrl", "drinkctrl", "allctrl", "sportctrl", "listenctrl", "jobctrl", "carctrl", "timectrl", "readctrl", "medctrl", "playctrl", "seectrl"];
+const match = location.pathname.match(/^\/([a-z]+ctrl)\.html$/);
+if (match && modules.includes(match[1])) location.replace('/' + match[1] + '/' + location.search + location.hash);
+</script></body></html>
