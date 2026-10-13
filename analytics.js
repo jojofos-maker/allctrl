@@ -24,7 +24,11 @@
     }
     let target;
     try { target = new URL(element.href, location.href); } catch (_) { return; }
-    if (target.protocol === 'mailto:') return send('kontakt_epost');
+    if (target.protocol === 'mailto:') {
+      const interest = element.dataset.interest;
+      if (modules.has(interest)) return send('testinteresse_' + interest);
+      return send('kontakt_epost');
+    }
     if (target.protocol === 'tel:') return send('kontakt_telefon');
     if (target.hostname === 'linkedin.com' || target.hostname.endsWith('.linkedin.com')) return send('kontakt_linkedin');
     if (target.hostname === 'timectrl-taupe.vercel.app' || target.hostname === 'timectrl.allctrl.no') return send('app_timectrl');

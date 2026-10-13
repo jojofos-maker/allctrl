@@ -17,3 +17,5 @@
 .card h3{margin-top:14px}
 @media(max-width:900px){.hero:has(.mockup-art){grid-template-columns:1fr}.mockup-art{width:100%;max-width:100%;margin:0}.product-mockup img{width:100%}}
 @media(max-width:620px){.hero:has(.mockup-art){grid-template-columns:1fr}.card-mockup{width:calc(100% + 46px);margin:-23px -23px 18px}.product-mockup a{border-radius:14px}}
+
+.interest-link{display:inline-block;margin:16px 0 0 20px;font-size:15px;font-weight:700;text-decoration:underline;text-underline-offset:4px}.interest-note{font-size:14px;max-width:600px}@media(max-width:620px){.interest-link{display:block;margin-left:0}}

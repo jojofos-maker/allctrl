@@ -4,3 +4,18 @@
 @media(max-width:900px){.hero{gap:30px;padding:55px 0}.grid{grid-template-columns:repeat(2,1fr)}.intro{gap:35px}.hero-art{padding:20px}.art-caption{font-size:9px;letter-spacing:.5px}.features{gap:14px}.feature{padding:20px}}
 @media(max-width:620px){main{padding:0 20px}.nav{padding:14px 20px}.navlinks{gap:16px;font-size:12px}.navlinks .contact-link{display:none}.brand{font-size:21px}.brand>.module-logo{width:34px;height:34px;padding:2px}.hero{grid-template-columns:1fr;gap:32px;padding:40px 0 45px}.hero:before{inset:0 -20px}.hero-art{max-width:360px;width:100%;margin:auto;padding:20px;transform:rotate(1deg)}.hero-art>.module-logo{max-width:220px;padding:14px}.module-hero .hero-art>.module-logo{max-width:200px}.lead{font-size:18px}.intro,.features{grid-template-columns:1fr;gap:18px}.section{padding:40px 0}.section-top{display:block}.grid{grid-template-columns:1fr}.card{padding:23px}.card p{min-height:0}.vision{padding:28px;margin-bottom:40px}.vision p{font-size:18px}.contact{padding:28px;margin-bottom:35px}.footer{padding:25px 20px;flex-direction:column}.next{align-items:start;flex-direction:column}.module-hero{padding-top:30px}.example-row{font-size:12px}.example-row span{font-size:11px}.hero .eyebrow{letter-spacing:1px;font-size:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card,.btn{transition:none}}
+
+/* Product concept images, October 2026 */
+.hero:has(.mockup-art){grid-template-columns:minmax(0,.85fr) minmax(0,1.5fr)}
+.mockup-art,.module-hero .mockup-art{padding:0;background:none;border:0;box-shadow:none;transform:none;min-width:0}
+.product-mockup{margin:0;width:100%}
+.product-mockup a{display:block;border-radius:22px;overflow:hidden;box-shadow:0 18px 50px #3b30241a}
+.product-mockup img{display:block;width:100%;height:auto;aspect-ratio:3/2}
+.product-mockup figcaption{font-size:12px;color:#52615e;margin-top:12px;text-align:center}
+.card-mockup{display:block;width:calc(100% + 52px);max-width:none;height:auto;aspect-ratio:3/2;object-fit:contain;margin:-26px -26px 20px;border-radius:16px 16px 0 0}
+.card>.module-logo{width:64px;height:64px;padding:5px;border-radius:14px}
+.card h3{margin-top:14px}
+@media(max-width:900px){.hero:has(.mockup-art){grid-template-columns:1fr}.mockup-art{width:100%;max-width:100%;margin:0}.product-mockup img{width:100%}}
+@media(max-width:620px){.hero:has(.mockup-art){grid-template-columns:1fr}.card-mockup{width:calc(100% + 46px);margin:-23px -23px 18px}.product-mockup a{border-radius:14px}}
+
+.interest-link{display:inline-block;margin:16px 0 0 20px;font-size:15px;font-weight:700;text-decoration:underline;text-underline-offset:4px}.interest-note{font-size:14px;max-width:600px}@media(max-width:620px){.interest-link{display:block;margin-left:0}}

@@ -26,3 +26,9 @@ Målingen sender bare forhåndsdefinerte hendelsesnavn. URL-parametere og hash u
 For å utelate egne besøk, sett `localStorage.setItem('umami.disabled', '1')` i nettleseren. Dette gjelder én nettleser om gangen. Opphev med `localStorage.removeItem('umami.disabled')`.
 
 Gratisnivået har 100 000 målinger per måned og 6 måneders historikk, kontrollert 13. oktober 2026 på https://umami.is/pricing. Eksporter månedsoversikt dersom lengre historikk trengs.
+
+## Interesse for testing
+
+Alle 13 modulsider har «Jeg vil teste»-lenke øverst og en interessemelding nederst. Knappen åpner brukerens eget e-postprogram med modulnavn i emnet og en kort ferdig utfylt tekst. Meldingen sendes av den besøkende til jjf@allctrl.no. Ingen skjemaopplysninger lagres på hjemmesiden, og ingen tilgang loves.
+
+Umami-hendelser `testinteresse_<modulnavn>` teller klikk på e-postknappen. Disse viser interesse, ikke antall sendte e-poster eller påmeldte testbrukere. Faktiske henvendelser finnes i innboksen til jjf@allctrl.no.
