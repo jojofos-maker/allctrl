@@ -1,14 +1,9 @@
-# Ny allctrl-hjemmeside og samlet grafikk
+# allctrl
 
-Forside og 13 modulsider i en felles mørk grafisk stil.
+Offentlig hjemmeside for ctrl-universet, med forside og 13 modulsider.
 
-## Mapper
+Nettstedet ligger i repositoryets rot for GitHub Pages. `website/` inneholder samme godkjente versjon som et samlet eksportgrunnlag. `brand/svg/` har fire SVG-varianter per modul, og `brand/packages/` har ferdige eksportpakker i SVG, PNG, WebP og PDF samt appikonstørrelser og favicon.
 
-- `website/` inneholder den komplette statiske nettsiden.
-- `brand/` inneholder grafikk for alle 13 moduler.
+Den tidligere forsiden er bevart i `archive/homepage-before-2026-10-13.html`, og i Git-historikken. Eksisterende enkeltfiler for apper og tidligere modulsider er beholdt.
 
-Nettsiden bruker relative lenker og kan ligge på både et eget domene og GitHub Pages under `/allctrl/`. For publisering kan innholdet i `website/` brukes som nettstedets rot. Domenet og den eksisterende publiseringen er ikke endret.
-
-Denne pakken ligger på en egen branch slik at den eksisterende nettsiden kan vurderes før den erstattes. Ingen kontoer, databaser eller appdata er inkludert. Produkttekstene beskriver ideene, ikke bekreftet lanseringsstatus.
-
-Se `brand/README.md` for formater og bruksområder.
+Produkttekstene beskriver ideer og muligheter. All lanseringsstatus er ikke verifisert. Domenet www.allctrl.no kobles når DNS-oppsettet er klart.
