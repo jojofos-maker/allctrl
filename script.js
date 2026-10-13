@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('[data-group]').forEach(c=>c.classList.toggle('hidden',button.dataset.filter!=='all'&&c.dataset.group!==button.dataset.filter));}));

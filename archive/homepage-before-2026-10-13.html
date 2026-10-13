@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="allctrl — alt du bruker tid på, under kontroll. Spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil, medisiner og tid — samlet i ett univers.">
+<title>ctrl-universet — alt du bruker tid på. under kontroll.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --bg: #0A0A0F;
+    --bg-card: #111118;
+    --bg-elevated: #16161F;
+    --text: #F0F0FF;
+    --text-dim: #8888AA;
+    --border: #1C1C30;
+    --border-strong: #2A2A44;
+
+    --mono: 'DM Mono', monospace;
+    --sans: 'Outfit', sans-serif;
+
+    /* Product accents */
+    --c-all: #E8FF47;
+    --c-sourdough: #C48A5A;
+    --c-see: #00E5FF;
+    --c-read: #4DFF91;
+    --c-eat: #FF6B35;
+    --c-drink: #4DFFF3;
+    --c-listen: #C084FC;
+    --c-play: #FF4D6D;
+    --c-car: #2563EB;
+    --c-sport: #FFC700;
+    --c-med: #FF7EB6;
+    --c-time: #8B9DFF;
+    --c-job: #FF6B52;
+  }
+
+  /* ============ RESET & BASE ============ */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Scroll offset for fixed header */
+  .section, .cta { scroll-margin-top: 80px; }
+
+  /* ============ HEADER ============ */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .header-logo img { height: 48px; }
+  .nav { display: flex; gap: 28px; }
+  .nav a {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+  .nav a:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .nav { gap: 16px; }
+    .nav a { font-size: 11px; letter-spacing: 0.05em; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 160px 0 100px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 600px;
+    background: radial-gradient(ellipse, rgba(232,255,71,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-logo { margin-bottom: 32px; }
+  .hero-logo img {
+    height: 140px;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 30px rgba(232,255,71,0.15));
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--c-all);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5.5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .hero p {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--text-dim);
+    max-width: 580px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--c-all);
+    color: #0A0A0F;
+  }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+  .btn-secondary:hover { 
+    border-color: var(--c-all); 
+    color: var(--c-all);
+  }
+
+  .hero-status {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .hero-status span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--c-sourdough);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(196,138,90,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(196,138,90,0); }
+  }
+
+  /* Logo grid i hero */
+  .hero-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .hero-strip a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.35s ease;
+  }
+  .hero-strip a:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.035);
+    border-color: var(--border-strong);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  }
+  .hero-strip img { 
+    height: 88px;
+    transition: transform 0.35s ease;
+  }
+  .hero-strip a:hover img {
+    transform: scale(1.06);
+  }
+
+  @media (max-width: 700px) {
+    .hero-strip { 
+      gap: 10px;
+      max-width: 100%;
+    }
+    .hero-strip a { padding: 16px 8px; }
+    .hero-strip img { height: 52px; }
+  }
+
+  /* ============ SECTIONS ============ */
+  .section { padding: 100px 0; }
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--c-all);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .section-lead {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  /* ============ FILOSOFI ============ */
+  .filosofi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .filosofi-text p {
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 18px;
+    font-weight: 300;
+  }
+  .filosofi-text strong { color: var(--text); font-weight: 500; }
+
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .principle {
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s;
+  }
+  .principle:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .principle-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--c-all);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .principle h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .principle p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .filosofi-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 640px) {
+    .principles { grid-template-columns: 1fr; }
+  }
+
+  /* ============ STRATEGI ============ */
+  .strategi-section { border-top: 1px solid var(--border); }
+  .strategi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .strategi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+  }
+  .strategi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.5;
+    transition: opacity 0.35s ease;
+  }
+  .strategi-card::after {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
+    opacity: 0.04;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .strategi-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+  }
+  .strategi-card:hover::before { opacity: 1; }
+  .strategi-card:hover::after { opacity: 0.08; }
+
+  .strategi-card-featured {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+  }
+  .strategi-card-featured::before { opacity: 1; height: 3px; }
+
+  .strategi-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .strategi-icon {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+  }
+  .strategi-icon-stack {
+    display: flex;
+    gap: 8px;
+  }
+  .strategi-icon-stack img {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .strategi-step {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    opacity: 0.8;
+  }
+  .strategi-card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-top: 4px;
+  }
+  .strategi-card-featured h4 {
+    font-size: 24px;
+  }
+  .strategi-card > p {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-weight: 300;
+    flex: 1;
+  }
+  .strategi-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+  .meta-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+  }
+  .meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .strategi-grid { grid-template-columns: 1fr; }
+    .strategi-card { padding: 24px; }
+    .strategi-card-featured h4 { font-size: 20px; }
+  }
+
+  /* ============ UNIVERSET GRID ============ */
+  .universe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .product-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .product-card:hover::before { opacity: 1; }
+
+  /* Per-product top accents */
+  .product-card[data-product="sourdoughctrl"]::before { background: var(--c-sourdough); }
+  .product-card[data-product="eatctrl"]::before { background: var(--c-eat); }
+  .product-card[data-product="drinkctrl"]::before { background: var(--c-drink); }
+  .product-card[data-product="readctrl"]::before { background: var(--c-read); }
+  .product-card[data-product="seectrl"]::before { background: var(--c-see); }
+  .product-card[data-product="playctrl"]::before { background: var(--c-play); }
+  .product-card[data-product="listenctrl"]::before { background: var(--c-listen); }
+  .product-card[data-product="carctrl"]::before { background: var(--c-car); }
+  .product-card[data-product="sportctrl"]::before { background: var(--c-sport); }
+
+  .product-card[data-product="medctrl"]::before { background: var(--c-med); }
+  [data-product="medctrl"] .product-name { color: var(--c-med); }
+  [data-mod="med"] { --mod: var(--c-med); }
+
+  .product-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .product-symbol {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    object-fit: contain;
+  }
+  .product-meta { flex: 1; }
+  .product-name {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .product-phase {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .product-card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .product-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    font-weight: 300;
+    flex: 1;
+  }
+  .product-cta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    transition: color 0.2s;
+    margin-top: 4px;
+  }
+  .product-card:hover .product-cta { color: var(--text); }
+
+  /* Product name colors */
+  [data-product="sourdoughctrl"] .product-name { color: var(--c-sourdough); }
+  [data-product="eatctrl"] .product-name { color: var(--c-eat); }
+  [data-product="drinkctrl"] .product-name { color: var(--c-drink); }
+  [data-product="readctrl"] .product-name { color: var(--c-read); }
+  [data-product="seectrl"] .product-name { color: var(--c-see); }
+  [data-product="playctrl"] .product-name { color: var(--c-play); }
+  [data-product="listenctrl"] .product-name { color: var(--c-listen); }
+  [data-product="carctrl"] .product-name { color: var(--c-car); }
+  [data-product="sportctrl"] .product-name { color: var(--c-sport); }
+
+  /* ============ ALLCTRL DASHBOARD MOCK ============ */
+  .dashboard-section { border-top: 1px solid var(--border); }
+  .dashboard-mock {
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    border-image: linear-gradient(135deg, var(--c-sourdough), var(--c-eat), var(--c-drink), var(--c-read), var(--c-see), var(--c-play), var(--c-listen), var(--c-car), var(--c-sport), var(--c-all)) 1;
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 16px;
+  }
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dashboard-header h3 {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--c-all);
+  }
+  .dashboard-header span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .stat-card {
+    padding: 18px;
+    background: var(--bg-elevated);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .stat-meta {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+  .stat-viz {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Per-module accent variables on each card */
+  [data-mod="sourdough"] { --mod: var(--c-sourdough); }
+  [data-mod="eat"] { --mod: var(--c-eat); }
+  [data-mod="drink"] { --mod: var(--c-drink); }
+  [data-mod="read"] { --mod: var(--c-read); }
+  [data-mod="see"] { --mod: var(--c-see); }
+  [data-mod="play"] { --mod: var(--c-play); }
+  [data-mod="listen"] { --mod: var(--c-listen); }
+  [data-mod="car"] { --mod: var(--c-car); }
+  [data-mod="sport"] { --mod: var(--c-sport); }
+  [data-mod] .stat-label { color: var(--mod); }
+
+  /* === sourdough: bubbling dots === */
+  .viz-bubbles {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+    height: 100%;
+  }
+  .viz-bubbles span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mod);
+    opacity: 0.4;
+    animation: viz-bubble 2s ease-in-out infinite;
+  }
+  .viz-bubbles span:nth-child(2) { animation-delay: 0.2s; }
+  .viz-bubbles span:nth-child(3) { animation-delay: 0.4s; }
+  .viz-bubbles span:nth-child(4) { animation-delay: 0.6s; }
+  .viz-bubbles span:nth-child(5) { animation-delay: 0.8s; }
+  @keyframes viz-bubble {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-12px); opacity: 1; }
+  }
+
+  /* === see: animated bars === */
+  .viz-bars {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+  }
+  .viz-bars span {
+    flex: 1;
+    background: var(--mod);
+    height: var(--h);
+    border-radius: 2px 2px 0 0;
+    opacity: 0.85;
+    animation: viz-bar-grow 1.8s ease-in-out infinite alternate;
+  }
+  .viz-bars span:nth-child(odd) { animation-delay: 0.3s; }
+  @keyframes viz-bar-grow {
+    from { transform: scaleY(0.6); }
+    to { transform: scaleY(1); }
+  }
+
+  /* === read: progress bar === */
+  .viz-progress {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+  .viz-progress-fill {
+    height: 100%;
+    width: var(--p);
+    background: var(--mod);
+    border-radius: 3px;
+    box-shadow: 0 0 12px var(--mod);
+    animation: viz-progress-fill 2.5s ease-out forwards;
+    transform-origin: left;
+  }
+  @keyframes viz-progress-fill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* === eat: popping dots on a timeline === */
+  .viz-dots {
+    width: 100%;
+    height: 100%;
+  }
+  .dots-line {
+    stroke: var(--mod);
+    stroke-width: 1;
+    opacity: 0.3;
+  }
+  .dot-pop {
+    fill: var(--mod);
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: viz-pop 3s ease-in-out infinite;
+  }
+  @keyframes viz-pop {
+    0%, 100% { transform: scale(0.6); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+
+  /* === drink: glass icons === */
+  .viz-glasses {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 100%;
+  }
+  .viz-glasses span {
+    width: 8px;
+    height: 16px;
+    background: var(--mod);
+    opacity: 0.5;
+    clip-path: polygon(15% 0, 85% 0, 70% 100%, 30% 100%);
+    animation: viz-fill 2.5s ease-in-out infinite;
+  }
+  .viz-glasses span:nth-child(2) { animation-delay: 0.15s; }
+  .viz-glasses span:nth-child(3) { animation-delay: 0.3s; }
+  .viz-glasses span:nth-child(4) { animation-delay: 0.45s; }
+  .viz-glasses span:nth-child(5) { animation-delay: 0.6s; }
+  .viz-glasses span:nth-child(6) { animation-delay: 0.75s; }
+  .viz-glasses span:nth-child(7) { animation-delay: 0.9s; }
+  @keyframes viz-fill {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* === listen: waveform === */
+  .viz-wave {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  .viz-wave span {
+    flex: 1;
+    background: var(--mod);
+    border-radius: 2px;
+    height: 30%;
+    animation: viz-wave-pulse 1.2s ease-in-out infinite;
+  }
+  .viz-wave span:nth-child(1) { animation-delay: 0s; }
+  .viz-wave span:nth-child(2) { animation-delay: 0.1s; }
+  .viz-wave span:nth-child(3) { animation-delay: 0.2s; }
+  .viz-wave span:nth-child(4) { animation-delay: 0.3s; }
+  .viz-wave span:nth-child(5) { animation-delay: 0.4s; }
+  .viz-wave span:nth-child(6) { animation-delay: 0.5s; }
+  .viz-wave span:nth-child(7) { animation-delay: 0.4s; }
+  .viz-wave span:nth-child(8) { animation-delay: 0.3s; }
+  .viz-wave span:nth-child(9) { animation-delay: 0.2s; }
+  .viz-wave span:nth-child(10) { animation-delay: 0.1s; }
+  .viz-wave span:nth-child(11) { animation-delay: 0.05s; }
+  .viz-wave span:nth-child(12) { animation-delay: 0s; }
+  @keyframes viz-wave-pulse {
+    0%, 100% { height: 25%; }
+    50% { height: 95%; }
+  }
+
+  /* === play: circular ring === */
+  .viz-ring {
+    width: 36px;
+    height: 36px;
+    transform: rotate(-90deg);
+  }
+  .ring-bg {
+    fill: none;
+    stroke: var(--bg-card);
+    stroke-width: 4;
+  }
+  .ring-fill {
+    fill: none;
+    stroke: var(--mod);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 150.8;
+    stroke-dashoffset: calc(150.8 - (150.8 * var(--p) / 100));
+    filter: drop-shadow(0 0 4px var(--mod));
+    animation: viz-ring-draw 2s ease-out forwards;
+  }
+  @keyframes viz-ring-draw {
+    from { stroke-dashoffset: 150.8; }
+  }
+
+  /* === sport: heartbeat pulse line === */
+  .viz-pulse-line {
+    width: 100%;
+    height: 100%;
+  }
+  .pulse-stroke {
+    fill: none;
+    stroke: var(--mod);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px var(--mod));
+    stroke-dasharray: 300;
+    animation: viz-pulse-draw 3s linear infinite;
+  }
+  @keyframes viz-pulse-draw {
+    0% { stroke-dashoffset: 300; }
+    50%, 100% { stroke-dashoffset: 0; }
+  }
+
+  /* === car: speedometer-style horizontal indicator === */
+  .viz-speed {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .viz-speed-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mod), transparent);
+    width: 65%;
+    border-radius: 3px;
+    box-shadow: 0 0 8px var(--mod);
+    animation: viz-speed-pulse 2s ease-in-out infinite;
+  }
+  @keyframes viz-speed-pulse {
+    0%, 100% { width: 55%; opacity: 0.7; }
+    50% { width: 75%; opacity: 1; }
+  }
+
+  @media (max-width: 640px) {
+    .dash-grid { grid-template-columns: 1fr 1fr; }
+    .stat-value { font-size: 18px; }
+  }
+
+  /* ============ ROADMAP ============ */
+  .roadmap-section {
+    border-top: 1px solid var(--border);
+  }
+  .roadmap-timeline {
+    display: grid;
+    gap: 0;
+    position: relative;
+  }
+  .roadmap-phase {
+    display: grid;
+    grid-template-columns: 100px 24px 1fr;
+    gap: 0 20px;
+    align-items: start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .roadmap-phase:last-child { border-bottom: none; }
+  .phase-time {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    padding-top: 2px;
+  }
+  .phase-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--c-all);
+    margin-top: 5px;
+    position: relative;
+  }
+  .phase-dot::after {
+    content: '';
+    position: absolute;
+    top: 10px; left: 4px;
+    width: 2px; height: calc(100% + 46px);
+    background: var(--border);
+  }
+  .roadmap-phase:last-child .phase-dot::after { display: none; }
+  .phase-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .phase-content p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .phase-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .phase-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 640px) {
+    .roadmap-phase { grid-template-columns: 80px 16px 1fr; gap: 0 12px; }
+    .phase-time { font-size: 11px; }
+  }
+
+  /* ============ CTA ============ */
+  .cta {
+    padding: 100px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .cta-icon {
+    height: 48px;
+    margin: 0 auto 32px;
+    filter: drop-shadow(0 0 30px rgba(232,255,71,0.2));
+  }
+  .cta h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .cta-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+  .cta-form {
+    display: flex;
+    gap: 8px;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  .cta-form input {
+    flex: 1;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 15px;
+    font-family: var(--sans);
+  }
+  .cta-form input::placeholder { color: var(--text-dim); }
+  .cta-form input:focus {
+    outline: none;
+    border-color: var(--c-all);
+  }
+  .cta-note {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 16px;
+    font-weight: 300;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .footer-logo img { height: 24px; opacity: 0.7; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero p, .hero-buttons, .hero-status, .hero-strip {
+    animation: fadeUp 0.7s ease-out both;
+  }
+  .hero p { animation-delay: 0.1s; }
+  .hero-buttons { animation-delay: 0.2s; }
+  .hero-status { animation-delay: 0.3s; }
+  .hero-strip { animation-delay: 0.4s; }
+
+  /* ============ SUCCESS STATE ============ */
+  .cta-success {
+    display: none;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--c-all);
+    padding: 16px;
+    animation: fadeUp 0.4s ease-out;
+  }
+  .cta-success.show { display: block; }
+  .cta-form.hidden { display: none; }
+
+  /* ============ REDUCED MOTION ============ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+.product-card[data-product="timectrl"]::before { background: var(--c-time); }
+[data-product="timectrl"] .product-name { color: var(--c-time); }
+[data-product="jobctrl"] .product-name {color:var(--c-job);}
+.product-card[data-product="jobctrl"]::before {background:var(--c-job);}
+</style>
+<link rel="icon" type="image/svg+xml" href="logos/v2/allctrl-appikon.svg">
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="header-logo" aria-label="allctrl forside">
+      <img src="logos/v2/allctrl-logo-navn-under.svg" alt="allctrl">
+    </a>
+    <nav class="nav">
+      <a href="#filosofi">Filosofi</a>
+      <a href="#universet">Universet</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#tidlig-tilgang">Tidlig tilgang</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-logo">
+      <img src="logos/v2/allctrl-logo-navn-under.svg" alt="allctrl">
+    </div>
+    <div class="hero-tag">CTRL-UNIVERSET · UNDER UTVIKLING</div>
+    <h1>Alt du bruker tid på.<br>Under kontroll.</h1>
+    <p>Spesialiserte apper for serier, bøker, mat, drikke, surdeig, sport, lyd, spill, bil, medisiner og tid. Hver app gjør én ting perfekt. allctrl samler alt på én skjerm.</p>
+    <div class="hero-buttons">
+      <a href="#tidlig-tilgang" class="btn btn-primary">Bli med tidlig</a>
+      <a href="#universet" class="btn btn-secondary">Utforsk universet</a>
+    </div>
+
+    <div class="hero-status">
+      <span><span class="dot"></span>SOURDOUGHCTRL FØRST UT</span>
+      <span>NORDISK-FØRST</span>
+      <span>TOLV APPER + ALLCTRL</span>
+    </div>
+
+    <!-- Logo-grid i hero — i strategisk rekkefølge -->
+    <div class="hero-strip">
+      <a href="sourdoughctrl.html" title="sourdoughctrl"><img src="logos/v2/sourdoughctrl-logo-navn-under.svg" alt="sourdoughctrl"></a>
+      <a href="eatctrl.html" title="eatctrl"><img src="logos/v2/eatctrl-logo-navn-under.svg" alt="eatctrl"></a>
+      <a href="drinkctrl.html" title="drinkctrl"><img src="logos/v2/drinkctrl-logo-navn-under.svg" alt="drinkctrl"></a>
+      <a href="readctrl.html" title="readctrl"><img src="logos/v2/readctrl-logo-navn-under.svg" alt="readctrl"></a>
+      <a href="seectrl.html" title="seectrl"><img src="logos/v2/seectrl-logo-navn-under.svg" alt="seectrl"></a>
+      <a href="playctrl.html" title="playctrl"><img src="logos/v2/playctrl-logo-navn-under.svg" alt="playctrl"></a>
+      <a href="listenctrl.html" title="listenctrl"><img src="logos/v2/listenctrl-logo-navn-under.svg" alt="listenctrl"></a>
+      <a href="carctrl.html" title="carctrl"><img src="logos/v2/carctrl-logo-navn-under.svg" alt="carctrl"></a>
+      <a href="sportctrl.html" title="sportctrl"><img src="logos/v2/sportctrl-logo-navn-under.svg" alt="sportctrl"></a>
+      <a href="medctrl.html" title="medctrl"><img src="logos/v2/medctrl-logo-navn-under.svg" alt="medctrl"></a>
+      <a href="timectrl.html" title="timectrl"><img src="logos/v2/timectrl-logo-navn-under.svg" alt="timectrl"></a>
+      <a href="jobctrl.html" title="jobctrl"><img src="logos/v2/jobctrl-logo-navn-under.svg" alt="jobctrl"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FILOSOFI ========== -->
+<section class="section" id="filosofi">
+  <div class="container">
+    <div class="section-eyebrow">FILOSOFI</div>
+    <h2 class="section-title">Du eier tiden din. Vi gir deg oversikten.</h2>
+
+    <div class="filosofi-grid">
+      <div class="filosofi-text">
+        <p>De fleste apper konkurrerer om oppmerksomheten din. <strong>Ctrl-universet gjør det motsatte</strong> — vi hjelper deg å forstå og styre det du allerede konsumerer.</p>
+        <p>Ikke én monolittisk app som prøver alt halvveis. I stedet et voksende sett spesialiserte apper med felles identitet, infrastruktur og overbygg.</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <div class="principle-num">01</div>
+          <h4>Spesialisert</h4>
+          <p>Hver app er bygget for ett formål. Ingen halve løsninger.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">02</div>
+          <h4>Modulær vekst</h4>
+          <p>Bruk én app eller hele suiten. Du bestemmer takten.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">03</div>
+          <h4>Felles språk</h4>
+          <p>Samme system og logikk. Lærer du én, kan du dem alle.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">04</div>
+          <h4>Dine data</h4>
+          <p>Anonymisert innsikt. Persondata deles aldri. Reklamefritt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STRATEGI ========== -->
+<section class="section strategi-section" id="strategi">
+  <div class="container">
+    <div class="section-eyebrow">STRATEGI</div>
+    <h2 class="section-title">Hvorfor denne rekkefølgen?</h2>
+    <p class="section-lead">De fleste starter med det mest komplekse produktet — og strever. Vi gjør det motsatte. Hver lansering bygger erfaringen som trengs for den neste.</p>
+
+    <div class="strategi-grid">
+
+      <div class="strategi-card" style="--accent: var(--c-sourdough);">
+        <div class="strategi-card-head">
+          <img src="logos/v2/sourdoughctrl-symbol.svg" alt="" class="strategi-icon">
+          <span class="strategi-step">STEG 01</span>
+        </div>
+        <h4>Start der risikoen er lavest</h4>
+        <p>sourdoughctrl er teknisk overkommelig, har en engasjert nisjemålgruppe og krever ingen tunge eksterne API-er.</p>
+        <div class="strategi-meta">
+          <span class="meta-label">RESULTAT</span>
+          <span class="meta-value">Stacken er bevist før neste produkt</span>
+        </div>
+      </div>
+
+      <div class="strategi-card" style="--accent: var(--c-eat);">
+        <div class="strategi-card-head">
+          <div class="strategi-icon-stack">
+            <img src="logos/v2/eatctrl-symbol.svg" alt="">
+            <img src="logos/v2/drinkctrl-symbol.svg" alt="">
+            <img src="logos/v2/readctrl-symbol.svg" alt="">
+          </div>
+          <span class="strategi-step">STEG 02–04</span>
+        </div>
+        <h4>Gjenbruk det som funker</h4>
+        <p>Samme arkitektur, samme designsystem, samme infrastruktur. Hver lansering blir raskere enn den forrige.</p>
+        <div class="strategi-meta">
+          <span class="meta-label">RESULTAT</span>
+          <span class="meta-value">Tre produkter på halve tiden</span>
+        </div>
+      </div>
+
+      <div class="strategi-card strategi-card-featured" style="--accent: var(--c-see);">
+        <div class="strategi-card-head">
+          <img src="logos/v2/seectrl-symbol.svg" alt="" class="strategi-icon">
+          <span class="strategi-step">STEG 05 · HOVEDSATSNING</span>
+        </div>
+        <h4>Hovedsatsningen kommer når stacken er bevist</h4>
+        <p>seectrl er det største markedet og det mest komplekse produktet. Når vi lanserer det, har vi fire vellykkede lanseringer bak oss — ikke null.</p>
+        <div class="strategi-meta">
+          <span class="meta-label">RESULTAT</span>
+          <span class="meta-value">Mindre risiko, mer treff</span>
+        </div>
+      </div>
+
+      <div class="strategi-card" style="--accent: var(--c-all);">
+        <div class="strategi-card-head">
+          <img src="logos/v2/allctrl-logo-navn-under.svg" alt="" class="strategi-icon">
+          <span class="strategi-step">STEG 06+</span>
+        </div>
+        <h4>allctrl gir mening først når det er noe å samle</h4>
+        <p>Et meta-dashboard uten moduler er bare en tom skjerm. Når flere produkter er live, blir allctrl det som ingen konkurrent kan kopiere.</p>
+        <div class="strategi-meta">
+          <span class="meta-label">RESULTAT</span>
+          <span class="meta-value">Et økosystem konkurrenter ikke kan kopiere</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== UNIVERSET ========== -->
+<section class="section" id="universet">
+  <div class="container">
+    <div class="section-eyebrow">UNIVERSET</div>
+    <h2 class="section-title">Alle apper. Ett system.</h2>
+    <p class="section-lead">Hver modul er selvstendig — eget navn, ikon og identitet. Sammen utgjør de ctrl-universet. Lanseringsrekkefølgen er strategisk: enklest først.</p>
+
+    <div class="universe-grid">
+
+      <!-- 1. sourdoughctrl — FØRST UT -->
+      <a class="product-card" data-product="sourdoughctrl" href="sourdoughctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/sourdoughctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">sourdoughctrl</div>
+            <div class="product-phase">FØRST UT · FASE 1–2</div>
+          </div>
+        </div>
+        <h3>Full kontroll på surdeigen din</h3>
+        <p>Spor starterkultur, logg bakeøkter og perfeksjoner teknikken over tid. Fotodagbok, oppskriftsbibliotek og tidslinje-visning.</p>
+        <div class="product-cta">UTFORSK SOURDOUGHCTRL →</div>
+      </a>
+
+      <!-- 2. eatctrl -->
+      <a class="product-card" data-product="eatctrl" href="eatctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/eatctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">eatctrl</div>
+            <div class="product-phase">FASE 3 · #2</div>
+          </div>
+        </div>
+        <h3>Restaurantene og måltidene dine</h3>
+        <p>Kontroll på restaurantene du har besøkt og rettene du har smakt. Fyll på med ønskelister over steder å prøve og smaker å oppdage.</p>
+        <div class="product-cta">UTFORSK EATCTRL →</div>
+      </a>
+
+      <!-- 3. drinkctrl -->
+      <a class="product-card" data-product="drinkctrl" href="drinkctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/drinkctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">drinkctrl</div>
+            <div class="product-phase">FASE 3 · #3</div>
+          </div>
+        </div>
+        <h3>Drinker, viner og øl du har smakt</h3>
+        <p>Hold styr på hva du har prøvd — og få tips til hva du burde smake neste gang. Personlig smaksoversikt for drinker, vin og øl.</p>
+        <div class="product-cta">UTFORSK DRINKCTRL →</div>
+      </a>
+
+      <!-- 4. readctrl -->
+      <a class="product-card" data-product="readctrl" href="readctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/readctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">readctrl</div>
+            <div class="product-phase">FASE 3 · #4</div>
+          </div>
+        </div>
+        <h3>Sporingsliste for alt du leser</h3>
+        <p>Bøker du leser, har lest og vil lese. Lesehistorikk, fremdrift per bok og oversikt over hele biblioteket ditt — fysiske og digitale.</p>
+        <div class="product-cta">UTFORSK READCTRL →</div>
+      </a>
+
+      <!-- 5. seectrl — HOVEDSATSNING -->
+      <a class="product-card" data-product="seectrl" href="seectrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/seectrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">seectrl</div>
+            <div class="product-phase">HOVEDSATSNING · FASE 4</div>
+          </div>
+        </div>
+        <h3>Alle serier, samlet på ett sted</h3>
+        <p>Oversikt over alle serier du følger på tvers av Netflix, HBO Max, Viaplay, Disney+ og resten. Episodesporing, fremdrift og automatisk strømmestatus.</p>
+        <div class="product-cta">UTFORSK SEECTRL →</div>
+      </a>
+
+      <!-- 6. playctrl -->
+      <a class="product-card" data-product="playctrl" href="playctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/playctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">playctrl</div>
+            <div class="product-phase">ETTER SEECTRL · FASE 5</div>
+          </div>
+        </div>
+        <h3>Spilloversikt og fremgang</h3>
+        <p>Spilloversikt, spilltid og fremgang i enkeltspill. Hold styr på backloggen og se hva du faktisk har spilt ferdig.</p>
+        <div class="product-cta">UTFORSK PLAYCTRL →</div>
+      </a>
+
+      <!-- 7. listenctrl -->
+      <a class="product-card" data-product="listenctrl" href="listenctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/listenctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">listenctrl</div>
+            <div class="product-phase">ETTER SEECTRL · FASE 5</div>
+          </div>
+        </div>
+        <h3>Lyttehistorikk og podkaster</h3>
+        <p>Lyttehistorikk, fremdrift på podkastserier og musikksmak. Alt du hører — samlet og oversiktlig.</p>
+        <div class="product-cta">UTFORSK LISTENCTRL →</div>
+      </a>
+
+      <!-- 8. carctrl -->
+      <a class="product-card" data-product="carctrl" href="carctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/carctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">carctrl</div>
+            <div class="product-phase">ETTER SEECTRL · FASE 5</div>
+          </div>
+        </div>
+        <h3>Biler du vurderer, prøvekjører og eier</h3>
+        <p>Oversikt over biler med spesifikasjoner, priser og dine personlige vurderinger. Prøvekjøringslogg og sammenligning side ved side.</p>
+        <div class="product-cta">UTFORSK CARCTRL →</div>
+      </a>
+
+      <!-- 9. sportctrl -->
+      <a class="product-card" data-product="sportctrl" href="sportctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/sportctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">sportctrl</div>
+            <div class="product-phase">ETTER SEECTRL · FASE 5</div>
+          </div>
+        </div>
+        <h3>Kamper, lag og treningsøkter</h3>
+        <p>Følg favorittelag, se kommende kamper og resultater. Logg egne treningsøkter med type, varighet og notater.</p>
+        <div class="product-cta">UTFORSK SPORTCTRL →</div>
+      </a>
+
+      <!-- 10. medctrl -->
+      <a class="product-card" data-product="medctrl" href="medctrl.html">
+        <div class="product-header">
+          <img class="product-symbol" src="logos/v2/medctrl-symbol.svg" alt="">
+          <div class="product-meta">
+            <div class="product-name">medctrl</div>
+            <div class="product-phase">KONSEPT · UNDER UTVIKLING</div>
+          </div>
+        </div>
+        <h3>Medisiner og rutiner, samlet</h3>
+        <p>En personlig oversikt over medisiner, tidspunkter og registrerte inntak. Hold styr på rutinene dine og ta med oversikten til neste samtale med legen.</p>
+        <div class="product-cta">UTFORSK MEDCTRL →</div>
+      </a>
+
+      <!-- 11. timectrl -->
+      <a class="product-card" data-product="timectrl" href="timectrl.html">
+        <div class="product-header"><img class="product-symbol" src="logos/v2/timectrl-symbol.svg" alt=""><div class="product-meta"><div class="product-name">timectrl</div><div class="product-phase">PILOT · BYGGER PÅ PROSJEKTPULS</div></div></div>
+        <h3>Tiden din, prosjekt for prosjekt</h3>
+        <p>Start og stopp timeren, registrer tid manuelt og få oversikt over arbeidsdagen. timectrl bygger på Prosjektpuls. Automatisk e-postrapport er fortsatt under utprøving.</p>
+        <div class="product-cta">UTFORSK TIMECTRL →</div>
+      </a>
+      <a class="product-card" data-product="jobctrl" href="jobctrl.html"><div class="product-header"><img class="product-symbol" src="logos/v2/jobctrl-symbol.svg" alt=""><div class="product-meta"><div class="product-name">jobctrl</div><div class="product-phase">ALPHA · UNDER UTVIKLING</div></div></div><div class="product-tagline">Jobbsøkingen din, samlet</div><p class="product-desc">Hold oversikt over aktuelle jobber, søknader, intervjuer og oppfølging.</p><span class="product-cta">UTFORSK JOBCTRL →</span></a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== ALLCTRL DASHBOARD ========== -->
+<section class="section dashboard-section" id="dashboard">
+  <div class="container">
+    <div class="section-eyebrow">DASHBOARD</div>
+    <h2 class="section-title">allctrl — alt på én skjerm</h2>
+    <p class="section-lead">Når nok moduler er live, samler allctrl aktiviteten din i ett felles dashboard. Én skjerm, full oversikt.</p>
+
+    <div class="dashboard-mock">
+      <div class="dashboard-header">
+        <h3>allctrl</h3>
+        <span>DENNE UKEN · MAI 2026</span>
+      </div>
+      <div class="dash-grid">
+
+        <div class="stat-card" data-mod="sourdough">
+          <div class="stat-label">SOURDOUGHCTRL</div>
+          <div class="stat-value">2 bakeøkter</div>
+          <div class="stat-meta">Starter fôret 3x</div>
+          <div class="stat-viz">
+            <div class="viz-bubbles">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="eat">
+          <div class="stat-label">EATCTRL</div>
+          <div class="stat-value">3 nye steder</div>
+          <div class="stat-meta">12 retter smakt</div>
+          <div class="stat-viz">
+            <svg class="viz-dots" viewBox="0 0 100 30">
+              <line x1="5" y1="15" x2="95" y2="15" class="dots-line"/>
+              <circle cx="20" cy="15" r="4" class="dot-pop" style="animation-delay: 0s"/>
+              <circle cx="50" cy="15" r="4" class="dot-pop" style="animation-delay: 0.4s"/>
+              <circle cx="80" cy="15" r="4" class="dot-pop" style="animation-delay: 0.8s"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="drink">
+          <div class="stat-label">DRINKCTRL</div>
+          <div class="stat-value">7 nye smaker</div>
+          <div class="stat-meta">5 viner · 2 øl</div>
+          <div class="stat-viz">
+            <div class="viz-glasses">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="read">
+          <div class="stat-label">READCTRL</div>
+          <div class="stat-value">128 sider</div>
+          <div class="stat-meta">«Dune Messiah» — 62 %</div>
+          <div class="stat-viz">
+            <div class="viz-progress">
+              <div class="viz-progress-fill" style="--p: 62%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="see">
+          <div class="stat-label">SEECTRL</div>
+          <div class="stat-value">4 episoder</div>
+          <div class="stat-meta">2 serier · Netflix, HBO</div>
+          <div class="stat-viz">
+            <div class="viz-bars">
+              <span style="--h: 40%"></span>
+              <span style="--h: 70%"></span>
+              <span style="--h: 55%"></span>
+              <span style="--h: 90%"></span>
+              <span style="--h: 60%"></span>
+              <span style="--h: 80%"></span>
+              <span style="--h: 45%"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="play">
+          <div class="stat-label">PLAYCTRL</div>
+          <div class="stat-value">6t 40m</div>
+          <div class="stat-meta">Baldur's Gate 3 — 78 %</div>
+          <div class="stat-viz">
+            <svg class="viz-ring" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="24" class="ring-bg"/>
+              <circle cx="30" cy="30" r="24" class="ring-fill" style="--p: 78"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="listen">
+          <div class="stat-label">LISTENCTRL</div>
+          <div class="stat-value">9 episoder</div>
+          <div class="stat-meta">3 podkaster · 4t 20m</div>
+          <div class="stat-viz">
+            <div class="viz-wave">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="car">
+          <div class="stat-label">CARCTRL</div>
+          <div class="stat-value">3 prøvekjørt</div>
+          <div class="stat-meta">2 på shortlist</div>
+          <div class="stat-viz">
+            <div class="viz-speed">
+              <div class="viz-speed-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="sport">
+          <div class="stat-label">SPORTCTRL</div>
+          <div class="stat-value">3 kamper</div>
+          <div class="stat-meta">2 treningsøkter logget</div>
+          <div class="stat-viz">
+            <svg class="viz-pulse-line" viewBox="0 0 120 30" preserveAspectRatio="none">
+              <polyline points="0,15 20,15 25,5 30,25 35,15 60,15 65,8 70,22 75,15 120,15"
+                class="pulse-stroke"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-mod="med">
+          <div class="stat-label">MEDCTRL</div>
+          <div class="stat-value">Dagens rutine</div>
+          <div class="stat-meta">Illustrasjon · inntak og tidspunkter</div>
+          <div class="stat-viz"><img src="logos/v2/medctrl-symbol.svg" alt="" style="height: 36px;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ROADMAP ========== -->
+<section class="section roadmap-section" id="roadmap">
+  <div class="container">
+    <div class="section-eyebrow">ROADMAP</div>
+    <h2 class="section-title">Fra idé til univers</h2>
+    <p class="section-lead">Seks faser fra første prototype til globalt økosystem. Hvert steg bygger på det forrige.</p>
+
+    <div class="roadmap-timeline">
+      <div class="roadmap-phase">
+        <div class="phase-time">Fase 1<br>0–2 mnd</div>
+        <div class="phase-dot"></div>
+        <div class="phase-content">
+          <h4>sourdoughctrl — prototype og brukertesting</h4>
+          <p>Bygge første prototype i Flutter + Firebase/Supabase. Starterlogg og bakeøkt-logg som MVP. Brukertesting med 5–10 surdeigsbakere. Registrere domener og merkevare.</p>
+          <div class="phase-tags">
+            <span class="phase-tag">FLUTTER</span>
+            <span class="phase-tag">FIREBASE</span>
+            <span class="phase-tag">MVP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-time">Fase 2<br>2–4 mnd</div>
+        <div class="phase-dot"></div>
+        <div class="phase-content">
+          <h4>sourdoughctrl — lansering i Norge</h4>
+          <p>Første live-produkt i ctrl-universet. Freemium-modell live. Iterasjoner basert på brukerfeedback. Bevis at stacken fungerer.</p>
+          <div class="phase-tags">
+            <span class="phase-tag">LANSERING</span>
+            <span class="phase-tag">FREEMIUM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-time">Fase 3<br>4–10 mnd</div>
+        <div class="phase-dot"></div>
+        <div class="phase-content">
+          <h4>eatctrl · drinkctrl · readctrl</h4>
+          <p>Tre nye produkter lanseres med gjenbruk av sourdoughctrl-infrastrukturen. Affiliate-inntekter etableres. Fire lanseringer bak seg når readctrl starter.</p>
+          <div class="phase-tags">
+            <span class="phase-tag">GJENBRUK</span>
+            <span class="phase-tag">AFFILIATE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-time">Fase 4<br>10–18 mnd</div>
+        <div class="phase-dot"></div>
+        <div class="phase-content">
+          <h4>seectrl — kommersiell hovedsatsning</h4>
+          <p>Største marked, mest komplekst. TMDB- og JustWatch-integrasjon. Nordisk ekspansjon og vekststrategi. Hele stacken er bevist gjennom fire tidligere lanseringer.</p>
+          <div class="phase-tags">
+            <span class="phase-tag">TMDB</span>
+            <span class="phase-tag">JUSTWATCH</span>
+            <span class="phase-tag">NORDEN</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-time">Fase 5<br>18–30 mnd</div>
+        <div class="phase-dot"></div>
+        <div class="phase-content">
+          <h4>playctrl · listenctrl · carctrl · sportctrl</h4>
+          <p>Rekkefølge bestemmes når seectrl er lansert. carctrl har allerede fungerende prototype. Bygge og lansere allctrl som felles dashboard.</p>
+          <div class="phase-tags">
+            <span class="phase-tag">SKALERING</span>
+            <span class="phase-tag">ALLCTRL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-time">Fase 6<br>30+ mnd</div>
+        <div class="phase-dot"></div>
+        <div class="phase-content">
+          <h4>Global skalering og partnerskap</h4>
+          <p>allctrl-premiumplan på tvers av alle moduler. Global skaleringsplan. Partnerskap med bil-, sport- og medieaktører i Norden.</p>
+          <div class="phase-tags">
+            <span class="phase-tag">GLOBAL</span>
+            <span class="phase-tag">PREMIUM</span>
+            <span class="phase-tag">PARTNERSKAP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TIDLIG TILGANG ========== -->
+<section class="cta" id="tidlig-tilgang">
+  <div class="container">
+    <img class="cta-icon" src="logos/v2/allctrl-logo-navn-under.svg" alt="">
+    <h2>Bli med fra starten</h2>
+    <div class="cta-tag">CTRL-UNIVERSET · TIDLIG TILGANG</div>
+    <form class="cta-form" id="ctaForm" action="https://formspree.io/f/mykovdpe" method="POST" onsubmit="return handleSignup(event)">
+  <input type="email" name="email" id="ctaEmail" placeholder="din@epost.no" required>
+  <input type="hidden" name="_subject" value="Ny påmelding til ctrl-universet">
+  <input type="hidden" name="kilde" value="allctrl landingsside">
+  <input type="text" name="_gotcha" style="display:none">
+  <button type="submit" class="btn btn-primary">Meld meg på</button>
+</form>
+    <div class="cta-success" id="ctaSuccess">
+      ✓ Du er på listen. Vi gir beskjed når sourdoughctrl er klar.
+    </div>
+ 
+    <p class="cta-note">Ingen spam. Kun oppdateringer om ctrl-universet.<br>Du kan melde deg av når som helst. <a href="personvern.html" style="text-decoration: underline; color: var(--text-dim);">Les personvernerklæringen</a></p>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <img src="logos/v2/allctrl-logo-navn-under.svg" alt="allctrl">
+    </div>
+    <span>© 2026 ctrl-universet</span>
+    <div class="footer-links">
+      <a href="#filosofi">Filosofi</a>
+      <a href="#universet">Universet</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+  </div>
+</footer>
+<script>
+async function handleSignup(event) {
+  event.preventDefault();
+  const form = document.getElementById('ctaForm');
+  const email = document.getElementById('ctaEmail').value;
+  
+  if (!email || !email.includes('@')) return false;
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    
+    if (response.ok) {
+      form.classList.add('hidden');
+      document.getElementById('ctaSuccess').classList.add('show');
+    } else {
+      alert('Noe gikk galt. Prøv igjen eller send e-post direkte.');
+    }
+  } catch (error) {
+    alert('Kunne ikke sende. Sjekk nettforbindelsen og prøv igjen.');
+  }
+  return false;
+}
+</script>
+
+</body>
+</html>
+
+
+
