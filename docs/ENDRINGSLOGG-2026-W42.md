@@ -151,3 +151,8 @@ Kilde: [680c2244](https://github.com/jojofos-maker/allctrl/commit/680c2244c23e33
 ## Dekningsmerknad for 12. oktober
 
 Ingen commits fra 12. oktober ble funnet i dette repoets hentede main-historikk. Dette beviser ikke at det ikke ble gjort arbeid i andre verktøy eller samtaler.
+
+
+## 15. oktober 2026 visuell ukesrapport
+
+Laget en kort PDF-rapport for 12.-15. oktober med fem sider, ferske skjermbilder av offentlig hjemmeside, Bak ctrl og jobctrl-innlogging, samt de eksisterende ekte appbildene fra timectrl-veiledningen. Konseptbilde og innloggingsskjerm er tydelig merket. Leveranser, testbegrensninger og neste steg er skilt. Rapporten er lagret som allctrl-ukerapport-2026-uke42.pdf i den interne AllCTRL-dokumentasjonen og er ikke publisert på hjemmesiden. Alle fem PDF-sider er visuelt kontrollert; en overlappende overskrift ble rettet og kontrollert på nytt. Ingen nye innloggede funksjonstester eller appendringer er utført.
