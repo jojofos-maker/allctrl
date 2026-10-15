@@ -24,3 +24,10 @@ Ikke legg private profiler, CV-er, søknader, helseopplysninger, pilotkontakter,
 - docs/ENDRINGSLOGG-2026-W42.md dekker gjennomgangen 12.–15. oktober 2026. Før senere arbeid i en ny datert uke-/endringslogg og lenk fra README.
 - Felles oversikt og leveransekatalog finnes i jojofos-maker/allctrl under docs/.
 - Historikk arkiveres med dato og kilde, ikke ved å slette tidligere dokumentasjon.
+
+
+## Påkrevd Google Disk og kontinuitet
+
+Brukerføring 15. oktober 2026: Google Disk skal alltid oppdateres som del av dokumentasjonsarbeidet uten egen påminnelse. Bruk den eksisterende private AllCTRL-strukturen og prosjektregisteret i 01_styring-og-strategi. Oppdater også relevante produktdokumenter, kilder og neste handling. Bevar eksisterende filidentiteter og historikk. GitHub og ChatGPT Library erstatter ikke Google Disk. Bekreft faktisk lagring før oppgaven omtales som synkronisert, eller oppgi et konkret tilgangshinder.
+
+Bruk Personal Context for kontinuitet når relevant. Vesentlige beslutninger og preferanser skal oppsummeres i det private prosjektregisteret så de kan finnes igjen. Hvis Personal Context bare tilbyr søk, skal du ikke påstå en direkte minneoppdatering. Ingen private Drive-ID-er, kandidatopplysninger eller kontaktdata skal føres i dette offentlige regelsettet.
