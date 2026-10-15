@@ -50,3 +50,8 @@ Statusmerker vises på forsiden og hver modulside. Oppdatert 13. oktober 2026.
 «Jobb med meg» finnes på https://www.allctrl.no/johan/#samarbeid. Seksjonen presenterer lederstøtte, praktiske AI-kurs/hjelp og HMS-/kvalitetsarbeid. Kontakt går til jjf@allctrl.no via den besøkendes e-postprogram med ferdig emne og forslag til melding. LinkedIn er fortsatt synlig øverst og i kontaktseksjonen.
 
 Umami-hendelsen `oppdrag_epost` teller klikk på oppdrags- og samarbeidslenker. Den måler ikke sendte e-poster. Henvendelser finnes i e-postinnboksen. Ingen informasjon fra e-postmeldingen sendes til Umami.
+
+
+## Løpende prosjektdokumentasjon
+
+Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [status og åpne kontroller](docs/STATUS.md), [endringslogg uke 42](docs/ENDRINGSLOGG-2026-W42.md) og [arbeidsregler](AGENTS.md). [Leveransekatalogen](docs/LEVERANSER.md) viser filer, formater og intern hoveddokumentasjon.
