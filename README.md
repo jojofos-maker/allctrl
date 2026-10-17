@@ -55,3 +55,7 @@ Umami-hendelsen `oppdrag_epost` teller klikk på oppdrags- og samarbeidslenker. 
 ## Løpende prosjektdokumentasjon
 
 Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [status og åpne kontroller](docs/STATUS.md), [endringslogg uke 42](docs/ENDRINGSLOGG-2026-W42.md) og [arbeidsregler](AGENTS.md). [Leveransekatalogen](docs/LEVERANSER.md) viser filer, formater og intern hoveddokumentasjon.
+
+## Skrivebeskyttet domenekontroll
+
+`node scripts/check-public-domain.mjs` kontrollerer timectrl.allctrl.no med DNS og HTTPS HEAD. Oppgi eventuelt de forhåndsgodkjente domenene `timectrl.allctrl.no www.allctrl.no allctrl.no` som argumenter. Ingen innlogging, cookies, sideinnhold eller DNS-endringer. `node --test tests/public-domain.test.mjs` kjører isolerte tester uten nettverk eller npm-avhengigheter. Exit 0 betyr at begge kontrollene er bekreftet; exit 2 betyr uavklart/manuell kontroll, ikke nødvendigvis driftsstans. Se [A08-verifikasjon 17. oktober](docs/VERIFISERING-2026-10-17-A08.md).

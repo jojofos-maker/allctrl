@@ -27,3 +27,7 @@ Se full commitlogg i hvert repo. Ingen ny innlogget akseptansetest er gjennomfø
 AGENTS.md gjør dokumentasjon til del av hver vesentlige leveranse. En daglig dokumentasjonskontroll er opprettet i ChatGPT for kveldstid i Europe/Oslo. Den supplerer, men erstatter ikke, oppdateringer under arbeidet. Den kan bare kontrollere tilgjengelige kilder og må melde tilgangshindre. Endringslogger skal ikke brukes til å erklære tester eller produksjonsstatus uten bevis.
 
 Se [leveransekatalog](LEVERANSER.md) og [endringslogg uke 42](ENDRINGSLOGG-2026-W42.md).
+
+## A08 – avgrenset driftskontroll 17. oktober 2026
+
+Repeterbar DNS-/HTTPS-kontroll og 12 isolerte tester er implementert i egen agentgren, uten publisering. HTTPS HEAD mot www.allctrl.no ga 200 med validert TLS; allctrl.no ga 301 med validert TLS (ikke fulgt). timectrl.allctrl.no ga timeout fra arbeidsmiljøet. Direkte DNS-forespørsler ga ECONNREFUSED for alle tre domener. Dette beviser ikke tjenesteutfall. A08 er fortsatt påbegynt: offentlig DNS og timectrl HTTPS, e-post/backupansvar og komplett driftsprotokoll må verifiseres. [Kommandoer, resultater og gren](VERIFISERING-2026-10-17-A08.md). Øvrige daterte kontroller over er historikk, ikke nye tester.
