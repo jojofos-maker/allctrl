@@ -1,5 +1,9 @@
 # Samlet status 15. oktober 2026
 
+## M01 – avgrensningsforslag 18. oktober 2026
+
+Et konkret [førsteversjonsforslag for medctrl](MEDCTRL-M01-SCOPE-2026-10-18.md) er klart for eierbeslutning: én selvvalgt rutine og egen registrering, først med syntetiske data. Dette er ikke et godkjent byggeoppdrag eller en helseapp. Seks statiske kildetester av dagens informasjonsside bestod; ingen HTML, design, drift eller produktstatus er endret. M01 venter på godkjenning før bygging.
+
 ## Prioritet
 
 Godkjent 9. oktober: timectrl først, jobctrl deretter, medctrl tredje. allctrl er felles ramme. Andre produkter beholdes på vent uten nye lanseringsløfter. Tidligere markeds- og prisantakelser er ikke validerte prognoser.
