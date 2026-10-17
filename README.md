@@ -1,5 +1,9 @@
 # allctrl
 
+## M01 – avgrensningsforslag 18. oktober 2026
+
+Et konkret [førsteversjonsforslag for medctrl](docs/MEDCTRL-M01-SCOPE-2026-10-18.md) er klart for eierbeslutning: én selvvalgt rutine og egen registrering, først med syntetiske data. Dette er ikke et godkjent byggeoppdrag eller en helseapp. Seks statiske kildetester av dagens informasjonsside bestod; ingen HTML, design, drift eller produktstatus er endret. M01 venter på godkjenning før bygging.
+
 Offentlig hjemmeside for ctrl-universet på https://www.allctrl.no/. GitHub Pages publiserer repositoryets rot fra main.
 
 Hver modul har én side i `<modul>/index.html`. Ikke legg tilbake `<modul>.html` i roten. GitHub Pages kan ellers levere en annen versjon på adressen uten avsluttende skråstrek. Gamle .html-bokmerker håndteres av 404.html. Tidligere sider bevares i Git-historikken, ikke som offentlig HTML.
