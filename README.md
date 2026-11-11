@@ -29,7 +29,7 @@ Gratisnivået har 100 000 målinger per måned og 6 måneders historikk, kontrol
 
 ## Interesse for testing
 
-Alle 13 modulsider har «Jeg vil teste»-lenke øverst og en interessemelding nederst. Knappen åpner brukerens eget e-postprogram med modulnavn i emnet og en kort ferdig utfylt tekst. Meldingen sendes av den besøkende til jjf@allctrl.no. Ingen skjemaopplysninger lagres på hjemmesiden, og ingen tilgang loves.
+Alle modulsider har «Jeg vil teste»-lenke øverst og en interessemelding nederst. Knappen åpner brukerens eget e-postprogram med modulnavn i emnet og en kort ferdig utfylt tekst. Meldingen sendes av den besøkende til jjf@allctrl.no. Ingen skjemaopplysninger lagres på hjemmesiden, og ingen tilgang loves.
 
 Umami-hendelser `testinteresse_<modulnavn>` teller klikk på e-postknappen. Disse viser interesse, ikke antall sendte e-poster eller påmeldte testbrukere. Faktiske henvendelser finnes i innboksen til jjf@allctrl.no.
 
@@ -41,7 +41,7 @@ Statusmerker vises på forsiden og hver modulside. Oppdatert 13. oktober 2026.
 | --- | --- |
 | I bruk | timectrl |
 | Prototype | jobctrl, seectrl, carctrl |
-| Ide | allctrl, drinkctrl, eatctrl, listenctrl, medctrl, playctrl, readctrl, sourdoughctrl, sportctrl |
+| Ide | allctrl, drinkctrl, eatctrl, listenctrl, medctrl, playctrl, readctrl, sourdoughctrl, sportctrl, stayctrl |
 
 «I bruk» gjelder en første versjon og betyr ikke at alle planlagte funksjoner er ferdige. «Prototype» bekrefter en tidlig versjon, ikke åpen tilgjengelighet eller full funksjonstest. Kun Timectrl har en bekreftet offentlig appknapp på hjemmesiden. Konseptbilder skal fortsatt merkes som konseptbilder. Oppdater status både på forsiden, modulsiden og i eksportgrunnlaget når den endres.
 
@@ -55,3 +55,7 @@ Umami-hendelsen `oppdrag_epost` teller klikk på oppdrags- og samarbeidslenker. 
 ## Løpende prosjektdokumentasjon
 
 Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [status og åpne kontroller](docs/STATUS.md), [endringslogg uke 42](docs/ENDRINGSLOGG-2026-W42.md) og [arbeidsregler](AGENTS.md). [Leveransekatalogen](docs/LEVERANSER.md) viser filer, formater og intern hoveddokumentasjon.
+
+## stayctrl – 11. november 2026
+
+Ny modul i produktfamilien: `stayctrl/index.html` med konseptillustrasjon `assets/mockups/stayctrl-concept.svg` og kort i `index.html`. Status er **idé**, ikke ferdig app. Planlagte funksjoner er digital hyttebok med bilder og tekst, praktisk hytteguide og gjestedeling. Integrasjonen er commitet til `main` og avventer uavhengig kontroll av offentlig GitHub Pages-publisering og visuell nettlesertest. Endringene er ikke speilet til `website/`-eksportgrunnlaget ennå.
