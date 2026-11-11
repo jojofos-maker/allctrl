@@ -59,3 +59,7 @@ Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [
 ## stayctrl – 11. november 2026
 
 Ny modul i produktfamilien: `stayctrl/index.html` med konseptillustrasjon `assets/mockups/stayctrl-concept.svg` og kort i `index.html`. Status er **idé**, ikke ferdig app. Planlagte funksjoner er digital hyttebok med bilder og tekst, praktisk hytteguide og gjestedeling. Integrasjonen er commitet til `main` og avventer uavhengig kontroll av offentlig GitHub Pages-publisering og visuell nettlesertest. Endringene er ikke speilet til `website/`-eksportgrunnlaget ennå.
+
+## Felles designstandard
+
+Alle nye og oppdaterte moduler skal følge [obligatorisk design-, implementerings- og publiseringsprosess](docs/DESIGN-OG-PUBLISERING-STANDARD.md). Prosedyren krever identisk AC-mastergeometri, gjenbruk av kortmal, redigerbar typografi, mobil sammenligning mot referansemoduler, produksjonskontroll og synkronisert Google Drive-dokumentasjon.
