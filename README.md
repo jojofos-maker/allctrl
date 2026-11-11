@@ -58,7 +58,7 @@ Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [
 
 ## stayctrl – 11. november 2026
 
-Ny modul i produktfamilien: `stayctrl/index.html` med konseptillustrasjon `assets/mockups/stayctrl-concept.svg` og kort i `index.html`. Status er **idé**, ikke ferdig app. Planlagte funksjoner er digital hyttebok med bilder og tekst, praktisk hytteguide og gjestedeling. Integrasjonen er commitet til `main` og avventer uavhengig kontroll av offentlig GitHub Pages-publisering og visuell nettlesertest. Endringene er ikke speilet til `website/`-eksportgrunnlaget ennå.
+stayctrl er en **idé**, ikke en ferdig app. Gjeldende visuelle leveranse er det fotorealistiske produktbildet v10 (`assets/mockups/stayctrl-mockup-v10.jpg`) med en delvis redigerbar SVG-kilde (`assets/mockups/stayctrl-editable-v10.svg`). Forsiden og produktsiden er oppdatert, også i `website/`-speilet. GitHub Pages bekreftet vellykket publiseringsjobb for siste nettsidecommit, men visuell mobilkontroll og endelig designgodkjenning gjenstår. Se [status og overlevering](docs/STATUS.md#stayctrl--avslutning-av-designøkt-11-november-2026).
 
 ## Felles designstandard
 
