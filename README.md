@@ -4,11 +4,11 @@ Offentlig hjemmeside for ctrl-universet på https://www.allctrl.no/. GitHub Page
 
 Hver modul har én side i `<modul>/index.html`. Ikke legg tilbake `<modul>.html` i roten. GitHub Pages kan ellers levere en annen versjon på adressen uten avsluttende skråstrek. Gamle .html-bokmerker håndteres av 404.html. Tidligere sider bevares i Git-historikken, ikke som offentlig HTML.
 
-`website/` er et synkronisert eksportgrunnlag. `brand/` inneholder logoer og eksportpakker. Produktideer merkes som under utvikling. Timectrl lenker til den offentlige appadressen https://timectrl-taupe.vercel.app/. Personvernsiden gjelder hjemmesiden.
+`website/` er et delvis eksportgrunnlag med HTML, CSS, JS og noen bilder. Det skal holdes likt med roten. Sist synkronisert 16. november 2026. `brand/` inneholder logoer og eksportpakker. Produktideer merkes som under utvikling. Timectrl lenker til https://timectrl.allctrl.no/ (samlet 16. november 2026, ikke brukerbekreftet). Den tidligere adressen https://timectrl-taupe.vercel.app/ telles fortsatt i analytics. Personvernsiden gjelder hjemmesiden.
 
 ## Bruksstatistikk
 
-Umami-integrasjon er klargjort på alle 16 innholdssider, inkludert Bak ctrl. Nettsted-ID er konfigurert 13. oktober 2026. Speil endringen i `website/analytics.js`. Måling er aktiv på allctrl.no og www.allctrl.no.
+Umami-integrasjon er klargjort på alle 17 innholdssider, inkludert Bak ctrl, personvern og stayctrl (stayctrl lagt til i modullisten 16. november 2026). Nettsted-ID er konfigurert 13. oktober 2026. Speil endringen i `website/analytics.js`. Måling er aktiv på allctrl.no og www.allctrl.no.
 
 Tilgang til statistikken
 
@@ -35,15 +35,15 @@ Umami-hendelser `testinteresse_<modulnavn>` teller klikk på e-postknappen. Diss
 
 ## Modulstatus
 
-Statusmerker vises på forsiden og hver modulside. Oppdatert 13. oktober 2026.
+Statusmerker vises på forsiden og hver modulside. Oppdatert 13. oktober 2026, timectrl justert 16. november 2026.
 
 | Status | Moduler |
 | --- | --- |
-| I bruk | timectrl |
+| Beta · under utvikling | timectrl |
 | Prototype | jobctrl, seectrl, carctrl |
-| Ide | allctrl, drinkctrl, eatctrl, listenctrl, medctrl, playctrl, readctrl, sourdoughctrl, sportctrl, stayctrl |
+| Idé | allctrl, drinkctrl, eatctrl, listenctrl, medctrl, playctrl, readctrl, sourdoughctrl, sportctrl, stayctrl |
 
-«I bruk» gjelder en første versjon og betyr ikke at alle planlagte funksjoner er ferdige. «Prototype» bekrefter en tidlig versjon, ikke åpen tilgjengelighet eller full funksjonstest. Kun Timectrl har en bekreftet offentlig appknapp på hjemmesiden. Konseptbilder skal fortsatt merkes som konseptbilder. Oppdater status både på forsiden, modulsiden og i eksportgrunnlaget når den endres.
+timectrl ble vist som «I bruk» på forsiden og «Beta · under utvikling» på produktsiden. Fra 16. november 2026 brukes beta begge steder, slik produktsiden sier. Etiketten «I bruk» (`status-live`) finnes fortsatt i CSS og gjelder en første versjon og betyr ikke at alle planlagte funksjoner er ferdige. «Prototype» bekrefter en tidlig versjon, ikke åpen tilgjengelighet eller full funksjonstest. Kun Timectrl har en bekreftet offentlig appknapp på hjemmesiden. Konseptbilder skal fortsatt merkes som konseptbilder. Oppdater status både på forsiden, modulsiden og i eksportgrunnlaget når den endres.
 
 ## Jobb med Johan Jørgen
 
@@ -54,7 +54,7 @@ Umami-hendelsen `oppdrag_epost` teller klikk på oppdrags- og samarbeidslenker. 
 
 ## Løpende prosjektdokumentasjon
 
-Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [status og åpne kontroller](docs/STATUS.md), [endringslogg uke 42](docs/ENDRINGSLOGG-2026-W42.md) og [arbeidsregler](AGENTS.md). [Leveransekatalogen](docs/LEVERANSER.md) viser filer, formater og intern hoveddokumentasjon.
+Dokumentasjon oppdateres som del av vesentlig arbeid uten egen påminnelse. Se [status og åpne kontroller](docs/STATUS.md), [endringslogg uke 42](docs/ENDRINGSLOGG-2026-W42.md), [endringslogg uke 47](docs/ENDRINGSLOGG-2026-W47.md) og [arbeidsregler](AGENTS.md). [Leveransekatalogen](docs/LEVERANSER.md) viser filer, formater og intern hoveddokumentasjon.
 
 ## stayctrl – 11. november 2026
 
@@ -63,3 +63,7 @@ stayctrl er en **idé**, ikke en ferdig app. Gjeldende visuelle leveranse er det
 ## Felles designstandard
 
 Alle nye og oppdaterte moduler skal følge [obligatorisk design-, implementerings- og publiseringsprosess](docs/DESIGN-OG-PUBLISERING-STANDARD.md). Prosedyren krever identisk AC-mastergeometri, gjenbruk av kortmal, redigerbar typografi, mobil sammenligning mot referansemoduler, produksjonskontroll og synkronisert Google Drive-dokumentasjon.
+
+## Hurtigbuffer og deling – 16. november 2026
+
+Alle sider laster `style.css?v=status10` og `analytics.js?v=4`. Øk versjonen på **alle** sider samtidig når filen endres. Innholdssidene har Open Graph-tagger for delinger. Se [endringslogg uke 47](docs/ENDRINGSLOGG-2026-W47.md).

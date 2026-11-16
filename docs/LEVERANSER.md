@@ -6,9 +6,9 @@ Oppdatert 15. oktober 2026. Filplasseringer kontrollert mot GitHub-treet. Eksist
 
 - www.allctrl.no — offentlig hjemmeside, GitHub Pages fra rot på main.
 - index.html, style.css, script.js — hovedside og felles presentasjon.
-- <modul>/index.html — 13 modulsider. Ikke opprett parallelle <modul>.html-filer i roten.
+- <modul>/index.html — 14 modulsider (stayctrl kom til i november 2026). Ikke opprett parallelle <modul>.html-filer i roten.
 - CNAME — www.allctrl.no. 404.html — håndtering av gamle adresser.
-- website/ — eksportgrunnlag som skal holdes i takt med nettsiden.
+- website/ — delvis eksportgrunnlag (HTML/CSS/JS og noen bilder, ikke johan/ og de fleste bildene), sist synkronisert 16. november 2026.
 - personvern.html — personvern for hjemmesiden, ikke en generell erklæring for alle appene.
 
 ## Grafikk

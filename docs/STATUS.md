@@ -45,3 +45,14 @@ Se [leveransekatalog](LEVERANSER.md) og [endringslogg uke 42](ENDRINGSLOGG-2026-
 **Åpne kvalitetskontroller / neste økt:** (1) Åpne faktisk offentlig forside og produktside på mobil, ta skjermbilder og sammenlign side-ved-side med jobctrl/timectrl; (2) kontroller bildets tekststørrelser, logo, kontrast og utsnitt ved mobilbredde; (3) om nødvendig erstatt rastertekst inne i mockupene med eksakte grafiske lag uten å miste fotorealismen; (4) bekreft sluttresultatet med bruker før designet markeres endelig godkjent. Ikke start ny bildeserie uten konkret avvik og referansemål.
 
 **Øktstatus:** Arbeidet stanset etter brukerens ønske om kveldsavslutning. Ingen ytterligere utvikling er planlagt eller utført i bakgrunnen.
+
+## Kodegjennomgang og synk-retting 16. november 2026
+
+**Implementert på gren `claude/fervent-albattani-gjh218`, ikke slått sammen eller publisert.** Det som er rettet: stayctrl i analytics og 404-omdirigering, synkronisert `website/`, felles timectrl-status «Beta · under utvikling», like versjonsparametere, «Idé» og Open Graph-tagger. Testet automatisk og visuelt i lokal headless Chromium (390/1280 px). Ikke testet i produksjon eller på fysisk mobil. Detaljer i [endringslogg uke 47](ENDRINGSLOGG-2026-W47.md).
+
+Åpne kontroller:
+
+- Brukeren bekrefter timectrl-status og appadresse (`timectrl.allctrl.no` kontra `timectrl-taupe.vercel.app`). Ingen av dem kunne åpnes fra arbeidsmiljøet.
+- Etter sammenslåing til `main`: success i Pages-jobben, mobilkontroll av forsiden, timectrl og stayctrl, Umami-hendelser for stayctrl og delingsforhåndsvisning.
+- Strukturelle tiltak som gjenstår: én datakilde for modullister, formatert HTML og opprydding av ubrukte PNG-er.
+- **Åpent dokumentasjonspunkt:** Prosjektregisteret på Google Disk («CTRL-prosjektregister – status og kilder» i 01_styring-og-strategi) er funnet, men **ikke oppdatert**. Drive-koblingen i denne økten kan bare lese og endre metadata. Den har ikke noe verktøy for å skrive i dokumentinnhold og rapporterer ingen redigeringstilgang. Det ble ikke laget noen ny fil, for å bevare filidentiteten. Føres inn i neste økt med skrivetilgang. Den interne samlede dokumentasjonen er heller ikke oppdatert, fordi denne økten ikke har tilgang til Library.

@@ -7,7 +7,7 @@
   try { if (localStorage.getItem('umami.disabled') === '1') return; } catch (_) {}
   if (navigator.doNotTrack === '1' || navigator.globalPrivacyControl === true) return;
 
-  const modules = new Set(['allctrl', 'carctrl', 'drinkctrl', 'eatctrl', 'jobctrl', 'listenctrl', 'medctrl', 'playctrl', 'readctrl', 'seectrl', 'sourdoughctrl', 'sportctrl', 'timectrl']);
+  const modules = new Set(['allctrl', 'carctrl', 'drinkctrl', 'eatctrl', 'jobctrl', 'listenctrl', 'medctrl', 'playctrl', 'readctrl', 'seectrl', 'sourdoughctrl', 'sportctrl', 'stayctrl', 'timectrl']);
   const send = name => {
     if (window.umami && typeof window.umami.track === 'function') {
       try { Promise.resolve(window.umami.track(name)).catch(() => {}); } catch (_) {}
